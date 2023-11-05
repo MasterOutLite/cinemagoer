@@ -9,7 +9,7 @@ export class VideoCategoryService {
     constructor(@InjectModel(VideoCategory) private videoCategoryRepository: typeof VideoCategory) {
     }
 
-    async create(dto: CreateVideoCategoryDto): Promise<CreateVideoCategoryDto> {
+    async create(dto: CreateVideoCategoryDto): Promise<ResponseVideoCategoryDto> {
         const exists: VideoCategory = await this.videoCategoryRepository.findOne({where: {name: dto.name}})
         if (exists)
             throw new HttpException('Exists', HttpStatus.BAD_REQUEST);

@@ -1,4 +1,14 @@
-import {AllowNull, AutoIncrement, BelongsToMany, Column, Model, PrimaryKey, Table, Unique} from "sequelize-typescript";
+import {
+    AllowNull,
+    AutoIncrement,
+    BelongsToMany,
+    Column,
+    DataType,
+    Model,
+    PrimaryKey,
+    Table,
+    Unique
+} from "sequelize-typescript";
 import Video from "@src/video/video.model";
 import VideoGenre from "@src/genre/video-genre.model";
 
@@ -18,10 +28,10 @@ class Genre extends Model<Genre, GenreCreateAttr> {
     @Column
     name: string;
 
-    @Column
+    @Column({type: DataType.TEXT})
     description: string;
 
-    @BelongsToMany(()=> Video, ()=> VideoGenre)
+    @BelongsToMany(() => Video, () => VideoGenre)
     video: Video[];
 }
 

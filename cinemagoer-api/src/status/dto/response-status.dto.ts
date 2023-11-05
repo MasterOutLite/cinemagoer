@@ -3,10 +3,11 @@ import Status from "@src/status/status.model";
 
 
 export class ResponseStatusDto {
-    constructor(value: Status) {
+    constructor(value: Status, withoutDesc = false) {
         if (value) {
             this.id = value.id;
             this.name = value.name;
+            if (!withoutDesc)
             this.description = value.description;
         }
     }
@@ -19,7 +20,8 @@ export class ResponseStatusDto {
 
     @ApiProperty({
         example: 'The film is in the box office',
-        description: 'Description.'
+        description: 'Description.',
+        required: false
     })
-    description: string;
+    description?: string;
 }

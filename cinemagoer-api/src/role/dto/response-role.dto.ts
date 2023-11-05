@@ -2,10 +2,11 @@ import {ApiProperty} from "@nestjs/swagger";
 import Role from "@role/role.model";
 
 export class ResponseRoleDto {
-    constructor(role: Role) {
+    constructor(role: Role, withoutDesc = false) {
         this.id = role.id;
         this.name = role.name;
-        this.description = role.description;
+        if (!withoutDesc)
+            this.description = role.description;
     }
 
     @ApiProperty({example: '1', description: 'ID role'})
@@ -18,5 +19,5 @@ export class ResponseRoleDto {
         example: 'A user role that allows you to save playlists, rate and write comments.',
         description: 'Description of what the role does'
     })
-    readonly description: string;
+    readonly description?: string;
 }

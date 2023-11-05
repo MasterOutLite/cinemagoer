@@ -9,13 +9,10 @@ export class StatusService {
     constructor(@InjectModel(Status) private statusRepository: typeof Status) {
     }
 
-    async create(dto: CreateStatusDto): Promise<CreateStatusDto> {
+    async create(dto: CreateStatusDto): Promise<ResponseStatusDto> {
         const exists: Status = await this.statusRepository.findOne({where: {name: dto.name}})
         if (exists)
             throw new HttpException('Exists', HttpStatus.BAD_REQUEST);
-
-        if (dto.description.length > 255)
-            dto.description = dto.description.slice(0, 255);
 
         const status = await this.statusRepository.create(dto);
         return new ResponseStatusDto(status);

@@ -3,10 +3,11 @@ import VideoCategory from "@src/video-category/video-category.model";
 
 
 export class ResponseVideoCategoryDto {
-    constructor(value: VideoCategory) {
+    constructor(value: VideoCategory, withoutDesc = false) {
         if (value) {
             this.id = value.id;
             this.name = value.name;
+            if (!withoutDesc)
             this.description = value.description;
         }
     }
@@ -19,7 +20,8 @@ export class ResponseVideoCategoryDto {
 
     @ApiProperty({
         example: 'A cartoon is a type of visual art that is typically drawn, frequently animated, in an unrealistic or semi-realistic style.',
-        description: 'Description.'
+        description: 'Description.',
+        required: false
     })
-    description: string;
+    description?: string;
 }

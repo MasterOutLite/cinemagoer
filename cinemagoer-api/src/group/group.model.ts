@@ -17,7 +17,7 @@ class Group extends Model<Group, GroupCreateAttr> {
     @Column
     name: string;
 
-    @BelongsToMany(()=> Video, ()=> GroupVideo)
+    @BelongsToMany(() => Video, () => GroupVideo)
     video: Video[];
 }
 

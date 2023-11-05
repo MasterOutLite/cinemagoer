@@ -27,7 +27,7 @@ class AgeRating extends Model<AgeRating, AgeRatingCreateAttr> {
     @Column
     name: string;
 
-    @Column
+    @Column({type: DataType.TEXT})
     description: string;
 
     @HasMany(()=> Video)

@@ -1,5 +1,5 @@
 import {ApiProperty} from "@nestjs/swagger";
-import {IsArray, IsDate, IsNumberString} from "class-validator";
+import {IsArray, IsDate, IsNumberString, IsOptional} from "class-validator";
 import {Transform} from "class-transformer";
 
 export class CreateVideoDto {
@@ -19,9 +19,9 @@ export class CreateVideoDto {
     @Transform(({value}) => (new Date(value)))
     dateRelease: Date;
 
-    @ApiProperty({example: '[1, 6 ,7]', description: 'Genre (Roman, Fight, ...).'})
-    @Transform(({value}) => (Array.isArray(value) ? value : value.split(',')))
+    @ApiProperty({example: [1, 6, 7], type: [Number], description: 'Genre (Roman, Fight, ...).',})
     @IsArray({message: 'Is not arr'})
+    @Transform(({value}) => (Array.isArray(value) ? value : value.split(',')))
     genreIds: number[];
 
 
@@ -44,4 +44,9 @@ export class CreateVideoDto {
     @ApiProperty({example: '1', description: 'Age rating (18+, 16+, PG-13, ...).'})
     @IsNumberString({}, {message: 'Is not number'})
     ageRatingId: number;
+
+    @ApiProperty({example: '1', description: 'Group relation', required: false})
+    @IsNumberString({}, {message: 'Is not number'})
+    @IsOptional()
+    groupId?: number;
 }

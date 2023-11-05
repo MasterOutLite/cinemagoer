@@ -1,11 +1,13 @@
 import {ApiProperty} from "@nestjs/swagger";
+import User from "@users/users.model";
+import Role from "@role/role.model";
 
 export class ResponseUserDto {
-    constructor(id, nickname, roles, avatar) {
-        this.id = id;
-        this.nickname = nickname;
-        this.roles = roles;
-        this.avatar = avatar;
+    constructor(entity: User) {
+        this.id = entity.id;
+        this.nickname = entity.nickname;
+        this.roles = entity.role.map(value => value.id);
+        this.avatar = entity.avatar;
     }
 
 

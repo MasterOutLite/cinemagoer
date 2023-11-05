@@ -13,7 +13,9 @@ import Video from "@src/video/video.model";
 import User from "@users/users.model";
 
 export interface VideoRateCreateAttr {
-    name: string;
+    videoId: number;
+    userId: number;
+    rate: number;
 }
 
 @Table({tableName: 'video-rate'})
@@ -38,7 +40,6 @@ class VideoRate extends Model<VideoRate, VideoRateCreateAttr> {
     user: User;
 
     @AllowNull(false)
-    @Length({min: 0, max: 10})
     @Column
     rate: number;
 

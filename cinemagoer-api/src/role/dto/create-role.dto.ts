@@ -6,6 +6,7 @@ export class CreateRoleDto {
 
     @ApiProperty({example: 'User', description: 'Name role'})
     @IsString({message: 'Is not string'})
+    @Length(3, 255)
     readonly name: string;
 
     @ApiProperty({

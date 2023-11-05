@@ -1,4 +1,14 @@
-import {AllowNull, AutoIncrement, Column, HasMany, Model, PrimaryKey, Table, Unique} from "sequelize-typescript";
+import {
+    AllowNull,
+    AutoIncrement,
+    Column,
+    DataType,
+    HasMany,
+    Model,
+    PrimaryKey,
+    Table,
+    Unique
+} from "sequelize-typescript";
 import Video from "@src/video/video.model";
 
 export interface StatusCreateAttr {
@@ -18,7 +28,7 @@ class Status extends Model<Status, StatusCreateAttr> {
     @Column
     name: string;
 
-    @Column
+    @Column({type: DataType.TEXT})
     description: string;
 
     @HasMany(()=> Video)

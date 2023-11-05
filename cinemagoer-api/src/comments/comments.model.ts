@@ -17,6 +17,8 @@ export interface CommentsCreateAttr {
     videoId: number;
     userId: number;
     comment: string;
+    commentId?: number;
+    userAnswerId?: number;
 }
 
 @Table({tableName: 'comments'})

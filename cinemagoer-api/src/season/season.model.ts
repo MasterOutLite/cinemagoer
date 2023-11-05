@@ -13,10 +13,9 @@ import Video from "@src/video/video.model";
 import VideoSeries from "@src/video-series/video-series.model";
 
 export interface SeasonCreateAttr {
-    email: string;
-    login: string;
-    password: string;
-    nickname: string;
+    videoId: number;
+    name: string;
+    number: number;
 }
 
 @Table({tableName: 'season'})

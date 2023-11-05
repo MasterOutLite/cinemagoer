@@ -10,13 +10,10 @@ export class AgeRatingService {
     constructor(@InjectModel(AgeRating) private ageRatingRepository: typeof AgeRating) {
     }
 
-    async create(dto: CreateAgeRatingDto): Promise<CreateAgeRatingDto> {
+    async create(dto: CreateAgeRatingDto): Promise<ResponseAgeRatingDto> {
         const exists: AgeRating = await this.ageRatingRepository.findOne({where: {name: dto.name}})
         if (exists)
             throw new HttpException('Exists', HttpStatus.BAD_REQUEST);
-
-        if (dto.description.length > 255)
-            dto.description = dto.description.slice(0, 255);
 
         const ageRating = await this.ageRatingRepository.create(dto);
         return new ResponseAgeRatingDto(ageRating);

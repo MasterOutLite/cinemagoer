@@ -6,7 +6,7 @@ import {
     Column,
     DataType,
     ForeignKey,
-    HasMany,
+    HasMany, HasOne,
     Model,
     PrimaryKey,
     Table
@@ -99,8 +99,8 @@ class Video extends Model<Video, VideoCreateAttr> {
     @HasMany(() => Comments)
     comments: Comments[];
 
-    @HasMany(() => VideoInfo)
-    videoInfo: VideoInfo[];
+    @HasOne(() => VideoInfo)
+    videoInfo: VideoInfo;
 
     @HasMany(() => VideoSeries)
     videoSeries: VideoSeries[];

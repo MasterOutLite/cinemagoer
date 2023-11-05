@@ -3,11 +3,12 @@ import Type from "@src/type/type.model";
 
 
 export class ResponseTypeDto {
-    constructor(type: Type) {
-        if (type){
+    constructor(type: Type, withoutDesc = false) {
+        if (type) {
             this.id = type.id;
             this.name = type.name;
-            this.description = type.description;
+            if (!withoutDesc)
+                this.description = type.description;
         }
     }
 
@@ -20,7 +21,8 @@ export class ResponseTypeDto {
 
     @ApiProperty({
         example: 'Is a work of visual art that simulates experiences and otherwise communicates ideas, stories, perceptions, feelings, beauty, or atmosphere through the use of moving images. These images are generally accompanied by sound and, more rarely, other sensory stimulations.',
-        description: 'Description.'
+        description: 'Description.',
+        required: false
     })
-    description: string;
+    description?: string;
 }

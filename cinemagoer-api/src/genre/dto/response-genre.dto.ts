@@ -3,11 +3,12 @@ import Genre from "@src/genre/genre.model";
 
 
 export class ResponseGenreDto {
-    constructor(value: Genre) {
+    constructor(value: Genre, withoutDesc = false) {
         if (value) {
             this.id = value.id;
             this.name = value.name;
-            this.description = value.description;
+            if (!withoutDesc)
+                this.description = value.description;
         }
     }
 
@@ -19,7 +20,8 @@ export class ResponseGenreDto {
 
     @ApiProperty({
         example: 'Is a literary work with a focus on romantic relationships and emotions. Such novels often include love stories, relationships between the main characters, and other aspects of romance.',
-        description: 'Description.'
+        description: 'Description.',
+        required: false,
     })
-    description: string;
+    description?: string;
 }

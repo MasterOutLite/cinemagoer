@@ -49,6 +49,7 @@ import Group from "@src/group/group.model";
 import GroupVideo from "@src/group/group-video.model";
 import Season from "@src/season/season.model";
 import {ServeStaticModule} from "@nestjs/serve-static";
+import { AuthModule } from './auth/auth.module';
 import * as path from "path";
 
 
@@ -91,7 +92,8 @@ import * as path from "path";
         DubbingOfVideoModule,
         GroupModule,
         SeasonModule,
-        FilesModule
+        FilesModule,
+        AuthModule
     ],
     controllers: [],
     providers: [],

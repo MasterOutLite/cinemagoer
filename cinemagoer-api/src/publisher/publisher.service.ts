@@ -9,13 +9,10 @@ export class PublisherService {
     constructor(@InjectModel(Publisher) private publisherRepository: typeof Publisher) {
     }
 
-    async create(dto: CreatePublisherDto): Promise<CreatePublisherDto> {
+    async create(dto: CreatePublisherDto): Promise<ResponsePublisherDto> {
         const exists: Publisher = await this.publisherRepository.findOne({where: {name: dto.name}})
         if (exists)
             throw new HttpException('Exists', HttpStatus.BAD_REQUEST);
-
-        if (dto.description.length > 255)
-            dto.description = dto.description.slice(0, 255);
 
         const publisher = await this.publisherRepository.create(dto);
         return new ResponsePublisherDto(publisher);

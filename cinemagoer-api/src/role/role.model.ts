@@ -28,7 +28,7 @@ class Role extends Model<Role, RoleCreateAttr> {
     @Column
     name: string;
 
-    @Column
+    @Column({type: DataType.TEXT})
     description: string;
 
     @BelongsToMany(()=> User, ()=> UserRole)

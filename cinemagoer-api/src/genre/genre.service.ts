@@ -10,13 +10,10 @@ export class GenreService {
     constructor(@InjectModel(Genre) private genreRepository: typeof Genre) {
     }
 
-    async create(dto: CreateGenreDto): Promise<CreateGenreDto> {
+    async create(dto: CreateGenreDto): Promise<ResponseGenreDto> {
         const exists: Genre = await this.genreRepository.findOne({where: {name: dto.name}})
         if (exists)
             throw new HttpException('Exists', HttpStatus.BAD_REQUEST);
-
-        if (dto.description.length > 255)
-            dto.description = dto.description.slice(0, 255);
 
         const genre = await this.genreRepository.create(dto);
         return new ResponseGenreDto(genre);

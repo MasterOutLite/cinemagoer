@@ -28,7 +28,7 @@ class Type extends Model<Type, TypeCreateAttr> {
     @Column
     name: string;
 
-    @Column
+    @Column({type: DataType.TEXT})
     description: string;
 
     @HasMany(() => Video)

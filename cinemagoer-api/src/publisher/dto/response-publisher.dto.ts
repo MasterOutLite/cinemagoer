@@ -3,11 +3,12 @@ import Publisher from "@src/publisher/publisher.model";
 
 
 export class ResponsePublisherDto {
-    constructor(value: Publisher) {
+    constructor(value: Publisher, withoutDesc = false) {
         if (value) {
             this.id = value.id;
             this.name = value.name;
-            this.description = value.description;
+            if (!withoutDesc)
+                this.description = value.description;
         }
     }
 
@@ -19,7 +20,8 @@ export class ResponsePublisherDto {
 
     @ApiProperty({
         example: 'Is an American multinational mass media and entertainment conglomerate.',
-        description: 'Description.'
+        description: 'Description.',
+        required: false
     })
-    description: string;
+    description?: string;
 }

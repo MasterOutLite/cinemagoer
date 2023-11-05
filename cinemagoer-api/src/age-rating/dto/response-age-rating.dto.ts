@@ -3,10 +3,11 @@ import AgeRating from "@src/age-rating/age-rating.model";
 
 
 export class ResponseAgeRatingDto {
-    constructor({id, name, description}: AgeRating) {
+    constructor({id, name, description}: AgeRating, withoutDesc = false) {
         this.id = id;
         this.name = name;
-        this.description = description;
+        if (!withoutDesc)
+            this.description = description;
     }
 
     @ApiProperty({example: '1', description: 'ID'})
@@ -17,7 +18,8 @@ export class ResponseAgeRatingDto {
 
     @ApiProperty({
         example: 'Some material may be inappropriate for children under 13.',
-        description: 'Description.'
+        description: 'Description.',
+        required: false
     })
-    description: string;
+    description?: string;
 }

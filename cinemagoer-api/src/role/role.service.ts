@@ -14,18 +14,12 @@ export class RoleService {
     ) {
     }
 
-    async createTest() {
-        await this.roleRepository.create({name: 'gg', description: 'lg'});
-    }
-
     async createRole(dto: CreateRoleDto): Promise<ResponseRoleDto> {
+        dto.name.toUpperCase();
         const exists:Role = await this.roleRepository.findOne({where:{name: dto.name}});
 
         if (exists)
             throw new ExistsException();
-
-        if (dto.description.length > 255)
-            dto.description = dto.description.slice(0, 255);
 
         const role = await this.roleRepository.create(dto);
         return new ResponseRoleDto(role)
