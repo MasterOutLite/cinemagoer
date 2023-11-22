@@ -6,7 +6,7 @@ import {CreateRoleDto} from "@role/dto/create-role.dto";
 import {ResponseUserDto} from "@users/dto/response-user.dto";
 import {Roles} from "@src/auth/roles-auth.decorator";
 import {RolesGuard} from "@src/auth/roles-guard";
-import {RoleUser} from "@src/const/role-const";
+import {RoleUser} from "@src/const/role";
 
 @ApiTags('Role')
 @Controller('role')

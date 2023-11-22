@@ -1,9 +1,10 @@
-import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import Role from "@role/role.model";
 import {InjectModel} from "@nestjs/sequelize";
 import {CreateRoleDto} from "@role/dto/create-role.dto";
 import {ResponseRoleDto} from "@role/dto/response-role.dto";
 import {ExistsException} from "@src/exception/ExistsException";
+import {Op} from "sequelize";
 
 @Injectable()
 export class RoleService {
@@ -16,7 +17,7 @@ export class RoleService {
 
     async createRole(dto: CreateRoleDto): Promise<ResponseRoleDto> {
         dto.name.toUpperCase();
-        const exists:Role = await this.roleRepository.findOne({where:{name: dto.name}});
+        const exists: Role = await this.roleRepository.findOne({where: {name: dto.name}});
 
         if (exists)
             throw new ExistsException();
@@ -33,6 +34,10 @@ export class RoleService {
             return null;
     }
 
+    async getRoleById(id: number): Promise<ResponseRoleDto> {
+        return await this.roleRepository.findOne({where: {id}});
+    }
+
     async getRoleAll(): Promise<ResponseRoleDto[]> {
         const roles = await this.roleRepository.findAll();
         const rolesDto: ResponseRoleDto[] = [];
@@ -40,5 +45,15 @@ export class RoleService {
             rolesDto.push(new ResponseRoleDto(role));
         }
         return rolesDto;
+    }
+
+    async checkRole(ids: number[]): Promise<Role[]> {
+        return await this.roleRepository.findAll({
+            where: {
+                id: {
+                    [Op.in]: ids
+                }
+            }
+        });
     }
 }

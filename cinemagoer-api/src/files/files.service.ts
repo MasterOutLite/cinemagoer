@@ -16,12 +16,36 @@ export class FilesService {
 
     createFile(type: TypeFile, file: Express.Multer.File): string {
         try {
-            const filePath = path.resolve(__dirname, '..', 'static', type);
+            //For release
+            //const filePath = path.resolve(__dirname, '..', 'static', type);
+            //For development
+            const filePath = path.resolve(__dirname, '..', '..', 'static', type);
             const fileName = uuid.v4() + '.' + file.originalname.split('.').pop();
             if (!fs.existsSync(filePath)) {
                 fs.mkdirSync(filePath, {recursive: true});
             }
             fs.writeFileSync(path.resolve(filePath, fileName), file.buffer);
+
+            return type + '/' + fileName;
+        } catch (e) {
+            throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    createFileSimple(type: TypeFile, name: string) {
+        try {
+            //read
+            //const filePathToFile = path.resolve(__dirname, '..', '..', 'seed-obg', type, name);
+            const filePathToFile = path.resolve(__dirname, '..', '..', 'seed-obg', type, name);
+            const file = fs.readFileSync(filePathToFile,);
+
+            //write
+            const filePath = path.resolve(__dirname, '..', '..', 'static', type);
+            const fileName = uuid.v4() + '.' + name.split('.').pop();
+            if (!fs.existsSync(filePath)) {
+                fs.mkdirSync(filePath, {recursive: true});
+            }
+            fs.writeFileSync(path.resolve(filePath, fileName), file);
 
             return type + '/' + fileName;
         } catch (e) {

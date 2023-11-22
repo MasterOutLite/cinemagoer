@@ -30,6 +30,10 @@ export class FilterVideoQuery {
     @IsOptional()
     dateReleaseMax: Date;
 
+    @ApiProperty({example: '1', description: 'Season of year (Winter, Spring, Summer, Autumn).', required: false})
+    @IsNumberString({}, {message: 'Is not number'})
+    @IsOptional()
+    seasonOfYearId?: number;
 
     @ApiProperty({example: [1, 6, 7], type: [Number], description: 'Genre (Roman, Fight, ...).', required: false})
     @IsArray({message: 'Is not arr'})

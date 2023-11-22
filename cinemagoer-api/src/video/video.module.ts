@@ -16,12 +16,13 @@ import {GroupModule} from "@src/group/group.module";
 import {AuthModule} from "@src/auth/auth.module";
 import VideoGenre from "@src/genre/video-genre.model";
 import {VideoRateModule} from "@src/video-rate/video-rate.module";
+import SeasonOfYear from "@src/video/season-of-year.model";
 
 @Module({
     controllers: [VideoController],
     providers: [VideoService],
     imports: [
-        SequelizeModule.forFeature([Video, VideoGenre]),
+        SequelizeModule.forFeature([Video, VideoGenre,SeasonOfYear]),
         AuthModule, VideoRateModule,
         FilesModule, VideoInfoModule,
         SeasonModule, TypeModule,

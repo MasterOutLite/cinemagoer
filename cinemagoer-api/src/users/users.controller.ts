@@ -18,15 +18,27 @@ import {FileFieldsInterceptor} from "@nestjs/platform-express";
 import {JwtAuthGuard} from "@src/auth/jwt-auth-guard";
 import {Roles} from "@src/auth/roles-auth.decorator";
 import {RolesGuard} from "@src/auth/roles-guard";
-import {RoleUser} from "@src/const/role-const";
+import {RoleUser} from "@src/const/role";
 import {AuthModule} from "@src/auth/auth.module";
 import {UpdateUserDto} from "@users/dto/update-user.dto";
+import {UserDto} from "@users/dto/user.dto";
+import {UpdateUserRoleDto} from "@users/dto/update-user-role.dto";
 
 @ApiTags('User')
 @Controller('user')
 export class UsersController {
 
     constructor(private userService: UsersService) {
+    }
+
+    @ApiOperation({summary: 'Update user role'})
+    @ApiBearerAuth('JWT')
+    @ApiResponse({status: HttpStatus.CREATED, type: UserDto})
+    @Roles(RoleUser.ADMIN)
+    @UseGuards(RolesGuard)
+    @Put('role')
+    updateUserRole(@Body() dto: UpdateUserRoleDto) {
+        return this.userService.updateRole(dto);
     }
 
     @ApiOperation({summary: 'Update date user'})

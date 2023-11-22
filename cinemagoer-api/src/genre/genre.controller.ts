@@ -5,7 +5,7 @@ import {CreateGenreDto} from "@src/genre/dto/create-genre.dto";
 import {ResponseGenreDto} from "@src/genre/dto/response-genre.dto";
 import {Roles} from "@src/auth/roles-auth.decorator";
 import {RolesGuard} from "@src/auth/roles-guard";
-import {RoleUser} from "@src/const/role-const";
+import {RoleUser} from "@src/const/role";
 @ApiTags('Genre')
 @Controller('genre')
 export class GenreController {
@@ -14,11 +14,11 @@ export class GenreController {
 
     @ApiOperation({summary: 'Create'})
     @ApiBearerAuth('JWT')
-    @ApiResponse({status: HttpStatus.CREATED, type: CreateGenreDto})
+    @ApiResponse({status: HttpStatus.CREATED, type: ResponseGenreDto})
     @Roles(RoleUser.ADMIN)
     @UseGuards(RolesGuard)
     @Post()
-    createType(@Body() dto: CreateGenreDto){
+    createGenre(@Body() dto: CreateGenreDto){
         return this.genreService.create(dto);
     }
 

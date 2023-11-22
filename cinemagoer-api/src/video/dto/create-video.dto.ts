@@ -12,7 +12,7 @@ export class CreateVideoDto {
     name: string[];
 
     @ApiProperty({example: 'Icon file', description: 'Icon file (png, jpeg).', format: 'binary', required: false})
-    icon: string;
+    icon?: string;
 
     @ApiProperty({example: '2023-9-23', description: 'Date release', format: 'date'})
     @IsDate({message: 'Is not date'})
@@ -28,6 +28,10 @@ export class CreateVideoDto {
     @ApiProperty({example: '1', description: 'Type video (Film, Serial, ...).'})
     @IsNumberString({}, {message: 'Is not number'})
     typeId: number;
+
+    @ApiProperty({example: '1', description: 'Season of year (Winter, Spring, Summer, Autumn).'})
+    @IsNumberString({}, {message: 'Is not number'})
+    seasonOfYearId: number;
 
     @ApiProperty({example: '1', description: 'Status video (Release, Waiting, ...).'})
     @IsNumberString({}, {message: 'Is not number'})

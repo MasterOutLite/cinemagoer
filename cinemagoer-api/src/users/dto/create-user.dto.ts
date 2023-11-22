@@ -1,5 +1,5 @@
 import {ApiProperty} from "@nestjs/swagger";
-import {IsEmail, IsOptional, IsString, Length} from "class-validator";
+import {IsEmail, IsNumber, IsOptional, IsString, Length} from "class-validator";
 
 export class CreateUserDto {
 
@@ -16,4 +16,9 @@ export class CreateUserDto {
     @IsString({message: 'String only'})
     @Length(4, 20, {message: 'min: 4 / max: 20'})
     nickname: string;
+
+    @ApiProperty({example: 'nicknameTon', description: 'nickname user', required: false})
+    @IsNumber({}, {each: true})
+    @IsOptional()
+    roles?: number[];
 }

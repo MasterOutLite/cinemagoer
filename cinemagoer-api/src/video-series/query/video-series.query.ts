@@ -10,4 +10,9 @@ export class VideoSeriesQuery {
     @IsNumberString({},{message: 'Is not number'})
     @IsOptional()
     seasonId?: number;
+
+    // @ApiProperty({example: '1', description: 'Day when be show series.', required: false})
+    // @IsNumberString({}, {message: 'Is not number.'})
+    // @IsOptional()
+    // readonly dayShowId?: number;
 }

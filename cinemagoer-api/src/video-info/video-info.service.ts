@@ -85,4 +85,34 @@ export class VideoInfoService {
         return new ResponseVideoInfoDto(videoInfo);
     }
 
+
+    // seed
+
+    async createSeed(dto: CreateVideoInfoDto):
+        Promise<ResponseVideoInfoDto> {
+        const exists: VideoInfo = await this.videoInfoRepository.findOne({where: {videoId: dto.videoId}})
+        if (exists)
+            throw new ExistsException();
+
+        const nameTrailers = [];
+        if (dto.trailers && dto.trailers.length > 0) {
+            for (const trailer of dto.trailers) {
+                const name: string = this.fileService.createFileSimple(TypeFile.TRAILER, trailer);
+                nameTrailers.push(name);
+            }
+            dto.trailers = nameTrailers;
+        }
+
+        const namePictures = [];
+        if (dto.pictures && dto.pictures.length > 0) {
+            for (const picture of dto.pictures) {
+                const name: string = this.fileService.createFileSimple(TypeFile.PICTURES, picture);
+                namePictures.push(name);
+            }
+            dto.pictures = namePictures;
+        }
+
+        const videoInfo = await this.videoInfoRepository.create(dto);
+        return new ResponseVideoInfoDto(videoInfo);
+    }
 }

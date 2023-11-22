@@ -5,7 +5,7 @@ import {CreateAgeRatingDto} from "@src/age-rating/dto/create-age-rating.dto";
 import {ResponseAgeRatingDto} from "@src/age-rating/dto/response-age-rating.dto";
 import {Roles} from "@src/auth/roles-auth.decorator";
 import {RolesGuard} from "@src/auth/roles-guard";
-import {RoleUser} from "@src/const/role-const";
+import {RoleUser} from "@src/const/role";
 
 
 @ApiTags('AgeRating')

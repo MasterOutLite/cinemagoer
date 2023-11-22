@@ -1,8 +1,7 @@
 import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
-//import {ValidationPipe} from "@src/pipes/ValidationPipe";
-import {ValidationPipe, PipeTransform} from '@nestjs/common'
+import {ValidationPipe} from '@nestjs/common'
 import {ValidationException} from "@src/exception/ValidationException";
 
 async function bootstrap() {
@@ -11,7 +10,7 @@ async function bootstrap() {
 
     app.useGlobalPipes(new ValidationPipe({
         transform: true,
-        exceptionFactory:errors => {
+        exceptionFactory: errors => {
             if (errors.length) {
                 let messages = errors.map(value => (
                     `${value.property}: ${value.value}. Type value ${typeof value.target}. ${value.contexts}.`
@@ -22,12 +21,13 @@ async function bootstrap() {
     }));
 
     app.setGlobalPrefix('api');
+    app.enableCors();
 
     const configSwagger = new DocumentBuilder()
         .setTitle('Cinemagoer')
         .setDescription('Swagger Rest API')
         .setVersion('1.0.0')
-        .addBearerAuth(  {
+        .addBearerAuth({
                 type: 'http',
                 scheme: 'bearer',
                 bearerFormat: 'JWT',
@@ -40,11 +40,9 @@ async function bootstrap() {
 
     const documentSwagger = SwaggerModule.createDocument(app, configSwagger);
     SwaggerModule.setup('api/docs', app, documentSwagger);
-
     await app.listen(PORT, () => {
         console.log(`Server start work on port: ${PORT}`);
     });
-
 }
 
 bootstrap();

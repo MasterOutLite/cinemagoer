@@ -33,7 +33,6 @@ export class AuthService {
     }
 
     private generateToken(user: UserDto) {
-
         const payload: TokenFormat = {id: user.id, nickname: user.nickname, roles: user.roles}
         return {token: this.jwtService.sign(payload)}
     }
@@ -48,5 +47,16 @@ export class AuthService {
             return new UserDto(user);
         }
         throw new UnauthorizedException('Bad email or password.');
+    }
+
+    //seed
+
+    async registrationSeed(dto: CreateUserDto) {
+        const exists = await this.usersService.getByEmail(dto.email);
+        if (exists)
+            throw new ExistsException(`User already registration with email: ${dto.email}.`);
+
+        const hashPassword = await bcrypt.hash(dto.password, 5)
+        return await this.usersService.registration({...dto, password: hashPassword});
     }
 }

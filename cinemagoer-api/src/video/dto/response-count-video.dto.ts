@@ -54,7 +54,7 @@ export class ResponseCountVideoDto {
                     "id": 1,
                     "name": "PG-13"
                 },
-                icon: "icon/bfb73574-64dc-4fb6-97a7-9dfe9ac4aa5f.jpg4"
+                icon: "pictures/bfb73574-64dc-4fb6-97a7-9dfe9ac4aa5f.jpg4"
             },
         }], description: 'Count'
     })

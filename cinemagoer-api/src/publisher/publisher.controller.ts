@@ -5,7 +5,7 @@ import {CreatePublisherDto} from "@src/publisher/dto/create-publisher.dto";
 import {ResponsePublisherDto} from "@src/publisher/dto/response-publisher.dto";
 import {Roles} from "@src/auth/roles-auth.decorator";
 import {RolesGuard} from "@src/auth/roles-guard";
-import {RoleUser} from "@src/const/role-const";
+import {RoleUser} from "@src/const/role";
 
 @ApiTags('Publisher')
 @Controller('publisher')

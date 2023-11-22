@@ -1,21 +1,11 @@
-import {
-    AllowNull,
-    AutoIncrement,
-    BelongsTo,
-    Column,
-    ForeignKey,
-    Model,
-    PrimaryKey,
-    Table,
-    Unique
-} from "sequelize-typescript";
+import {AllowNull, AutoIncrement, BelongsTo, Column, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
 import DubbingStudio from "@src/dubbing-studio/dubbing-studio.model";
 import VideoSeries from "@src/video-series/video-series.model";
 
 export interface DubbingOfVideoCreateAttr {
     dubbingStudioId: number;
     videoSeriesId: number;
-    path: string;
+    video: string;
 }
 
 @Table({tableName: 'dubbing-of-video'})
@@ -40,9 +30,8 @@ class DubbingOfVideo extends Model<DubbingOfVideo, DubbingOfVideoCreateAttr> {
     videoSeries: VideoSeries;
 
     @AllowNull(false)
-    @Unique
     @Column
-    path: string;
+    video: string;
 }
 
 export default DubbingOfVideo;

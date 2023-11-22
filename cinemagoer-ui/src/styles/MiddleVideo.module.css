@@ -1,0 +1,20 @@
+.image {
+
+}
+
+
+@media (min-width: 0px){
+    .image {
+        width: 150px;
+        height: 220px;
+    }
+}
+
+@media (min-width: 600px){
+    .image {
+        width: 184px;
+        height: 260px;
+    }
+
+}
+

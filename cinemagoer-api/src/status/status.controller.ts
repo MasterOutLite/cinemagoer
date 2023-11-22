@@ -4,7 +4,7 @@ import {StatusService} from "@src/status/status.service";
 import {CreateStatusDto} from "@src/status/dto/create-status.dto";
 import {ResponseStatusDto} from "@src/status/dto/response-status.dto";
 import {Roles} from "@src/auth/roles-auth.decorator";
-import {RoleUser} from "@src/const/role-const";
+import {RoleUser} from "@src/const/role";
 import {RolesGuard} from "@src/auth/roles-guard";
 
 @ApiTags('Status')

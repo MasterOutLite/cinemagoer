@@ -32,14 +32,23 @@
 $ yarn install
 ```
 
+## Seed
+
+```bash
+# seed data
+#  NODE_ENV - .development.env | example .env file
+$ npx cross-env NODE_ENV=development
+$ npx nestjs-command seed:all
+```
+
 ## Running the app
 
 ```bash
 # development
-$ yarn run start
+$ yarn start
 
 # watch mode
-$ yarn run start:dev
+$ yarn dev
 
 # production mode
 $ yarn run start:prod

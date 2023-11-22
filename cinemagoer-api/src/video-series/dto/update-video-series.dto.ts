@@ -7,6 +7,10 @@ export class UpdateVideoSeriesDto {
     @IsNumberString({}, {message: 'Is not number.'})
     id: number;
 
+    @ApiProperty({example: '1', description: 'Day when be show series.'})
+    @IsNumberString({}, {message: 'Is not number.'})
+    readonly dayShowId: number;
+
     @ApiProperty({example: '1', description: 'Number series'})
     @IsNumberString({}, {message: 'Is not number.'})
     @IsOptional()

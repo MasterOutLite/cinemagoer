@@ -4,7 +4,8 @@ import {
     BelongsTo,
     Column,
     Default,
-    ForeignKey, HasMany,
+    ForeignKey,
+    HasMany,
     Model,
     PrimaryKey,
     Table
@@ -12,6 +13,7 @@ import {
 import Video from "@src/video/video.model";
 import DubbingOfVideo from "@src/dubbing-of-video/dubbing-of-video.model";
 import Season from "@src/season/season.model";
+import DayOfWeek from "@src/video-series/day-of-week.model";
 
 export interface VideoSeriesCreateAttr {
     videoId: number;
@@ -58,6 +60,12 @@ class VideoSeries extends Model<VideoSeries, VideoSeriesCreateAttr> {
     seasonId: number;
     @BelongsTo(() => Season)
     season: Season;
+
+    @ForeignKey(() => DayOfWeek)
+    @Column
+    dayShowId: number;
+    @BelongsTo(() => DayOfWeek)
+    dayShow: DayOfWeek;
 
     @HasMany(() => DubbingOfVideo)
     dubbingOfVideo: DubbingOfVideo[];

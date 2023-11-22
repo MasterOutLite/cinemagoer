@@ -6,12 +6,14 @@ import {ResponseVideoCategoryDto} from "@src/video-category/dto/response-video-c
 import {ResponseStatusDto} from "@src/status/dto/response-status.dto";
 import {ResponseTypeDto} from "@src/type/dto/response-type.dto";
 import {ResponseGenreDto} from "@src/genre/dto/response-genre.dto";
+import ResponseSeasonOfYearDto from "@src/video/dto/response-season-of-year.dto";
 
 export class ResponseVideoDto {
     constructor(video: Video, withoutDesc = true) {
         this.id = video.id;
         this.name = video.name;
         this.dateRelease = video.dateRelease;
+        this.seasonOfYear = new ResponseSeasonOfYearDto(video.seasonOfYear)
         this.genre = video.genre.map(value => new ResponseGenreDto(value, withoutDesc));
         this.videoCategory = new ResponseVideoCategoryDto(video.videoCategory, withoutDesc);
         this.type = new ResponseTypeDto(video.type, withoutDesc);
@@ -21,9 +23,11 @@ export class ResponseVideoDto {
         this.icon = video.icon;
 
         // @ts-ignore
-        this.rate = video.getDataValue('avgRate') || null;
+        this.rate = parseFloat(video.getDataValue('avgRate')) || null;
+        if (this.rate)
+            this.rate = parseFloat(this.rate.toFixed(2));
         // @ts-ignore
-        this.yourRate = video.getDataValue('yourRate') || undefined;
+        this.yourRate = parseFloat(video.getDataValue('yourRate')) || undefined;
     }
 
     @ApiProperty({example: '1', description: 'Id video.'})
@@ -44,6 +48,9 @@ export class ResponseVideoDto {
     @ApiProperty({example: [{id: 1, name: 'Roman'}, {id: 1, name: 'Fight'}], description: 'Genre (Roman, Fight, ...).'})
     genre: ResponseGenreDto[];
 
+    @ApiProperty({example: '1', description: 'Season of year (Winter, Spring, Summer, Autumn).'})
+    seasonOfYear: ResponseSeasonOfYearDto;
+
     @ApiProperty({example: {id: 1, name: 'Film'}, description: 'Type video (Film, Serial, ...).'})
     type: ResponseTypeDto;
 
@@ -59,6 +66,6 @@ export class ResponseVideoDto {
     @ApiProperty({example: {id: 1, name: 'PG-13'}, description: 'Age rating (18+, 16+, PG-13, ...).'})
     ageRating: ResponseAgeRatingDto;
 
-    @ApiProperty({example: 'icon/bfb73574-64dc-4fb6-97a7-9dfe9ac4aa5f.jpg4', description: 'Icon video.'})
+    @ApiProperty({example: 'pictures/bfb73574-64dc-4fb6-97a7-9dfe9ac4aa5f.jpg4', description: 'Icon video.'})
     icon: string;
 }

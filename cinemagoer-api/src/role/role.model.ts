@@ -12,6 +12,7 @@ import User from "@users/users.model";
 import UserRole from "@role/user-role.model";
 
 export interface RoleCreateAttr {
+    id: number;
     name: string;
     description: string;
 }

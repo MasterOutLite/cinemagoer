@@ -1,7 +1,7 @@
 import {Body, Controller, Get, HttpStatus, Post, Put, Query, UseGuards} from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {Roles} from "@src/auth/roles-auth.decorator";
-import {RoleUser} from "@src/const/role-const";
+import {RoleUser} from "@src/const/role";
 import {RolesGuard} from "@src/auth/roles-guard";
 import {SeasonService} from "@src/season/season.service";
 import {CreateSeasonDto} from "@src/season/dto/create-season.dto";

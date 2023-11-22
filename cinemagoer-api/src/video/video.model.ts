@@ -26,6 +26,7 @@ import VideoSeries from "@src/video-series/video-series.model";
 import GroupVideo from "@src/group/group-video.model";
 import Group from "@src/group/group.model";
 import Season from "@src/season/season.model";
+import SeasonOfYear from "@src/video/season-of-year.model";
 
 export interface VideoCreateAttr {
     name: string[];
@@ -89,6 +90,13 @@ class Video extends Model<Video, VideoCreateAttr> {
     ageRatingId: number;
     @BelongsTo(() => AgeRating)
     ageRating: AgeRating
+
+    @AllowNull(false)
+    @ForeignKey(() => SeasonOfYear)
+    @Column
+    seasonOfYearId: number;
+    @BelongsTo(() => SeasonOfYear)
+    seasonOfYear: SeasonOfYear
 
     @HasMany(() => ListView)
     listView: ListView[];

@@ -17,14 +17,14 @@ import {FileFieldsInterceptor} from "@nestjs/platform-express";
 import {ResponseVideoCombineDto} from "@src/video/dto/response-video-combine.dto";
 import {CreateVideoCombineDto} from "@src/video/dto/create-video-combine.dto";
 import {Roles} from "@src/auth/roles-auth.decorator";
-import {RoleUser} from "@src/const/role-const";
+import {RoleUser} from "@src/const/role";
 import {RolesGuard} from "@src/auth/roles-guard";
-import {FilterVideoQuery} from "@src/video/dto/filter-video.query";
+import {FilterVideoQuery} from "@src/video/query/filter-video.query";
 import {ResponseVideoDto} from "@src/video/dto/response-video.dto";
-import {SearchVideoQuery} from "@src/video/dto/search-video.query";
+import {SearchVideoQuery} from "@src/video/query/search-video.query";
 import {ResponseCountVideoDto} from "@src/video/dto/response-count-video.dto";
 import {UpdateVideoDto} from "@src/video/dto/update-video.dto";
-import {GetVideoQuery} from "@src/video/dto/get-video.query";
+import {GetVideoQuery} from "@src/video/query/get-video.query";
 import {UpdateVideoInfoDto} from "@src/video-info/dto/update-video-info.dto";
 import {ResponseVideoInfoDto} from "@src/video-info/dto/response-video-info.dto";
 import {VideoInfoService} from "@src/video-info/video-info.service";
@@ -44,6 +44,7 @@ export class VideoController {
 
     @ApiOperation({summary: 'Create video rate'})
     @ApiBearerAuth('JWT')
+    @ApiResponse({status: HttpStatus.CREATED,})
     @UseGuards(JwtAuthGuard)
     @Post('rate')
     createRate(@Body() dto: CreateVideoRateDto, @Req() req) {
@@ -75,7 +76,7 @@ export class VideoController {
     @ApiOperation({summary: 'Update video'})
     @ApiBearerAuth('JWT')
     @ApiConsumes('multipart/form-data')
-    @ApiResponse({status: HttpStatus.OK, type: ResponseVideoCombineDto})
+    @ApiResponse({status: HttpStatus.CREATED, type: ResponseVideoCombineDto})
     @UseInterceptors(FileFieldsInterceptor([
         {name: 'icon', maxCount: 1},
     ]))
@@ -92,7 +93,7 @@ export class VideoController {
     @ApiOperation({summary: 'Update video'})
     @ApiBearerAuth('JWT')
     @ApiConsumes('multipart/form-data')
-    @ApiResponse({status: HttpStatus.OK, type: ResponseVideoInfoDto})
+    @ApiResponse({status: HttpStatus.CREATED, type: ResponseVideoInfoDto})
     @UseInterceptors(FileFieldsInterceptor([
         {name: 'trailers'},
         {name: 'pictures'}
@@ -109,7 +110,7 @@ export class VideoController {
     }
 
     @ApiOperation({summary: 'Get video',})
-    @ApiResponse({status: HttpStatus.CREATED, type: ResponseVideoDto})
+    @ApiResponse({status: HttpStatus.OK, type: ResponseVideoDto})
     @ApiBearerAuth('JWT')
     @UseGuards(PossiblyJwtAuthGuard)
     @Get()
@@ -118,7 +119,7 @@ export class VideoController {
     }
 
     @ApiOperation({summary: 'Get video',})
-    @ApiResponse({status: HttpStatus.CREATED, type: ResponseCountVideoDto})
+    @ApiResponse({status: HttpStatus.OK, type: ResponseCountVideoDto})
     @ApiBearerAuth('JWT')
     @UseGuards(PossiblyJwtAuthGuard)
     @Get('filter')
@@ -127,7 +128,7 @@ export class VideoController {
     }
 
     @ApiOperation({summary: 'Get video',})
-    @ApiResponse({status: HttpStatus.CREATED, type: ResponseCountVideoDto})
+    @ApiResponse({status: HttpStatus.OK, type: ResponseCountVideoDto})
     @ApiBearerAuth('JWT')
     @UseGuards(PossiblyJwtAuthGuard)
     @Get('searchByName')

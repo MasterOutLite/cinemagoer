@@ -27,6 +27,11 @@ export class UpdateVideoDto {
     @IsOptional()
     dateRelease?: Date;
 
+    @ApiProperty({example: '1', description: 'Season of year (Winter, Spring, Summer, Autumn).'})
+    @IsNumberString({}, {message: 'Is not number'})
+    @IsOptional()
+    seasonOfYearId?: number;
+
     @ApiProperty({example: [1, 6, 7], type: [Number], description: 'Genre (Roman, Fight, ...).', required: false})
     @IsArray({message: 'Is not arr'})
     @Transform(({value}) => (Array.isArray(value) ? value : value.split(',')))

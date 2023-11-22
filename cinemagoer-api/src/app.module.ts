@@ -49,14 +49,24 @@ import Group from "@src/group/group.model";
 import GroupVideo from "@src/group/group-video.model";
 import Season from "@src/season/season.model";
 import {ServeStaticModule} from "@nestjs/serve-static";
-import { AuthModule } from './auth/auth.module';
+import {AuthModule} from './auth/auth.module';
 import * as path from "path";
+import {CommandModule} from "nestjs-command";
+import {CommandSeed} from "@src/command-seed";
+import {SeedModule} from './seed/seed.module';
+import DayOfWeek from "@src/video-series/day-of-week.model";
+import SeasonOfYear from "@src/video/season-of-year.model";
 
 
 @Module({
     imports: [
+        CommandModule,
         ConfigModule.forRoot({envFilePath: `.${process.env.NODE_ENV}.env`}),
-        ServeStaticModule.forRoot({rootPath: path.resolve(__dirname, 'static'),}),
+        //for productive
+        //ServeStaticModule.forRoot({rootPath: path.resolve(__dirname, 'static'),}),
+        //for development
+        ServeStaticModule.forRoot({rootPath: path.resolve(__dirname, '..', 'static'),}),
+
         SequelizeModule.forRoot({
             dialect: 'postgres',
             host: process.env.POSTGRES_HOST,
@@ -67,10 +77,11 @@ import * as path from "path";
             models: [User, Video, Role, UserRole, ListViewState, UserListView, ListView,
                 Type, Status, VideoCategory, Publisher, AgeRating, Genre, VideoGenre,
                 VideoRate, VideoInfo, VideoSeries, Comments, CommentsRate, Season,
-                DubbingStudio, DubbingOfVideo, Group, GroupVideo,
+                DubbingStudio, DubbingOfVideo, Group, GroupVideo, DayOfWeek, SeasonOfYear
             ],
             autoLoadModels: true,
         }),
+
         UsersModule,
         RoleModule,
         ListViewStateModule,
@@ -93,10 +104,11 @@ import * as path from "path";
         GroupModule,
         SeasonModule,
         FilesModule,
-        AuthModule
+        AuthModule,
+        SeedModule
     ],
     controllers: [],
-    providers: [],
+    providers: [CommandSeed],
 })
 export class AppModule {
 }

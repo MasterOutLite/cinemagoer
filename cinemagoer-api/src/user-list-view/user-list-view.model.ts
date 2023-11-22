@@ -31,9 +31,6 @@ class UserListView extends Model<UserListView, UserListViewCreateAttr> {
     @Column
     name: string;
 
-    @Column
-    description: string;
-
     @AllowNull(false)
     @ForeignKey(() => ListViewState)
     @Column({type: DataType.INTEGER})

@@ -16,7 +16,7 @@ import {FilesService, TypeFile} from "@src/files/files.service";
 import {ResponseVideoCombineDto} from "@src/video/dto/response-video-combine.dto";
 import VideoGenre from "@src/genre/video-genre.model";
 import {GroupService} from "@src/group/group.service";
-import {FilterVideoQuery} from "@src/video/dto/filter-video.query";
+import {FilterVideoQuery} from "@src/video/query/filter-video.query";
 import Genre from "@src/genre/genre.model";
 import {col, fn, literal, Op, where} from "sequelize";
 import AgeRating from "@src/age-rating/age-rating.model";
@@ -26,9 +26,9 @@ import VideoCategory from "@src/video-category/video-category.model";
 import Publisher from "@src/publisher/publisher.model";
 import {ResponseVideoDto} from "@src/video/dto/response-video.dto";
 import {ResponseCountVideoDto} from "@src/video/dto/response-count-video.dto";
-import {SearchVideoQuery} from "@src/video/dto/search-video.query";
+import {SearchVideoQuery} from "@src/video/query/search-video.query";
 import {UpdateVideoDto} from "@src/video/dto/update-video.dto";
-import {GetVideoQuery} from "@src/video/dto/get-video.query";
+import {GetVideoQuery} from "@src/video/query/get-video.query";
 import VideoInfo from "@src/video-info/video-info.model";
 import VideoSeries from "@src/video-series/video-series.model";
 import Season from "@src/season/season.model";
@@ -38,6 +38,7 @@ import {ResponseVideoSeriesDto} from "@src/video-series/dto/response-video-serie
 import {CreateVideoRateDto} from "@src/video-rate/dto/create-video-rate.dto";
 import {TokenFormat} from "@src/auth/dto/TokenFormat";
 import {VideoRateService} from "@src/video-rate/video-rate.service";
+import SeasonOfYear from "@src/video/season-of-year.model";
 
 @Injectable()
 export class VideoService {
@@ -71,6 +72,7 @@ export class VideoService {
             tag: string,
             exists: boolean
         }[] = [];
+        existsAtr.push({tag: 'seasonOfYearId', exists: dto.seasonOfYearId <= 4 && dto.seasonOfYearId >= 1});
         existsAtr.push({tag: 'typeId', exists: await this.typeService.exists(videoDto.typeId)});
         existsAtr.push({tag: 'statusId', exists: await this.statusService.exists(videoDto.statusId)});
         existsAtr.push({tag: 'genreIds', exists: await this.genreService.existsArr(videoDto.genreIds)});
@@ -100,7 +102,8 @@ export class VideoService {
 
         const video: Video = await this.videoRepository.create(videoDto);
         await video.$set('genre', videoDto.genreIds);
-        await video.$set('group', videoDto.groupId);
+        if (videoDto.groupId)
+            await video.$set('group', videoDto.groupId);
 
         await video.reload({
             include: [
@@ -110,6 +113,7 @@ export class VideoService {
                 {model: Status},
                 {model: VideoCategory},
                 {model: Publisher},
+                {model: SeasonOfYear},
             ],
         });
         const videoRes: ResponseVideoDto = new ResponseVideoDto(video);
@@ -131,6 +135,8 @@ export class VideoService {
             tag: string,
             exists: boolean
         }[] = [];
+        if (dto.seasonOfYearId)
+            existsAtr.push({tag: 'seasonOfYearId', exists: dto.seasonOfYearId <= 4 && dto.seasonOfYearId >= 1});
         if (dto.typeId)
             existsAtr.push({tag: 'typeId', exists: await this.typeService.exists(dto.typeId)});
         if (dto.statusId)
@@ -174,6 +180,7 @@ export class VideoService {
                 {model: Status},
                 {model: VideoCategory},
                 {model: Publisher},
+                {model: SeasonOfYear},
             ],
         });
         return new ResponseVideoDto(video)
@@ -235,6 +242,7 @@ export class VideoService {
                 {model: Status},
                 {model: VideoCategory},
                 {model: Publisher},
+                {model: SeasonOfYear},
             ],
             limit: limitRows,
             offset: dto.page * limitRows,
@@ -266,7 +274,7 @@ export class VideoService {
             where: literal(
                 `EXISTS (SELECT 1
             FROM unnest("Video"."name") AS elem
-            WHERE elem ILIKE '%${dto.name}%')`
+            WHERE elem ILIKE '%${dto.name}%') and "Video"."videoCategoryId"=${dto.videoCategoryId}`
             ),
             include: [
                 {model: Genre},
@@ -275,6 +283,7 @@ export class VideoService {
                 {model: Status},
                 {model: VideoCategory},
                 {model: Publisher},
+                {model: SeasonOfYear},
             ],
             limit: limitRows,
             offset: dto.page * limitRows,
@@ -313,6 +322,7 @@ export class VideoService {
                 {model: Group},
                 {model: VideoSeries},
                 {model: Season},
+                {model: SeasonOfYear},
 
             ],
         });
@@ -328,8 +338,73 @@ export class VideoService {
     }
 
     async exists(id: number): Promise<boolean> {
-        const video: Video = await this.videoRepository.findOne({where: {id}})
+        const video
+            :
+            Video = await this.videoRepository.findOne({where: {id}})
         return video !== null;
+    }
+
+    // seed fun
+
+    async createSeed(dto: CreateVideoCombineDto): Promise<ResponseVideoCombineDto> {
+        const videoDto: CreateVideoDto = dto;
+
+        const existsAtr: {
+            tag: string,
+            exists: boolean
+        }[] = [];
+        existsAtr.push({tag: 'seasonOfYearId', exists: dto.seasonOfYearId <= 4 && dto.seasonOfYearId >= 1});
+        existsAtr.push({tag: 'typeId', exists: await this.typeService.exists(videoDto.typeId)});
+        existsAtr.push({tag: 'statusId', exists: await this.statusService.exists(videoDto.statusId)});
+        existsAtr.push({tag: 'genreIds', exists: await this.genreService.existsArr(videoDto.genreIds)});
+        existsAtr.push({
+            tag: 'videoCategoryId',
+            exists: await this.videoCategoryService.exists(videoDto.videoCategoryId)
+        });
+        existsAtr.push({tag: 'publisherId', exists: await this.publisherService.exists(videoDto.publisherId)});
+        existsAtr.push({tag: 'ageRatingId', exists: await this.ageRatingService.exists(videoDto.ageRatingId)});
+
+        const wrongAtr = existsAtr.filter(value => !value.exists);
+        if (wrongAtr.length > 0) {
+            throw new BadRequestException(`Request param ${wrongAtr.map(value => value.tag)} is null or bad value!`);
+        }
+
+        if (videoDto.groupId) {
+            const exists = await this.groupService.exists(videoDto.groupId);
+            if (!exists)
+                throw new BadRequestException('Request param groupId is not exists.');
+        }
+
+        if (!Array.isArray(videoDto.name))
+            throw new BadRequestException('Param name is not array!');
+
+        if (dto.icon)
+            videoDto.icon = this.filesService.createFileSimple(TypeFile.PICTURES, dto.icon);
+
+        const video: Video = await this.videoRepository.create(videoDto);
+        await video.$set('genre', videoDto.genreIds);
+        if (videoDto.groupId)
+            await video.$set('group', videoDto.groupId);
+
+        await video.reload({
+            include: [
+                {model: Genre},
+                {model: AgeRating},
+                {model: Type},
+                {model: Status},
+                {model: VideoCategory},
+                {model: Publisher},
+                {model: SeasonOfYear},
+            ],
+        });
+        const videoRes: ResponseVideoDto = new ResponseVideoDto(video);
+
+
+        const videoInfoDto: CreateVideoInfoDto = dto;
+        videoInfoDto.videoId = video.id;
+        const videoInfoRes: ResponseVideoInfoDto = await this.videoInfoService.createSeed(videoInfoDto);
+
+        return new ResponseVideoCombineDto(videoRes, videoInfoRes);
     }
 
 }

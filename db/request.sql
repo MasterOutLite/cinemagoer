@@ -15,7 +15,16 @@ WHERE EXISTS (SELECT 1
 
 
 select *, (Select avg(rate) from "video-rate" where "videoId" = videos.id)
-from videos;
+from videos
+where EXISTS (SELECT 1
+              FROM unnest("videos"."name") AS elem
+              WHERE elem ILIKE '%%')
+  and "videos"."videoCategoryId" = 2;
 
 select *, (select count(rate) from "comments-rate" where "videoId" = comments."videoId" and rate = true)
-from comments
+from comments;
+
+select *
+from "video-series"
+where "dateRelease" between '2023-01-01' and '2023-01-08'
+  and "dayShowId" = 1;

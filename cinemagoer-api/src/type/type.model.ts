@@ -12,6 +12,7 @@ import {
 import Video from "@src/video/video.model";
 
 export interface TypeCreateAttr {
+    id: number;
     name: string;
     description: string;
 }

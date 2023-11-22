@@ -22,6 +22,7 @@ export class TypeService {
         const types = await this.typeRepository.findAll();
         const typeDtos: ResponseTypeDto[] = [];
 
+
         for (const type of types) {
             typeDtos.push(new ResponseTypeDto(type));
         }
