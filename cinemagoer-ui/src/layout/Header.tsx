@@ -7,7 +7,8 @@ import {
     CssBaseline,
     Divider,
     Drawer,
-    IconButton, Link,
+    IconButton,
+    Link,
     List,
     ListItem,
     ListItemButton,
@@ -19,6 +20,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import React, {useState} from 'react';
 import {useRouter} from "next/navigation";
 import {Links} from "@/helper/link";
+import {useAuthStore} from "@/store/useAuthStore";
+import useStorePersist from "@/hook/useStorePersist";
 
 
 const nameLogo = 'Cinemagoer';
@@ -36,6 +39,7 @@ interface Props {
 function Header(props: Props) {
     const router = useRouter();
     const [userAvatarUrl,] = useState<null | string>(null);
+    const user = useStorePersist(useAuthStore, state => state.user);
 
     const {window} = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -75,6 +79,18 @@ function Header(props: Props) {
     );
 
     const container = window !== undefined ? () => window().document.body : undefined;
+    // return (
+    //     <Box>
+    //         {navItems.map((item) => (
+    //             <Button key={item.href}
+    //                     href={item.href}
+    //                     color={'inherit'}
+    //             >
+    //                 {item.title}
+    //             </Button>
+    //         ))}
+    //     </Box>
+    // )
 
     return (
         <Box sx={{display: 'flex', marginBottom: '12px'}}>
@@ -113,13 +129,19 @@ function Header(props: Props) {
                             </Button>
                         ))}
                     </Box>
-                    <Avatar
-                        src={userAvatarUrl as string}
-                        style={{
-                            justifySelf: 'flex-end',
-                            marginLeft: '30px'
-                        }}
-                    />
+                    {
+                        user ? <Avatar
+                                src={userAvatarUrl as string}
+                                style={{
+                                    justifySelf: 'flex-end',
+                                }}
+                            >
+                                <Link href={'/user'}>{user?.nickname.slice(0, 2)}</Link>
+                            </Avatar>
+                            : <Button variant={'contained'} href={'/user'}>Увійти</Button>
+                    }
+
+
                 </Toolbar>
             </AppBar>
             <nav>

@@ -31,10 +31,15 @@ export class ResponseVideoFromListView {
         this.id = entity.id;
         this.name = entity.name;
         this.icon = entity.icon;
+        this.videoCategoryId = entity.videoCategoryId;
+
     }
 
     @ApiProperty({example: '1', description: 'Id video.'})
     id: number;
+
+    @ApiProperty({example: '1', description: 'Id video category.'})
+    videoCategoryId: number;
 
     @ApiProperty({example: '["Wolf", "Вовк"]', description: 'Name video.'})
     name: string[];

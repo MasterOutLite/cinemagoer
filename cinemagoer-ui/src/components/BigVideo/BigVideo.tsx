@@ -1,9 +1,10 @@
 import React from 'react';
-import {Video} from "@/type/video";
+import {VideoType} from "@/type/videoType";
 import {Box, Link, Paper, Skeleton, Stack, Typography} from "@mui/material";
 import {getTypeLink} from "@/helper/link";
+import {apiPath} from "@/helper/api";
 
-export interface BigVideoProps extends Video {
+export interface BigVideoProps extends VideoType {
 }
 
 
@@ -17,7 +18,7 @@ function BigVideo({id, name, type, ageRating, rate, icon, dateRelease, status, v
             < Stack style={{height: '100%'}}>
                 <Box sx={{height: {xs: '340px', sm: '250px'}}} mb={1}>
                     {icon ?
-                        <img src={'http://localhost:5000/' + icon}
+                        <img src={apiPath + icon}
                              style={{width: '100%', height: '100%'}}
                              alt={'Icon'}/>
                         :

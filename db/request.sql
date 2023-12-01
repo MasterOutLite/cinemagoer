@@ -24,6 +24,9 @@ where EXISTS (SELECT 1
 select *, (select count(rate) from "comments-rate" where "videoId" = comments."videoId" and rate = true)
 from comments;
 
+select *, (SELECT "rate" FROM "comments-rate" as "CommentsRate" WHERE "CommentsRate"."commentId" = comments."id" and "CommentsRate"."userId" = 2)
+from comments;
+
 select *
 from "video-series"
 where "dateRelease" between '2023-01-01' and '2023-01-08'

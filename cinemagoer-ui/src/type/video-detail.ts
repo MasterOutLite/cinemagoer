@@ -1,9 +1,10 @@
-import {Video} from "@/type/video";
-import {VideoInfo} from "@/type/video-info";
+import {VideoType} from "@/type/videoType";
+import {VideoInfoType} from "@/type/video-info-type";
+import {Series} from "@/type/series";
 
 export type VideoDetail = {
-    video: Video;
-    videoInfo: VideoInfo;
+    video: VideoType;
+    videoInfo: VideoInfoType;
     season?: any[];
-    series?: any[];
+    series?: Series[];
 }

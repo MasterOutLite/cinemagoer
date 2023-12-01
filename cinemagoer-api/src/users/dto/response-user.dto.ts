@@ -1,6 +1,5 @@
 import {ApiProperty} from "@nestjs/swagger";
 import User from "@users/users.model";
-import Role from "@role/role.model";
 
 export class ResponseUserDto {
     constructor(entity: User) {

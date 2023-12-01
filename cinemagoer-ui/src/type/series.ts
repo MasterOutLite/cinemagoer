@@ -1,4 +1,4 @@
-import {Video} from "@/type/video";
+import {VideoType} from "@/type/videoType";
 
 export interface Series {
     id: number;
@@ -9,5 +9,5 @@ export interface Series {
     dateRelease: string;
     release: boolean;
     seasonId: number;
-    video: Video;
+    video: VideoType;
 }

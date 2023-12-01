@@ -1,11 +1,12 @@
-import {Box, Container, Grid, Paper, Stack} from "@mui/material";
+import {Box, Container, Grid, Paper} from "@mui/material";
 import React from "react";
-import OutputOfSeries, {OutputOfSeriesProps} from "@/components/OutputOfSeries/OutputOfSeries";
+import OutputOfSeries from "@/components/OutputOfSeries/OutputOfSeries";
 import MiddleVideo from "@/components/MiddleVideo/MiddleVideo";
-import {Video} from "@/type/video";
 import Title from "@/components/Title/Title";
 import BreakBlock2 from "@/components/BreakBlock/BreakBlock2";
-import {getVideoByDayOfWeek, getVideoByFilter, VideoCategory} from "@/helper/api";
+import {getVideoByDayOfWeek, getVideoByFilter, nextInit, VideoCategory} from "@/helper/api";
+import Grid2 from "@mui/material/Unstable_Grid2";
+import RenderSeriesDay from "@/components/RenderSeriesDay/RenderSeriesDay";
 
 const seriesForDayOfWeek = [
     'Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П\'ятниця', 'Субота', 'Неділя',
@@ -22,14 +23,16 @@ export default async function Home({}) {
 
     return (
         <Container>
-            <Stack flexDirection={'row'} justifyContent={'center'}>
-                <Box sx={{minWidth: {xs: '100%', md: '400px'}}}>
-                    {
-                        seriesForDayOfWeek.map((value, index) =>
-                            <OutputOfSeries key={index} title={value} series={series[index]} id={index}/>)
-                    }
-                </Box>
-            </Stack>
+            {/*<Grid2 container justifyContent={'center'}>*/}
+            {/*    {*/}
+            {/*        seriesForDayOfWeek.map((value, index) =>*/}
+            {/*            <Grid2 key={index} xs={12} md={6} lg={4}>*/}
+            {/*                <OutputOfSeries title={value} series={series[index]} id={index}/>*/}
+            {/*            </Grid2>)*/}
+            {/*    }*/}
+            {/*</Grid2>*/}
+
+            <RenderSeriesDay series={series}/>
 
             <Box p={2}></Box>
 
@@ -38,8 +41,6 @@ export default async function Home({}) {
                     <Title>
                         Фільми
                     </Title>
-
-
                     <Grid container spacing={2} p={1}>
                         {
                             movie.map(value => <Grid key={value.id} item xs={12} md={6}> <MiddleVideo   {...value}/>

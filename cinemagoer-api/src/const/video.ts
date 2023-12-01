@@ -12,6 +12,8 @@ export const anime: CreateVideoCombineDto[] = [
     {
         name: [
             'Фрірен, що проводжає в останню путь',
+            'Sousou no Frieren',
+            'Frieren: Beyond Journey\'s End',
         ],
         description: 'Короля демонів переможено, і загін героїв-переможців повертається додому перед тим, як розійтися по домівках. Чотири маги - Фрірен, герой Гіммель, священик Хайтер і воїн Айзен - згадують про свою десятирічну подорож, коли настає момент прощання. Але для ельфів плин часу є іншим, тож Фрірен стає свідком того, як її супутники повільно відходять у вічність один за одним.\n' +
             '\n' +
@@ -29,11 +31,99 @@ export const anime: CreateVideoCombineDto[] = [
         icon: '1696887481_frieren_poster_big.jpg',
         duration: '~24 хв',
         countSeries: 12,
-        mainCharacters: []
+        mainCharacters: [],
+        series: {
+            series: [
+                {
+                    series: 1,
+                    name: 'The Journey\'s End',
+                    release: false,
+                    dateRelease: new Date('2023-09-29'),
+                    dayShowId: DayOfWeekEnum.Friday
+                },
+                {
+                    series: 2,
+                    name: 'It Didn\'t Have to Be Magic...',
+                    release: false,
+                    dateRelease: new Date('2023-09-29'),
+                    dayShowId: DayOfWeekEnum.Friday
+                },
+                {
+                    series: 3,
+                    name: 'Killing Magic',
+                    release: false,
+                    dateRelease: new Date('2023-09-29'),
+                    dayShowId: DayOfWeekEnum.Friday
+                },
+                {
+                    series: 4,
+                    name: 'The Land Where Souls Rest',
+                    release: false,
+                    dateRelease: new Date('2023-09-29'),
+                    dayShowId: DayOfWeekEnum.Friday
+                }, {
+                    series: 5,
+                    name: 'Phantoms of the Dead',
+                    release: false,
+                    dateRelease: new Date('2023-10-06'),
+                    dayShowId: DayOfWeekEnum.Friday
+                }, {
+                    series: 6,
+                    name: 'The Hero of the Village',
+                    release: false,
+                    dateRelease: new Date('2023-10-13'),
+                    dayShowId: DayOfWeekEnum.Friday
+                }, {
+                    series: 7,
+                    name: 'Like a Fairy Tale',
+                    release: false,
+                    dateRelease: new Date('2023-10-20'),
+                    dayShowId: DayOfWeekEnum.Friday
+                }, {
+                    series: 8,
+                    name: 'Frieren the Slayer',
+                    release: false,
+                    dateRelease: new Date('2023-10-27'),
+                    dayShowId: DayOfWeekEnum.Friday
+                }, {
+                    series: 9,
+                    name: 'Aura the Guillotine',
+                    release: false,
+                    dateRelease: new Date('2023-11-03'),
+                    dayShowId: DayOfWeekEnum.Friday
+                }, {
+                    series: 10,
+                    name: 'A Powerful Mage',
+                    release: false,
+                    dateRelease: new Date('2023-11-10'),
+                    dayShowId: DayOfWeekEnum.Friday
+                }, {
+                    series: 11,
+                    name: 'Winter in the Northern Lands',
+                    release: false,
+                    dateRelease: new Date('2023-11-17'),
+                    dayShowId: DayOfWeekEnum.Friday
+                }, {
+                    series: 12,
+                    name: 'A Real Hero',
+                    release: false,
+                    dateRelease: new Date('2023-11-24'),
+                    dayShowId: DayOfWeekEnum.Friday
+                }, {
+                    series: 13,
+                    name: 'Episode 13',
+                    release: false,
+                    dateRelease: new Date('2023-12-01'),
+                    dayShowId: DayOfWeekEnum.Friday
+                },
+            ]
+        },
     },
     {
         name: [
-            'Доктор Стоун 3: Новий світ (2 частина)'
+            'Доктор Стоун 3: Новий світ (2 частина)',
+            'Dr. Stone: New World Part 2',
+            'Dr.STONE NEW WORLD',
         ],
         description: 'Продовження третього сезону.',
         videoCategoryId: VideoCategory.Anime,
@@ -49,11 +139,75 @@ export const anime: CreateVideoCombineDto[] = [
         icon: '1697398837_stoun-noviy-svt-3-sezon-2-chastina.jpg',
         duration: '~24 хв',
         countSeries: 12,
-        mainCharacters: []
+        mainCharacters: [],
+        series: {
+            series: [
+                {
+                    series: 1,
+                    name: 'The Kingdom of Science Strikes Back',
+                    release: false,
+                    dateRelease: new Date('2023-10-12'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                },
+                {
+                    series: 2,
+                    name: 'Episode 13',
+                    release: false,
+                    dateRelease: new Date('2023-10-19'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                },
+                {
+                    series: 3,
+                    name: 'Episode 14',
+                    release: false,
+                    dateRelease: new Date('2023-10-26'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                },
+                {
+                    series: 4,
+                    name: 'Episode 15',
+                    release: false,
+                    dateRelease: new Date('2023-11-02'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 5,
+                    name: 'Episode 16',
+                    release: false,
+                    dateRelease: new Date('2023-11-09'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 6,
+                    name: 'Episode 17',
+                    release: false,
+                    dateRelease: new Date('2023-11-16'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 7,
+                    name: 'Episode 18',
+                    release: false,
+                    dateRelease: new Date('2023-11-23'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 8,
+                    name: 'Episode 19',
+                    release: false,
+                    dateRelease: new Date('2023-11-30'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 9,
+                    name: 'Episode 20',
+                    release: false,
+                    dateRelease: new Date('2023-12-07'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                },
+            ]
+        },
     },
     {
         name: [
-            'Магічна битва 2'
+            'Магічна битва 2',
+            'Jujutsu Kaisen 2nd Season',
+            'Jujutsu Kaisen Season 2',
         ],
         description: 'Другий сезон "Магічної битви" охоплює події арок "Іскра Божа", "Згаслий пломінь" й "Шібуйський інцидент". Спочатку історія перенесе глядачів на 12 років назад, у часи буремної юності "Найсильнішого". От тільки неймовірний талант і високий титул ще не гарантують, що життя здаватиметься медом: як і будь-який підліток, Ґоджьо стикатиметься з непростими викликами, учитиметься розділяти емоції та обов\'язки, боротиметься з власним гонором і шукатиме відповідь на найголовніше запитання: "Ти найсильніший, бо ти Ґоджьо Сатору? Чи ти Ґоджьо Сатору, бо ти найсильніший?".\n' +
             'Шлях мага ніколи не буває простим, і учням Токійської магічної школи відомо про це, як нікому іншому. Ти або зламаєшся, або станеш сильнішим, третього не дано. От тільки що робити, коли привиди минулого знову стукають у двері, а старі рани починають кровити з новою силою? І чи може секундна слабкість обернути на попіл цілий світ?',
@@ -69,11 +223,141 @@ export const anime: CreateVideoCombineDto[] = [
         icon: '1688704442_jjk_s2_done2.jpg',
         duration: '~24 хв',
         countSeries: 12,
-        mainCharacters: []
+        mainCharacters: [],
+        series: {
+            series: [
+                {
+                    series: 1,
+                    name: 'Hidden Inventory',
+                    release: false,
+                    dateRelease: new Date('2023-07-06'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                },
+                {
+                    series: 2,
+                    name: 'Hidden Inventory 2',
+                    release: false,
+                    dateRelease: new Date('2023-07-13'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                },
+                {
+                    series: 3,
+                    name: 'Hidden Inventory 3',
+                    release: false,
+                    dateRelease: new Date('2023-07-20'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                },
+                {
+                    series: 4,
+                    name: 'Hidden Inventory 3',
+                    release: false,
+                    dateRelease: new Date('2023-07-27'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 5,
+                    name: 'Premature Death',
+                    release: false,
+                    dateRelease: new Date('2023-08-03'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 6,
+                    name: 'That\'s How It Is',
+                    release: false,
+                    dateRelease: new Date('2023-08-31'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 7,
+                    name: 'Evening Festival',
+                    release: false,
+                    dateRelease: new Date('2023-09-07'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 8,
+                    name: 'Shibuya Incident',
+                    release: false,
+                    dateRelease: new Date('2023-09-14'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 9,
+                    name: 'Shibuya Incident - Gate, Open',
+                    release: false,
+                    dateRelease: new Date('2023-09-21'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 10,
+                    name: 'Pandemonium',
+                    release: false,
+                    dateRelease: new Date('2023-09-28'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 11,
+                    name: 'Seance',
+                    release: false,
+                    dateRelease: new Date('2023-10-05'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 12,
+                    name: 'Dull Knife',
+                    release: false,
+                    dateRelease: new Date('2023-10-12'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 13,
+                    name: 'Red Scale',
+                    release: false,
+                    dateRelease: new Date('2023-10-19'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 14,
+                    name: 'Fluctuations',
+                    release: false,
+                    dateRelease: new Date('2023-10-26'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 15,
+                    name: 'Fluctuations, Part 2',
+                    release: false,
+                    dateRelease: new Date('2023-11-02'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 16,
+                    name: 'Thunderclap',
+                    release: false,
+                    dateRelease: new Date('2023-11-09'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 17,
+                    name: 'Thunderclap, Part 2',
+                    release: false,
+                    dateRelease: new Date('2023-11-16'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 18,
+                    name: 'Right and Wrong',
+                    release: false,
+                    dateRelease: new Date('2023-11-23'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 19,
+                    name: 'Episode 19',
+                    release: false,
+                    dateRelease: new Date('2023-11-30'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                }, {
+                    series: 20,
+                    name: 'Episode 20',
+                    release: false,
+                    dateRelease: new Date('2023-12-07'),
+                    dayShowId: DayOfWeekEnum.Thursday
+                },
+            ]
+        },
     },
     {
         name: [
-            'Заборонена дедукція Рона Камонохаші'
+            'Заборонена дедукція Рона Камонохаші',
+            'Kamonohashi Ron no Kindan Suiri',
+            'Ron Kamonohashi\'s Forbidden Deductions',
         ],
         description: 'Незважаючи на відсутність навичок, необхідних для роботи в слідчій групі Департаменту столичної поліції, Тотомару Ісшікі хоче розкривати вбивства та допомагати людям. Він наважується заручитися підтримкою Рона Камонохаші, генія дедукції, який п\'ять років тому після таємничого інциденту під час навчання покинув знамениту Академію BLUE.\n' +
             '\n' +
@@ -88,11 +372,81 @@ export const anime: CreateVideoCombineDto[] = [
         publisherId: 14,
         icon: '7239b141b697f45559bce35346568e.jpg',
         duration: '~24 хв',
-        mainCharacters: []
+        mainCharacters: [],
+        series: {
+            series: [
+                {
+                    series: 1,
+                    name: 'The Case of the Metropolitan Serial Drownings',
+                    release: false,
+                    dateRelease: new Date('2023-10-02'),
+                    dayShowId: DayOfWeekEnum.Monday
+                },
+                {
+                    series: 2,
+                    name: 'The Case of the Locked-Room Piggy Bank Theft',
+                    release: false,
+                    dateRelease: new Date('2023-10-09'),
+                    dayShowId: DayOfWeekEnum.Monday
+                },
+                {
+                    series: 3,
+                    name: 'The Case of the Benizome Hot Spring Murder (Part 1)',
+                    release: false,
+                    dateRelease: new Date('2023-10-16'),
+                    dayShowId: DayOfWeekEnum.Monday
+                },
+                {
+                    series: 4,
+                    name: 'The Case of the Benizome Hot Spring Murder (Part 2)',
+                    release: false,
+                    dateRelease: new Date('2023-10-23'),
+                    dayShowId: DayOfWeekEnum.Monday
+                }, {
+                    series: 5,
+                    name: 'The Case of the Hand Collector',
+                    release: false,
+                    dateRelease: new Date('2023-10-30'),
+                    dayShowId: DayOfWeekEnum.Monday
+                }, {
+                    series: 6,
+                    name: 'The Case of the Live Broadcast Murder',
+                    release: false,
+                    dateRelease: new Date('2023-11-6'),
+                    dayShowId: DayOfWeekEnum.Monday
+                }, {
+                    series: 7,
+                    name: 'The Case of the Observatory Murder (Part 1)',
+                    release: false,
+                    dateRelease: new Date('2023-11-13'),
+                    dayShowId: DayOfWeekEnum.Monday
+                }, {
+                    series: 8,
+                    name: 'The Case of the Observatory Murder (Part 2)',
+                    release: false,
+                    dateRelease: new Date('2023-11-20'),
+                    dayShowId: DayOfWeekEnum.Monday
+                }, {
+                    series: 9,
+                    name: 'Episode 9',
+                    release: false,
+                    dateRelease: new Date('2023-11-27'),
+                    dayShowId: DayOfWeekEnum.Monday
+                }, {
+                    series: 10,
+                    name: 'Episode 10',
+                    release: false,
+                    dateRelease: new Date('2023-12-4'),
+                    dayShowId: DayOfWeekEnum.Monday
+                },
+            ]
+        },
     },
     {
         name: [
-            'Міґі і Далі'
+            'Міґі і Далі',
+            'Migi to Dali',
+            'Migi & Dali',
         ],
         description: 'Лелека принесла ангела в життя бездітної пари середнього віку. Його батьки добрі, їхній будинок розкішний, а їжа смачна, але щоб продовжувати насолоджуватися цим щастям, Хіторі повинен приховати від рідних певний факт...',
         videoCategoryId: VideoCategory.Anime,
@@ -107,14 +461,83 @@ export const anime: CreateVideoCombineDto[] = [
         trailers: [],
         icon: '1696582899_poster.jpg',
         duration: '~24 хв',
-        mainCharacters: []
+        mainCharacters: [],
+        series: {
+            series: [
+                {
+                    series: 1,
+                    name: 'Migi and Dali',
+                    release: false,
+                    dateRelease: new Date('2023-10-02'),
+                    dayShowId: DayOfWeekEnum.Monday
+                },
+                {
+                    series: 2,
+                    name: 'Welcome Party',
+                    release: false,
+                    dateRelease: new Date('2023-10-09'),
+                    dayShowId: DayOfWeekEnum.Monday
+                },
+                {
+                    series: 3,
+                    name: 'Let\'s Make Friends',
+                    release: false,
+                    dateRelease: new Date('2023-10-16'),
+                    dayShowId: DayOfWeekEnum.Monday
+                },
+                {
+                    series: 4,
+                    name: 'Let\'s be Good Kids',
+                    release: false,
+                    dateRelease: new Date('2023-10-23'),
+                    dayShowId: DayOfWeekEnum.Monday
+                }, {
+                    series: 5,
+                    name: 'Water Flea\'s Song',
+                    release: false,
+                    dateRelease: new Date('2023-10-30'),
+                    dayShowId: DayOfWeekEnum.Monday
+                }, {
+                    series: 6,
+                    name: 'Who Killed the Parent Bird?',
+                    release: false,
+                    dateRelease: new Date('2023-11-6'),
+                    dayShowId: DayOfWeekEnum.Monday
+                }, {
+                    series: 7,
+                    name: 'It Wasn\'t a Ghost',
+                    release: false,
+                    dateRelease: new Date('2023-11-13'),
+                    dayShowId: DayOfWeekEnum.Monday
+                }, {
+                    series: 8,
+                    name: 'Two ≠ One',
+                    release: false,
+                    dateRelease: new Date('2023-11-20'),
+                    dayShowId: DayOfWeekEnum.Monday
+                }, {
+                    series: 9,
+                    name: 'Episode 9',
+                    release: false,
+                    dateRelease: new Date('2023-11-27'),
+                    dayShowId: DayOfWeekEnum.Monday
+                }, {
+                    series: 10,
+                    name: 'Episode 10',
+                    release: false,
+                    dateRelease: new Date('2023-12-4'),
+                    dayShowId: DayOfWeekEnum.Monday
+                },
+            ]
+        },
     }
 ]
 
 export const movie: CreateVideoCombineDto[] = [
     {
         name: [
-            'Творець', 'The Creator',
+            'Творець',
+            'The Creator',
         ],
         description: 'Створений людьми штучний інтелект у майбутньому допоміг людству впоратися з деякими проблемами, проте пізніше у програмі відбулися зміни, що призвело до жахливих наслідків. У центрі Лос-Анджелеса було підірвано ядерну бомбу. Після цього почалося жорстоке протистояння людей і роботів за ресурси, що залишилися. Якось агент Джошуа отримує важливе завдання: штучний інтелект розробив якусь таємну зброю, і тепер чоловікові треба знищити ці розробки. Герой вирушає у подорож і в результаті знаходить дівчинку-робота, яка поводиться як людина, проте може керувати будь-якими електронними системами. Джошуа розуміє, що вона несе небезпеку, і водночас не хоче її знищувати. Можливо, саме ця дівчинка допоможе герою та всьому людству зрозуміти справжній задум Творця, через який і повстали роботи?',
         videoCategoryId: VideoCategory.Movie,
@@ -129,7 +552,14 @@ export const movie: CreateVideoCombineDto[] = [
         trailers: [],
         icon: 'Творець_фільм.jpg',
         duration: '133 хвилини (02:13)',
-        mainCharacters: ['Джон Девід Вашинґтон', 'Madeleine Yuna Voyles', 'Джемма Чан', 'Еллісон Дженні', 'Кен Ватанабе', 'Sturgill Simpson']
+        mainCharacters: [
+            'Джон Девід Вашинґтон',
+            'Madeleine Yuna Voyles',
+            'Джемма Чан',
+            'Еллісон Дженні',
+            'Кен Ватанабе',
+            'Sturgill Simpson'
+        ]
     },
     {
         name: [
@@ -149,7 +579,14 @@ export const movie: CreateVideoCombineDto[] = [
         trailers: [],
         icon: '0dfeb98a0210225102f971998845e2.jpg',
         duration: '109 хвилин (01:49)',
-        mainCharacters: ['Кем Жиґанде', 'Джейсон Патрік', ' Наталі Берн', 'Орландо Джонс', 'СерДаріус Блейн', 'Панчо Молер']
+        mainCharacters: [
+            'Кем Жиґанде',
+            'Джейсон Патрік',
+            ' Наталі Берн',
+            'Орландо Джонс',
+            'СерДаріус Блейн',
+            'Панчо Молер'
+        ]
     },
     {
         name: [
@@ -172,11 +609,19 @@ export const movie: CreateVideoCombineDto[] = [
         ],
         icon: '2e8fe556b1462d5c2645ae25b7b2d9.jpg',
         duration: '113 хвилин (01:53)',
-        mainCharacters: ['Фібі Дайневор', 'Олден Еренрайк', 'Едді Марсан', 'Річ Соммер', 'Себастьян де Соуса', 'Sia Alipour']
+        mainCharacters: [
+            'Фібі Дайневор',
+            'Олден Еренрайк',
+            'Едді Марсан',
+            'Річ Соммер',
+            'Себастьян де Соуса',
+            'Sia Alipour'
+        ]
     },
     {
         name: [
-            'Продавці болю', 'Pain Hustlers'
+            'Продавці болю',
+            'Pain Hustlers'
         ],
         description: 'Зіткнувшись із численними труднощами, Ліза змушена піти з коледжу та терміново шукати роботу. Їй вдається отримати невелику посаду у фармацевтичній компанії, яка перебуває на межі руйнування. Дівчині обіцяють найкращі умови, якщо вдасться покращити фінансові показники. Героїня самовіддано кидається в роботу, намагаючись бути корисною і сподіваючись на тривалу зайнятість на цьому місці. Незабаром Insys Therapeutics вдається позбутися загрози повного краху, випустивши інноваційний знеболюючий препарат. Обивателі скуповують ефективний засіб, не підозрюючи про його реальні наслідки. Тривалий прийом викликає звикання, різке припинення застосування призводить до ломки, а передозування несе смертельну загрозу. Журналіст відомого періодичного видання починає розслідувати таємничі смерті, пов\'язані із компанією. Він пише розгромну статтю, що викликає гучний скандал та численні судові розгляди.',
         videoCategoryId: VideoCategory.Movie,
@@ -219,18 +664,26 @@ export const movie: CreateVideoCombineDto[] = [
         ],
         icon: '1699185662_1699185599_6478437415e87.jpg',
         duration: '98 хвилин (01:38)',
-        mainCharacters: ['Франсуа Даміенс', 'William Lebghil', 'Laura Felpin', 'Ванесса Параді', 'Бруно Подалідес', 'Lucile de la Morena']
+        mainCharacters: [
+            'Франсуа Даміенс',
+            'William Lebghil',
+            'Laura Felpin',
+            'Ванесса Параді',
+            'Бруно Подалідес',
+            'Lucile de la Morena'
+        ]
     }
 ]
 
 export const serials: CreateVideoCombineDto[] = [
     {
         name: [
-            'Чудотворці', 'Miracle Workers'
+            'Чудотворці',
+            'Miracle Workers',
         ],
         description: 'Бог утомився. Він дивиться телевізор і не думає про майбутнє Землі. Йому подобається, коли його вихваляють, особливо на телебаченні. Всевишній усвідомлює, що деякі люди приносять як йому, так і собі дуже багато проблем, що, звичайно ж, дуже напружує. Саме тому той приймає рішення будь-якою ціною покінчити з планетою. Два тижні – відведений термін життя Землі. Щоправда, з Богом укладає парі один із ангелів, який впевнений в тому, що зможе вирішити найскладніші молитви: їх накопичилася ціла скринька, тому доведеться діяти швидко. Заручившись підтримкою ще одного лінивого і боягузливого янголятка, головна героїня кидається на вирішення складних випадків, які часом ставлять героїв у глухий кут, змушуючи оцінити всі моральні "за" і "проти". Якщо любовні стосунки здаються нескладним завданням, то затримання і арешт небезпечного злочинця, що орудує дробовиком - це вже складніший випадок. На все про все у героїв два тижні, інакше світу кінець, а наприкінці ангелу доведеться ще поживитися огидним черв\'яком. Останнє – особисте бажання Бога у разі провалу місії амбітними янголятами.',
         videoCategoryId: VideoCategory.Serial,
-        dateRelease: new Date('2023-09-01'),
+        dateRelease: new Date('2023'),
         seasonOfYearId: SeasonOfYearEnum.Winter,
         genreIds: [Genre.Melodrama, Genre.Comedy],
         ageRatingId: AgeRating.PG13,
@@ -300,15 +753,26 @@ export const serials: CreateVideoCombineDto[] = [
                 }
             ]
         },
-        mainCharacters: ['Стів Бушемі', 'Деніел Редкліфф', 'Джеральдін Вісванатхан', 'Каран Соні', 'Саша Компере', 'Джон Басс', 'Лоллі Адефоп', 'Калеб Емері', "Тереза О’Ші"]
+        mainCharacters: [
+            'Стів Бушемі',
+            'Деніел Редкліфф',
+            'Джеральдін Вісванатхан',
+            'Каран Соні',
+            'Саша Компере',
+            'Джон Басс',
+            'Лоллі Адефоп',
+            'Калеб Емері',
+            "Тереза О’Ші"
+        ]
     },
     {
         name: [
-            'Замкнуте коло', 'Full Circle'
+            'Замкнуте коло',
+            'Full Circle',
         ],
         description: 'Сюжет серіалу бере свій початок із невдалого злочину, який чинить величезний вплив на людей, якимось чином пов\'язаних з ним. Дивовижні деталі розкриваються під час цієї справи: все починається в Нью-Йорку, а головними героями стають представники культурно-розважальної сфери. На перший погляд здається, що дійові особи зовсім не пов\'язані одні з одними, проте незабаром стає ясно, що перед загальною небезпекою їм необхідно об\'єднати зусилля і діяти спільно. Персонажі в критичних умовах розкриваються по-новому, реалізуючи себе з нової, неймовірної сторони. Грані власної особистості виявляються розширеними, через що тепер тонка нитка з натяків і недомовок починає сплітатися в загальний клубок подій, які так чи інакше підштовхують на відповіді на багато хвилюючих питань. Початок заплутаної детективної історії покладено, але лише найуважнішим, старанним і стійким належить розгадати таємницю минулого...',
         videoCategoryId: VideoCategory.Serial,
-        dateRelease: new Date('2023-09-01'),
+        dateRelease: new Date('2023'),
         seasonOfYearId: SeasonOfYearEnum.Summer,
         genreIds: [Genre.Detective, Genre.Drama, Genre.Crime],
         ageRatingId: AgeRating.SixteenPlus,
@@ -324,7 +788,62 @@ export const serials: CreateVideoCombineDto[] = [
         icon: '1689360908_1689360668_stnblcywiurhvfio2vgttoc81xj.jpg',
         duration: '~20 хв',
         mainCharacters: [
-            'Гаппі Андерсон', 'Phaldut Sharma', 'Gerald W. Jones III', 'Ethan Stoddard', 'Lucian Zanes', 'Kareem Savinon']
+            'Гаппі Андерсон',
+            'Phaldut Sharma',
+            'Gerald W. Jones III',
+            'Ethan Stoddard',
+            'Lucian Zanes',
+            'Kareem Savinon'
+        ],
+        series: {
+            season: {
+                name: 'Сезон 1',
+                videoId: 0,
+                number: 1,
+            } as CreateSeasonDto,
+            series: [
+                {
+                    name: 'Something Different',
+                    series: 1,
+                    release: false,
+                    dateRelease: new Date('2023-07-14'),
+                    dayShowId: DayOfWeekEnum.Friday
+                },
+                {
+                    name: 'Charger',
+                    series: 2,
+                    release: false,
+                    dateRelease: new Date('2023-07-14'),
+                    dayShowId: DayOfWeekEnum.Friday
+                },
+                {
+                    name: 'Jared\'s Body',
+                    series: 3,
+                    release: false,
+                    dateRelease: new Date('2023-07-21'),
+                    dayShowId: DayOfWeekEnum.Friday
+                },
+                {
+                    name: 'Safe in the Circle',
+                    series: 4,
+                    release: false,
+                    dateRelease: new Date('2023-07-21'),
+                    dayShowId: DayOfWeekEnum.Friday
+                }, {
+                    name: 'Loyalty',
+                    series: 5,
+                    release: false,
+                    dateRelease: new Date('2023-07-28'),
+                    dayShowId: DayOfWeekEnum.Friday
+                }, {
+                    name: 'Essequibo',
+                    series: 6,
+                    release: false,
+                    dateRelease: new Date('2023-07-28'),
+                    dayShowId: DayOfWeekEnum.Friday
+                },
+            ]
+        },
     }
 ];
 

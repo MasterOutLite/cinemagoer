@@ -7,7 +7,6 @@ import {SeasonService} from "@src/season/season.service";
 import {CreateListSeriesDto} from "@src/video-series/dto/create-list-series.dto";
 import {VideoService} from "@src/video/video.service";
 import {UpdateListSeriesDto} from "@src/video-series/dto/update-list-series.dto";
-import GetSeriesByDayOfWeek from "@src/video-series/query/get-series-by-day-of.week";
 import {DayOfWeekEnum} from "@src/const/day-of-week-list";
 import {Op} from "sequelize";
 import Video from "@src/video/video.model";
@@ -41,14 +40,14 @@ export class VideoSeriesService {
                 throw new BadRequestException(`Not found season: ${dto.seasonId}`)
         }
 
-        const response = [];
+        const seriesData = [];
         for (const seriesDtoElement of dto.series) {
             const update = {...seriesDtoElement, videoId: dto.videoId, seasonId: dto.seasonId || null};
-            const series: VideoSeries = await this.videoSeriesRepository.create(update);
-            response.push(new ResponseVideoSeriesDto(series));
+            seriesData.push(update);
         }
 
-        return response;
+        const series = await this.videoSeriesRepository.bulkCreate(seriesData);
+        return series.map(value => new ResponseVideoSeriesDto(value));
     }
 
     async update(dto: UpdateListSeriesDto) {

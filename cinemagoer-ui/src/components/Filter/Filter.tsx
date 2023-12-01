@@ -1,7 +1,7 @@
 "use client"
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
-    Box, Button,
+    Button,
     Checkbox,
     Chip,
     FormControl,
@@ -12,11 +12,15 @@ import {
     Paper,
     Select,
     SelectChangeEvent,
-    Stack, SxProps, TextField, Theme
+    Stack,
+    SxProps,
+    TextField,
+    Theme
 } from "@mui/material";
 import Title from "@/components/Title/Title";
 import {BaseResponse} from "@/type/base-response";
 import {VideoCategory} from "@/helper/api";
+import queryString from 'query-string';
 
 export interface FilterProps {
     type: BaseResponse[];
@@ -40,7 +44,6 @@ function Filter({type, status, ageRating, genre, videoCategory, setQuery, sx}: F
 
     const [toYear, setToYear] = React.useState('');
     const [toYearValid, setToYearValid] = React.useState<boolean>(true);
-
 
     const handleChangeType = (event: SelectChangeEvent) => {
         setTypeSelect(event.target.value);
@@ -98,18 +101,17 @@ function Filter({type, status, ageRating, genre, videoCategory, setQuery, sx}: F
     };
 
     const handleRequest = () => {
-        const genreIds = genreSelect.length > 0 ? 'genreIds=' + genreSelect.toString() : undefined;
-        const typeId = typeSelect ? 'typeId=' + typeSelect : undefined;
-        const statusId = statusSelect ? 'statusId=' + statusSelect : undefined;
-        const ageRatingId = ageRatingSelect ? 'ageRatingId=' + ageRatingSelect : undefined;
-        const dateReleaseMin = fromYearValid && fromYear ? 'dateReleaseMin=' + fromYear : undefined;
-        const dateReleaseMax = toYearValid && toYear ? 'dateReleaseMax=' + toYear : undefined;
-        const videoCategoryId = 'videoCategoryId=' + videoCategory;
-
-        const getRequest = [videoCategoryId, genreIds, typeId, statusId, ageRatingId, dateReleaseMin, dateReleaseMax]
-            .filter(value => !!value).join('&');
-        setQuery(getRequest);
-        // console.log(getRequest.join('&'));
+        const obg = {
+            genreIds: genreSelect,
+            typeId: typeSelect,
+            statusId: statusSelect,
+            ageRatingId: ageRatingSelect,
+            videoCategoryId: videoCategory,
+            dateReleaseMin: fromYear,
+            dateReleaseMax: toYear
+        }
+        const query = queryString.stringify(obg, {arrayFormat: 'comma', skipNull: true, skipEmptyString: true})
+        setQuery(query);
     };
 
     const renderFilter = [
@@ -118,11 +120,27 @@ function Filter({type, status, ageRating, genre, videoCategory, setQuery, sx}: F
         {title: 'Віковий рейтинг', render: ageRating, action: handleChangeAgeRating, value: ageRatingSelect},
     ];
 
+    useEffect(() => {
+        const parse = queryString.parse(location.search) as {
+            genreIds?: number,
+            videoCategoryId?: number,
+        };
+        parse.videoCategoryId = videoCategory
+        const query = queryString.stringify(parse);
+        // console.log(parse)
+        if (parse.genreIds) {
+            // console.log('Set query')
+            setQuery(query);
+            // @ts-ignore
+            setGenreSelect(() => [parseInt(parse.genreIds)]);
+        }
+    }, []);
+
     return (
         <Paper sx={sx} style={{maxWidth: '350px', flexGrow: 0}}>
 
             <Title style={{textAlign: 'center'}}>
-                Фільтер
+                Фільтр
             </Title>
             <Stack p={1} mt={2} pb={3} gap={2}>
 
@@ -136,17 +154,17 @@ function Filter({type, status, ageRating, genre, videoCategory, setQuery, sx}: F
                         onChange={handleChangeGenre}
                         input={<OutlinedInput label="Жанри"/>}
                         renderValue={(selected) => (
-                            <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
+                            <Stack direction={'row'} flexWrap={'wrap'} gap={0.5}>
                                 {selected.map((value) => (
                                     <Chip key={value} label={getGenreById(value)?.name}/>
                                 ))}
-                            </Box>
+                            </Stack>
                         )}
                     >
                         {genre.map((value) => (
-                            <MenuItem key={value.id} value={value.id}>
+                            <MenuItem key={value.id} value={value.id} sx={{maxWidth: '300px'}}>
                                 <Checkbox checked={genreSelect.indexOf(value.id) > -1}/>
-                                <ListItemText primary={value.name}/>
+                                <ListItemText primary={value.id + ' ' + value.name}/>
                             </MenuItem>
                         ))}
                     </Select>

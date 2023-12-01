@@ -4,10 +4,12 @@ import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import {yellow} from "@mui/material/colors";
 import Image from "next/image";
 import styles from '@/styles/MiddleVideo.module.css'
-import {Video} from "@/type/video";
+import {VideoType} from "@/type/videoType";
 import {getTypeLink} from "@/helper/link";
+import {apiPath} from "@/helper/api";
+import {FilterParam} from "@/type/filter-param";
 
-export interface MiddleVideoProps extends Video {
+export interface MiddleVideoProps extends VideoType {
 
 }
 
@@ -28,7 +30,7 @@ function MiddleVideo({
             <Stack flexDirection={'row'} gap={1}>
 
                 {icon ?
-                    <Image className={styles.image} width={184} height={260} src={'http://localhost:5000/' + icon}
+                    <Image className={styles.image} width={184} height={260} src={apiPath + icon}
                            alt={'Icon'}/>
                     :
                     <Skeleton variant="rectangular"
@@ -45,16 +47,13 @@ function MiddleVideo({
                         </Typography>
                     </Link>
                     {
-                        rate ?
-                            <Stack flexDirection={'row'} gap={1}>
-                                <StarRoundedIcon sx={{color: yellow[800], fontSize: 30}}/>
-                                <Paper sx={{background: yellow[700], paddingX: '4px'}}>
-                                    <Typography variant={'h6'}
-                                                color={'#fff'}> {rate}</Typography>
-
-                                </Paper>
-
-                            </Stack> : null
+                        <Stack flexDirection={'row'} gap={1}>
+                            <StarRoundedIcon sx={{color: yellow[800], fontSize: 30}}/>
+                            <Paper sx={{background: yellow[700], paddingX: '4px', minWidth: '50px'}}>
+                                <Typography variant={'h6'} textAlign={'center'}
+                                            color={'#fff'}> {rate || '0.00'}</Typography>
+                            </Paper>
+                        </Stack>
                     }
 
                     <Typography>
@@ -65,7 +64,7 @@ function MiddleVideo({
                         {genre.map((value, index, array) =>
                             <React.Fragment key={value.id}>
                                 <Link underline="hover"
-                                      href={`${typeLink}?genre=${value.id}`}> {value.name}</Link>
+                                      href={`${typeLink}?${FilterParam.genre}=${value.id}`}> {value.name}</Link>
                                 {index !== array.length - 1 ? <span>, </span> : null}
                             </React.Fragment>
                         )}

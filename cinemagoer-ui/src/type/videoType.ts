@@ -1,6 +1,6 @@
 import {BaseResponse} from "@/type/base-response";
 
-export type Video = {
+export type VideoType = {
     id: number;
     rate: number | null;
     yourRate: number | null;

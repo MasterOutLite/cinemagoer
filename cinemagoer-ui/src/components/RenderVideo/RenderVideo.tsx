@@ -1,9 +1,9 @@
 "use client"
-import React, {useEffect} from 'react';
+import React, {memo, useEffect, useMemo, useState} from 'react';
 import Filter from "@/components/Filter/Filter";
 import {Box, Button, Paper, Stack, SwipeableDrawer, TextField} from "@mui/material";
 import Title from "@/components/Title/Title";
-import {Video} from "@/type/video";
+import {VideoType} from "@/type/videoType";
 import BigVideo from "@/components/BigVideo/BigVideo";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import {getVideoByFilter, getVideoByName, VideoCategory} from "@/helper/api";
@@ -19,12 +19,12 @@ export interface RenderVideoProps {
         genre: BaseResponse[];
         videoCategory: VideoCategory;
     };
-    videoBase: Video[];
+    videoBase: VideoType[];
     title: string;
 }
 
 function RenderVideo({filter, videoBase, title}: RenderVideoProps) {
-    const [video, setVideo] = React.useState<Video[]>(videoBase);
+    const [video, setVideo] = React.useState<VideoType[]>(videoBase);
     const [query, setQuery] = React.useState<string>();
     const [search, setSearch] = React.useState<string>('');
     const [searchCount, setSearchCount] = React.useState<number>(0);
@@ -77,17 +77,21 @@ function RenderVideo({filter, videoBase, title}: RenderVideoProps) {
         setVideo(data.rows);
     }
 
+    const changeQuery = useMemo(() => query, [query]);
+    const [oldQuery, setOldQuery] = useState<string>();
 
     useEffect(() => {
         const request = async () => {
             const data = await getVideoByFilter(0, query);
-            console.log(data.rows);
+            //console.log(data.rows);
             setVideo(data.rows);
+            return data;
         }
-        if (query)
-            request();
-
-    }, [query])
+        if (query && query !== oldQuery) {
+            setOldQuery(query);
+            request().then();
+        }
+    }, [changeQuery])
 
     return (
         <Stack direction={'row'} spacing={2} alignItems={'flex-start'} justifyContent={'center'}>
@@ -148,4 +152,4 @@ function RenderVideo({filter, videoBase, title}: RenderVideoProps) {
     );
 }
 
-export default RenderVideo;
+export default memo(RenderVideo);

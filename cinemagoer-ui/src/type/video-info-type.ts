@@ -1,4 +1,4 @@
-export type VideoInfo = {
+export type VideoInfoType = {
     readonly id: number;
     readonly videoId: number;
     description: string;

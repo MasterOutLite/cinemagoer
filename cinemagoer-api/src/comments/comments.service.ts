@@ -9,6 +9,9 @@ import {GetCommentsDto} from "@src/comments/dto/get-comments.dto";
 import {TokenFormat} from "@src/auth/dto/TokenFormat";
 import {literal} from "sequelize";
 import {ResponseCountCommentsDto} from "@src/comments/dto/response-count-comments.dto";
+import User from "@users/users.model";
+import Role from "@role/role.model";
+import CommentsRate from "@src/comments-rate/comments-rate.model";
 
 @Injectable()
 export class CommentsService {
@@ -36,6 +39,11 @@ export class CommentsService {
         }
 
         const comment: Comments = await this.commentsRepository.create({...dto, userId: auth.id});
+        await comment.reload({
+            include: [
+                {model: User, as: 'user', include: [{model: Role}]}
+            ],
+        })
         return new ResponseCommentsDto(comment);
     }
 
@@ -54,12 +62,18 @@ export class CommentsService {
                     include: [
                         [literal('(SELECT count("rate") FROM "comments-rate" as "CommentsRate" WHERE "CommentsRate"."commentId" = "Comments"."id" and "CommentsRate"."rate" = true)'), 'like'],
                         [literal('(SELECT count("rate") FROM "comments-rate" as "CommentsRate" WHERE "CommentsRate"."commentId" = "Comments"."id" and "CommentsRate"."rate" = false)'), 'dislike'],
-                        [literal(`(SELECT "rate" FROM "comments-rate" as "CommentsRate" WHERE "CommentsRate"."commentId" = "Comments"."id" and "CommentsRate"."userId" = ${auth ? auth.id : 0})`), 'userLike']
+                        [literal(`(SELECT "rate" FROM "comments-rate" as "CommentsRate" WHERE "CommentsRate"."commentId" = "Comments"."id" and "CommentsRate"."userId" = ${auth ? auth.id : 0} LIMIT 1)`), 'userLike']
                     ]
                 },
                 where: {
                     ...search
                 },
+                include: [
+                    {model: User, as: 'user', include: [{model: Role}]},
+                ],
+                order: [
+                    ['createdAt', 'DESC'],
+                ],
                 limit: count,
                 offset: dto.page * count,
                 distinct: true,

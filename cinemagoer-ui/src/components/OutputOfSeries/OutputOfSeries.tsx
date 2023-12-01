@@ -1,33 +1,40 @@
 import {Accordion, AccordionDetails, AccordionSummary, Divider, Stack, Typography} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React from 'react';
-import SmallVideo, {SmallVideoProps} from "@/components/SmallVideo/SmallVideo";
+import SmallVideo from "@/components/SmallVideo/SmallVideo";
 import {Series} from "@/type/series";
 
 export interface OutputOfSeriesProps {
-    id: number,
+    index: number,
     title: string,
     series: Series[],
-    video?: SmallVideoProps[],
     style?: React.CSSProperties,
+    expanded?: boolean,
+    maxHeightContent?: number,
 }
 
-function OutputOfSeries({title, video, series, style, id}: OutputOfSeriesProps) {
+function OutputOfSeries({title, series, style, index, expanded, maxHeightContent}: OutputOfSeriesProps) {
+    const [state, setState] = React.useState<boolean>(!!expanded);
+
+    const handleChangeExpand = () => {
+        setState((v) => !v);
+    }
+
     return (
-        <Accordion style={style} sx={{minWidth: {xs: '100%'}}}>
+        <Accordion expanded={state} onClick={handleChangeExpand} style={style} sx={{minWidth: {xs: '100%'}}}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon/>}
-                aria-controls={`panel${id}a-content`}
-                id={`panel${id}a-header`}
+                aria-controls={`panel${index}a-content`}
+                id={`panel${index}a-header`}
                 style={{background: '#e6e6e6'}}
             >
                 <Typography>{title}</Typography>
             </AccordionSummary>
-            <AccordionDetails>
-                <Stack gap={1} divider={<Divider/>}>
+            <AccordionDetails sx={{paddingX: 1}}>
+                <Stack gap={1} divider={<Divider/>} style={{maxHeight: maxHeightContent || 300, overflow: 'auto'}}>
                     {
-                        series.map((value, index) => (
-                            <SmallVideo key={value.name} {...value} />
+                        series.map((value) => (
+                            <SmallVideo key={value.id} {...value} />
                         ))
                     }
                 </Stack>

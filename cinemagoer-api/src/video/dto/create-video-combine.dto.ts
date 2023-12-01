@@ -9,5 +9,5 @@ export class CreateVideoCombineDto extends IntersectionType(
     CreateVideoDto,
     CreateVideoInfoDto,
 ) {
-    series?: { season: CreateSeasonDto | ResponseSeasonDto, series: CreateVideoSeriesDto[] };
+    series?: { season?: CreateSeasonDto | ResponseSeasonDto, series: CreateVideoSeriesDto[] };
 }
