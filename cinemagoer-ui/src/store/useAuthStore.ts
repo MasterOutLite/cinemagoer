@@ -29,10 +29,15 @@ export const useAuthStore = create<State & Action>()(
             ...initState,
             async setToken(token: string) {
                 const user = jwtDecode(token) as Auth;
-                const date = await getUserList(token);
+                set({token});
+                const date = await getUserList();
+
+                // @ts-ignore
+                if (date.statusCode == 401)
+                    return;
                 console.log('AuthStore');
                 console.log(date);
-                set(() => ({token, user, userList: date}))
+                set({user, userList: date})
             },
             getOut() {
                 set(initState)

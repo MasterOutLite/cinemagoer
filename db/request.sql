@@ -31,3 +31,5 @@ select *
 from "video-series"
 where "dateRelease" between '2023-01-01' and '2023-01-08'
   and "dayShowId" = 1;
+
+create DATABASE todo;

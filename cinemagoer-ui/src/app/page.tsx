@@ -7,6 +7,7 @@ import BreakBlock2 from "@/components/BreakBlock/BreakBlock2";
 import {getVideoByDayOfWeek, getVideoByFilter, nextInit, VideoCategory} from "@/helper/api";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import RenderSeriesDay from "@/components/RenderSeriesDay/RenderSeriesDay";
+import Main from "@/layout";
 
 const seriesForDayOfWeek = [
     'Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П\'ятниця', 'Субота', 'Неділя',
@@ -22,6 +23,7 @@ export default async function Home({}) {
     const series = await getVideoByDayOfWeek();
 
     return (
+
         <Container>
             {/*<Grid2 container justifyContent={'center'}>*/}
             {/*    {*/}
@@ -63,6 +65,7 @@ export default async function Home({}) {
                 </Box>
             </Paper>
         </Container>
+
     );
 }
 

@@ -1,5 +1,5 @@
 "use client"
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {VideoDetail} from "@/type/video-detail";
 import {useAuthStore} from "@/store/useAuthStore";
 import {apiPath, post, PostPatch} from "@/helper/api";
@@ -29,10 +29,12 @@ import TabPanel from "@mui/lab/TabPanel";
 import Comments from "@/components/Comments/Comments";
 import VideoInfo from "@/components/VideoInfo/VideoInfo";
 import useStorePersist from "@/hook/useStorePersist";
+import UserListViewButton from "@/components/UserListViewButton/UserListViewButton";
 
 export interface VideoProps {
     id: number;
     videoDetail: VideoDetail;
+    videoSeries?: boolean;
 }
 
 function Video({id, videoDetail}: VideoProps) {
@@ -40,11 +42,11 @@ function Video({id, videoDetail}: VideoProps) {
     const [video] = useState<VideoDetail>(videoDetail);
     const [value, setValue] = React.useState('1');
 
-    const user = useStorePersist(useAuthStore, (state) => state.user);
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
+
 
     if (!video)
         return (
@@ -60,35 +62,8 @@ function Video({id, videoDetail}: VideoProps) {
                     <Stack direction={{xs: 'column', sm: 'row'}}>
                         <Stack alignItems={'center'}>
                             <VideoBanner icon={video.video.icon}/>
-                            {
-                                user ?
-                                    <Stack
-                                        direction={'row'}
-                                        justifyContent={'center'}
-                                    >
-                                        <IconButton onClick={async () => {
-                                            console.log({userListViewId: 12, videoId: id, add: true});
-                                            await post(PostPatch.UserList, {
-                                                userListViewId: 12,
-                                                videoId: id,
-                                                add: true
-                                            })
 
-                                        }}>
-                                            <AddCircleOutlineRoundedIcon/>
-                                        </IconButton>
-                                        <IconButton>
-                                            <CheckCircleOutlineRoundedIcon/>
-                                        </IconButton>
-                                        <IconButton>
-                                            <AccessTimeRoundedIcon/>
-                                        </IconButton>
-                                        <IconButton>
-                                            <FavoriteBorderRoundedIcon/>
-                                        </IconButton>
-                                    </Stack> :
-                                    null
-                            }
+                            <UserListViewButton videoId={id}/>
 
                             <Divider sx={{width: '100%', mt: '6px'}} orientation="horizontal" variant="fullWidth"/>
                         </Stack>

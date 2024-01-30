@@ -26,12 +26,6 @@ export class UsersService {
     }
 
     async registration(dto: CreateUserDto) {
-        // const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        // if (emailPattern.test(dto.email)) {
-        //     console.log('Email is bad: ' + dto.email)
-        //     //throw new BadRequestException('Email is bad');
-        // }
-
         const roleId = RoleUser.USER;
         const user = await this.userRepository.create(dto);
         await user.$set('role', [roleId]);

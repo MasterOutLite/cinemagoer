@@ -39,6 +39,9 @@ import {CreateVideoRateDto} from "@src/video-rate/dto/create-video-rate.dto";
 import {TokenFormat} from "@src/auth/dto/TokenFormat";
 import {VideoRateService} from "@src/video-rate/video-rate.service";
 import SeasonOfYear from "@src/video/season-of-year.model";
+import {UserListViewService} from "@src/user-list-view/user-list-view.service";
+import {ListViewModule} from "@src/list-view/list-view.module";
+import {ListViewService} from "@src/list-view/list-view.service";
 
 @Injectable()
 export class VideoService {
@@ -55,6 +58,7 @@ export class VideoService {
         private ageRatingService: AgeRatingService,
         private groupService: GroupService,
         private videoRateService: VideoRateService,
+        private userListView: ListViewService,
     ) {
     }
 
@@ -303,6 +307,8 @@ export class VideoService {
 
 
     async get(dto: GetVideoQuery, auth: TokenFormat) {
+        let list = {};
+
         const video = await this.videoRepository.findOne({
             attributes: {
                 include: [
@@ -327,7 +333,7 @@ export class VideoService {
             ],
         });
         if (!video)
-            throw new BadRequestException('Video id is bad!');
+            throw new BadRequestException('Video id is bad!')
 
         const resVideo = new ResponseVideoDto(video);
         const resInfo = new ResponseVideoInfoDto(video.videoInfo);
@@ -338,9 +344,7 @@ export class VideoService {
     }
 
     async exists(id: number): Promise<boolean> {
-        const video
-            :
-            Video = await this.videoRepository.findOne({where: {id}})
+        const video: Video = await this.videoRepository.findOne({where: {id}})
         return video !== null;
     }
 

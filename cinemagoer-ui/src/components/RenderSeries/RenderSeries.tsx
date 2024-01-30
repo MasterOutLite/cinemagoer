@@ -7,10 +7,15 @@ import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
 import {grey} from '@mui/material/colors';
 
 export interface RenderSeriesProps {
-    series: Series[] | undefined
+    series: Series[] | undefined;
+    notRenderWhenNull?: boolean;
 }
 
-function RenderSeries({series}: RenderSeriesProps) {
+function RenderSeries({series, notRenderWhenNull}: RenderSeriesProps) {
+    if (!series && notRenderWhenNull) {
+        return <></>
+    }
+
     return (
         <Box>
             <Accordion>

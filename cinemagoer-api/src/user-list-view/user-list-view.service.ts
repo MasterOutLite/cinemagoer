@@ -11,6 +11,7 @@ import {ResponseListViewDto} from "@src/user-list-view/dto/response-list-view.dt
 import ListView from "@src/list-view/list-view.model";
 import {VideoService} from "@src/video/video.service";
 import Video from "@src/video/video.model";
+import {StateAction} from "@src/user-list-view/dto/state-action";
 
 @Injectable()
 export class UserListViewService {
@@ -42,21 +43,29 @@ export class UserListViewService {
 
         let response: ResponseListViewDto = null;
 
-        const exists = await this.listViewRepository.findOne({
-            where: {
-                videoId: dto.videoId,
-                userListViewId: dto.userListViewId
-            }
+        const existsWherever = await this.listViewRepository.findOne({
+            where: {videoId: dto.videoId},
+            include: [{model: UserListView, where: {userId: auth.id}}]
         })
 
-        if (dto.add && !exists) {
+        console.log('userListViewId')
+        console.log(dto.userListViewId)
+        console.log()
+        console.log(existsWherever)
+
+        if (!existsWherever) {
+            //create
             const listView = await this.listViewRepository.create(dto);
-            response = new ResponseListViewDto(listView, dto.add)
-        } else if (dto.add) {
-            response = new ResponseListViewDto(exists, dto.add);
+            response = new ResponseListViewDto(listView, dto.add, StateAction.CREATE)
+        } else if (existsWherever.userListViewId == dto.userListViewId) {
+            //remove
+            await existsWherever.destroy();
+            response = new ResponseListViewDto(existsWherever, false, StateAction.REMOVE);
         } else {
-            await exists.destroy();
-            response = new ResponseListViewDto(exists, dto.add);
+            //change userListViewId
+            existsWherever.userListViewId = dto.userListViewId;
+            await existsWherever.save();
+            response = new ResponseListViewDto(existsWherever, false, StateAction.CHANGE);
         }
 
         return response;
@@ -89,6 +98,16 @@ export class UserListViewService {
 
         return userListView;
 
+    }
+
+    async getListViewWhereVideo(videoId: number, userId: number) {
+        const listView = await this.listViewRepository.findOne({
+            where: {videoId},
+            include: [{model: UserListView, where: {userId}}]
+        });
+
+        console.log({...listView?.dataValues, notFound: !listView});
+        return {...listView?.dataValues, notFound: !listView}
     }
 
     async exists(id: number): Promise<boolean> {

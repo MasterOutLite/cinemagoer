@@ -11,7 +11,7 @@ import ListView from "@src/list-view/list-view.model";
         SequelizeModule.forFeature([ListView]),
         AuthModule
     ],
-    exports: []
+    exports: [ListViewService]
 })
 export class ListViewModule {
 }

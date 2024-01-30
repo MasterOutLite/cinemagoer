@@ -3,43 +3,10 @@ import {VideoDetail} from "@/type/video-detail";
 import {Series} from "@/type/series";
 import {useAuthStore} from "@/store/useAuthStore";
 import {ListView} from "@/type/list-view";
+import {ListViewVideo} from "@/type/list-view-video";
 
 export const apiPath = 'http://localhost:5000/';
 export const nextInit: NextFetchRequestConfig = {revalidate: 3600}
-
-async function sendRequest(url: string, init?: RequestInit) {
-    const res = await fetch(apiPath + url, {next: nextInit, ...init});
-
-    if (!res.ok) {
-        console.log(url)
-        if (res.status === 401)
-            useAuthStore.getState().getOut();
-        else
-            throw new Error('Failed to fetch data.' + 'Url: ' + url)
-    }
-    return await res.json();
-}
-
-export async function getVideoByFilter(page: number, query?: string) {
-    const url = `api/video/filter?page=${page}${query ? `&${query}` : ''}`
-    const date = await sendRequest(url, {next: nextInit})
-    return date as {
-        rows: VideoType[],
-        page: number,
-        count: number
-    };
-}
-
-export async function getVideoByName(name: string, videoCategory: VideoCategory, page: number = 0, limit: number = 20) {
-    const url = `api/video/searchByName` +
-        `?page=${page}&name=${name}&videoCategoryId=${videoCategory}&limit=${limit}`
-    const date = await sendRequest(url);
-    return date as {
-        rows: VideoType[],
-        page: number,
-        count: number
-    };
-}
 
 export enum BasePath {
     type = 'type',
@@ -56,82 +23,102 @@ export enum VideoCategory {
     Anime
 }
 
-export async function getBaseRequest(base: BasePath | string, query?: string, nextConfig?: NextFetchRequestConfig) {
-    const queryRequest = query ? '?' + query : '';
 
-    const url = `api/${base}` + queryRequest;
+async function sendRequest(url: string, method?: 'post' | 'put' | 'delete', body?: object, header?: HeadersInit) {
     const token = useAuthStore.getState().token;
-    const init: RequestInit = {
-        next: nextConfig,
+    const res = await fetch(apiPath + 'api/' + url, {
+        next: nextInit,
         headers: {
             "Authorization": `Bearer ${token}`,
+            ...header
         },
+        body: JSON.stringify(body),
+        method: method || 'get'
+    });
+
+    if (!res.ok) {
+        console.log(url)
+        console.log(await res.json())
+        if (res.status === 401)
+            useAuthStore.getState().getOut();
+        else
+            throw new Error('Failed to fetch data.' + 'Url: ' + url)
     }
-    return await sendRequest(url, init);
+    return await res.json();
 }
 
-export async function getVideoDetails(id: number, init?: RequestInit) {
-    const url = `api/video?id=${id}`
-    const date = await sendRequest(url, init);
+async function sendRequestPost(url: string, body: object, header?: HeadersInit) {
+    return await sendRequest(url, "post", body, header || {"Content-Type": "application/json",})
+}
+
+export async function getVideoByFilter(page: number, query?: string) {
+    const url = `video/filter?page=${page}${query ? `&${query}` : ''}`
+    const date = await sendRequest(url,)
+    return date as {
+        rows: VideoType[],
+        page: number,
+        count: number
+    };
+}
+
+export async function getVideoByName(name: string, videoCategory: VideoCategory, page: number = 0, limit: number = 20) {
+    const url = `video/searchByName` +
+        `?page=${page}&name=${name}&videoCategoryId=${videoCategory}&limit=${limit}`
+    const date = await sendRequest(url);
+    return date as {
+        rows: VideoType[],
+        page: number,
+        count: number
+    };
+}
+
+
+export async function getBaseRequest(base: BasePath | string, query?: string, nextConfig?: NextFetchRequestConfig) {
+    const queryRequest = query ? '?' + query : '';
+    const url = `${base}` + queryRequest;
+    return await sendRequest(url);
+}
+
+export async function getVideoDetails(id: number) {
+    const url = `video?id=${id}`
+    const date = await sendRequest(url);
     return date as VideoDetail;
 }
 
 export async function getVideoByDayOfWeek() {
-    const url = `api/video-series/seriesOfDay`;
+    const url = `video-series/seriesOfDay`;
     const date = await sendRequest(url);
     return date as [Series[]];
 }
 
 export async function loginUser(login: string, password: string) {
-    const url = 'api/auth/login';
-    const init = {
-        method: 'post',
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({login, password})
-    }
+    const url = 'auth/login';
 
-    const date = await sendRequest(url, init);
+    const date = await sendRequestPost(url, {login, password},);
     useAuthStore.getState().setToken(date.token);
 }
 
 export async function registrationUser(login: string, password: string, nickname: string) {
-    const url = 'api/auth/registration';
-    const init = {
-        method: 'post',
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({login, password, nickname})
-    }
-
-    const date = await sendRequest(url, init);
+    const url = 'auth/registration';
+    const date = await sendRequestPost(url, {login, password, nickname});
     useAuthStore.getState().setToken(date.token);
 }
 
-export async function getUserList(token: string, nextConfig?: NextFetchRequestConfig) {
-    const url = `api/user-list-view`;
-    const init: RequestInit = {
-        next: nextConfig,
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    }
-    const date = await sendRequest(url, init);
+export async function getUserList() {
+    const url = `user-list-view`;
+    const date = await sendRequest(url);
     return date as ListView[];
 }
 
-export async function getUserListWithVideo(nextConfig?: NextFetchRequestConfig) {
-    const token = useAuthStore.getState().token;
-    const url = `api/user-list-view/video`;
-    const init: RequestInit = {
-        next: nextConfig,
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    }
-    const date = await sendRequest(url, init);
+export async function getListViewVideo(id: number) {
+    const url = `user-list-view/listView?videoId=${id}`;
+    const date = await sendRequest(url);
+    return date as ListViewVideo;
+}
+
+export async function getUserListWithVideo() {
+    const url = `user-list-view/video`;
+    const date = await sendRequest(url);
     return date as ListView[];
 }
 
@@ -142,32 +129,12 @@ export enum PostPatch {
 }
 
 export async function post(path: PostPatch | string, date: object) {
-    const token = useAuthStore.getState().token;
-    const url = `api/${path}`;
-    const init: RequestInit = {
-        method: 'post',
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(date)
-    }
-
-    return await sendRequest(url, init);
+    const url = `${path}`;
+    return await sendRequestPost(url, date);
 }
 
 export async function postWithFile(path: string, date: object) {
-    const token = useAuthStore.getState().token;
-    const url = `api/${path}`;
-    const init: RequestInit = {
-        method: 'post',
-        headers: {
-            "Authorization": `Bearer ${token}`,
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: JSON.stringify(date)
-    }
-
-    return await sendRequest(url, init);
+    const url = `${path}`;
+    return await sendRequestPost(url, date, {'Content-Type': 'application/x-www-form-urlencoded'});
 }
 

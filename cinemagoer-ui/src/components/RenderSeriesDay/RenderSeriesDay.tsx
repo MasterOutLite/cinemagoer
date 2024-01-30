@@ -37,7 +37,7 @@ function RenderSeriesDay({series}: RenderSeriesDayProps) {
             {seriesForDayOfWeek.map((value, index) => (
                 <TabPanel key={index} index={index} value={tab}>
                     <OutputOfSeries maxHeightContent={500}
-                        title={value} expanded={true} series={series[index]} index={index}/>
+                        title={value} expanded={false} series={series[index]} index={index}/>
                     {/*<Paper >*/}
                     {/*    <Stack p={1} gap={1} divider={<Divider/>} style={{maxHeight: 300, overflow: 'auto'}}>*/}
                     {/*        {*/}
