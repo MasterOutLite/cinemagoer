@@ -1,13 +1,12 @@
 import {Box, Container, Grid, Paper} from "@mui/material";
 import React from "react";
-import OutputOfSeries from "@/components/OutputOfSeries/OutputOfSeries";
 import MiddleVideo from "@/components/MiddleVideo/MiddleVideo";
 import Title from "@/components/Title/Title";
 import BreakBlock2 from "@/components/BreakBlock/BreakBlock2";
-import {getVideoByDayOfWeek, getVideoByFilter, nextInit, VideoCategory} from "@/helper/api";
-import Grid2 from "@mui/material/Unstable_Grid2";
+import {VideoCategory} from "@/helper/api";
 import RenderSeriesDay from "@/components/RenderSeriesDay/RenderSeriesDay";
-import Main from "@/layout";
+import VideoService from "@/service/video.service";
+import {VideoType} from "@/type/videoType";
 
 const seriesForDayOfWeek = [
     'Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П\'ятниця', 'Субота', 'Неділя',
@@ -18,9 +17,10 @@ export const metadata = {
 }
 
 export default async function Home({}) {
-    const anime = (await getVideoByFilter(0, 'videoCategoryId=' + VideoCategory.Anime)).rows;
-    const movie = (await getVideoByFilter(0, 'videoCategoryId=' + VideoCategory.Movie)).rows;
-    const series = await getVideoByDayOfWeek();
+
+    const anime = (await VideoService.getVideoByFilter(0, 'videoCategoryId=' + VideoCategory.Anime)).rows;
+    const movie = (await VideoService.getVideoByFilter(0, 'videoCategoryId=' + VideoCategory.Movie)).rows;
+    const series = await VideoService.getVideoByDayOfWeek()
 
     return (
 
@@ -45,7 +45,8 @@ export default async function Home({}) {
                     </Title>
                     <Grid container spacing={2} p={1}>
                         {
-                            movie.map(value => <Grid key={value.id} item xs={12} md={6}> <MiddleVideo   {...value}/>
+                            movie.map((value: VideoType) => <Grid key={value.id} item xs={12} md={6}>
+                                <MiddleVideo   {...value}/>
                             </Grid>)
                         }
                     </Grid>
@@ -58,7 +59,8 @@ export default async function Home({}) {
                     </Title>
                     <Grid container spacing={2} p={1}>
                         {
-                            anime.map(value => <Grid key={value.id} item xs={12} md={6}> <MiddleVideo  {...value}/>
+                            anime.map((value: VideoType) => <Grid key={value.id} item xs={12} md={6}>
+                                <MiddleVideo  {...value}/>
                             </Grid>)
                         }
                     </Grid>

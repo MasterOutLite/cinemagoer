@@ -23,8 +23,7 @@ docker compose up
 #  NODE_ENV - .development.env | example .env file
 cd .\cinemagoer-api\
 yarn
-npx cross-env NODE_ENV=development
-npx nestjs-command seed:all
+npx cross-env NODE_ENV=development npx nestjs-command seed:all
 ```
 
 ## Start server

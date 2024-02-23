@@ -5,9 +5,9 @@ import {TabContext} from '@mui/lab';
 import TabList from "@mui/lab/TabList";
 import Tab from "@mui/material/Tab";
 import TabPanel from "@mui/lab/TabPanel";
-import {loginUser, registrationUser} from "@/helper/api";
 import {useAuthStore} from "@/store/useAuthStore";
 import useStorePersist from "@/hook/useStorePersist";
+import AuthService from "@/service/auth.service";
 
 function Auth() {
     const [tab, setTab] = React.useState('1');
@@ -44,13 +44,11 @@ function Auth() {
     };
 
     const handleLogin = useCallback(async () => {
-        await loginUser(login, password);
-
+        await AuthService.loginUser(login, password);
     }, [login, password])
 
     const handleRegistration = useCallback(async () => {
-        await registrationUser(login, password, nickname);
-
+        await AuthService.registrationUser(login, password, nickname);
     }, [login, password, nickname])
 
     return (

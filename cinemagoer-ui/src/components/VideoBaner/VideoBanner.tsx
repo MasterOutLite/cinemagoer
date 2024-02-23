@@ -1,12 +1,13 @@
 import React from 'react';
-import {Box, Skeleton} from "@mui/material";
+import {Box, Skeleton, Stack} from "@mui/material";
 import {apiPath} from "@/helper/api";
 
 export interface VideoBannerProps {
-    icon: string | null
+    icon: string | null,
+    children?: React.ReactNode
 }
 
-function VideoBanner({icon}: VideoBannerProps) {
+function VideoBanner({icon, children}: VideoBannerProps) {
     return (
         <Box sx={{
             height: {xs: '100%', sm: '340px'},
@@ -16,9 +17,13 @@ function VideoBanner({icon}: VideoBannerProps) {
             {icon ?
                 <img src={apiPath + icon}
                      style={{width: '100%', height: '100%'}}
-                     alt={'Icon'}/>
-                :
-                <Skeleton variant="rectangular" height={'100%'} width={'100%'}/>
+                     alt={'Icon'}/> :
+                children ?
+                    <Stack height='100%' justifyContent='center' alignItems='center' sx={{background: 'rgba(0, 0, 0, 0.11)'}}>
+                        {children}
+                    </Stack>
+                    :
+                    <Skeleton variant="rectangular" height={'100%'} width={'100%'}/>
             }
         </Box>
     );

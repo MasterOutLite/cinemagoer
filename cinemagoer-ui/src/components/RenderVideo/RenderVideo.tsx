@@ -6,10 +6,11 @@ import Title from "@/components/Title/Title";
 import {VideoType} from "@/type/videoType";
 import BigVideo from "@/components/BigVideo/BigVideo";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import {getVideoByFilter, getVideoByName, VideoCategory} from "@/helper/api";
+import {VideoCategory} from "@/helper/api";
 import {BaseResponse} from "@/type/base-response";
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import VideoService from "@/service/video.service";
 
 export interface RenderVideoProps {
     filter: {
@@ -67,11 +68,9 @@ function RenderVideo({filter, videoBase, title}: RenderVideoProps) {
         console.log('Search send');
         let data;
         if (search.length > 0) {
-            data = await getVideoByName(search as string, filter.videoCategory);
-            console.log('getVideoByName');
+            data = await VideoService.getVideoByName(search as string, filter.videoCategory);
         } else {
-            data = await getVideoByFilter(0, 'videoCategoryId=' + filter.videoCategory);
-            console.log('getVideoByFilter')
+            data = await VideoService.getVideoByFilter(0, 'videoCategoryId=' + filter.videoCategory);
         }
 
         setVideo(data.rows);
@@ -82,7 +81,7 @@ function RenderVideo({filter, videoBase, title}: RenderVideoProps) {
 
     useEffect(() => {
         const request = async () => {
-            const data = await getVideoByFilter(0, query);
+            const data = await VideoService.getVideoByFilter(0, query);
             //console.log(data.rows);
             setVideo(data.rows);
             return data;

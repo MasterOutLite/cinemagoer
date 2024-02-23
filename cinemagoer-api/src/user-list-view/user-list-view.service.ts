@@ -57,7 +57,7 @@ export class UserListViewService {
             //create
             const listView = await this.listViewRepository.create(dto);
             response = new ResponseListViewDto(listView, dto.add, StateAction.CREATE)
-        } else if (existsWherever.userListViewId == dto.userListViewId) {
+        } else if (existsWherever.userListViewId == dto.userListViewId || !dto.add) {
             //remove
             await existsWherever.destroy();
             response = new ResponseListViewDto(existsWherever, false, StateAction.REMOVE);
@@ -65,7 +65,7 @@ export class UserListViewService {
             //change userListViewId
             existsWherever.userListViewId = dto.userListViewId;
             await existsWherever.save();
-            response = new ResponseListViewDto(existsWherever, false, StateAction.CHANGE);
+            response = new ResponseListViewDto(existsWherever, true, StateAction.CHANGE);
         }
 
         return response;

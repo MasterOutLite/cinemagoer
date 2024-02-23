@@ -2,8 +2,8 @@ import {create} from "zustand";
 import {jwtDecode} from "jwt-decode";
 import {Auth} from "@/type/auth";
 import {createJSONStorage, persist} from "zustand/middleware";
-import {getUserList} from "@/helper/api";
 import {ListView} from "@/type/list-view";
+import UserListViewService from "@/service/user-list-view.service";
 
 
 type State = {
@@ -30,7 +30,7 @@ export const useAuthStore = create<State & Action>()(
             async setToken(token: string) {
                 const user = jwtDecode(token) as Auth;
                 set({token});
-                const date = await getUserList();
+                const date = await UserListViewService.getUserList();
 
                 // @ts-ignore
                 if (date.statusCode == 401)

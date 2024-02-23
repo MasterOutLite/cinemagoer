@@ -144,7 +144,7 @@ function Filter({type, status, ageRating, genre, videoCategory, setQuery, sx}: F
             </Title>
             <Stack p={1} mt={2} pb={3} gap={2}>
 
-                <FormControl>
+                <FormControl fullWidth>
                     <InputLabel id="demo-multiple-checkbox-label-genre">Жанри</InputLabel>
                     <Select
                         labelId="demo-multiple-checkbox-label-genre"
@@ -172,7 +172,7 @@ function Filter({type, status, ageRating, genre, videoCategory, setQuery, sx}: F
 
                 {
                     renderFilter.map((value, index) => (
-                        <FormControl key={value.title} fullWidth>
+                        <FormControl key={value.title} >
                             <InputLabel id={`demo-simple-select-label-${index}`}>{value.title}</InputLabel>
                             <Select
                                 labelId={`demo-simple-select-label-${index}`}

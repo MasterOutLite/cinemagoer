@@ -1,18 +1,23 @@
-'use client';
 import * as React from 'react';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import NextAppDirEmotionCacheProvider from './EmotionCache';
+import {ThemeProvider} from '@mui/material/styles';
 import theme from './theme';
+import {AppRouterCacheProvider} from '@mui/material-nextjs/v14-appRouter';
 
-export default function ThemeRegistry({ children }: { children: React.ReactNode }) {
-  return (
-    <NextAppDirEmotionCacheProvider options={{ key: 'mui' }}>
-      <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        {children}
-      </ThemeProvider>
-    </NextAppDirEmotionCacheProvider>
-  );
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
+
+export default function ThemeRegistry({children}: { children: React.ReactNode }) {
+
+    return (
+        <AppRouterCacheProvider
+            options={{key: 'css'}}
+        >
+            <ThemeProvider theme={theme}>
+                {children}
+            </ThemeProvider>
+        </AppRouterCacheProvider>
+    )
 }

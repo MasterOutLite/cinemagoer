@@ -1,3 +1,4 @@
+"use client"
 import {
     AppBar,
     Box,
@@ -18,7 +19,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import React from 'react';
 import {useRouter} from "next/navigation";
 import {Links} from "@/helper/link";
-import UserIcon from "@/layout/UserIcon/UserIcon";
+import AvatarUser from "@/layout/UserIcon/AvatarUser";
 
 const nameLogo = 'Cinemagoer';
 const drawerWidth = 240;
@@ -112,7 +113,7 @@ function Header(props: Props) {
                         ))}
                     </Box>
 
-                    <UserIcon/>
+                    <AvatarUser/>
 
                 </Toolbar>
             </AppBar>

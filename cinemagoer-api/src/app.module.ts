@@ -60,8 +60,8 @@ import SeasonOfYear from "@src/video/season-of-year.model";
 
 @Module({
     imports: [
-        CommandModule,
         ConfigModule.forRoot({envFilePath: `.${process.env.NODE_ENV}.env`}),
+        CommandModule,
         //for productive
         //ServeStaticModule.forRoot({rootPath: path.resolve(__dirname, 'static'),}),
         //for development
@@ -110,5 +110,7 @@ import SeasonOfYear from "@src/video/season-of-year.model";
     controllers: [],
     providers: [CommandSeed],
 })
+
+
 export class AppModule {
 }

@@ -49,7 +49,15 @@ export class UserListViewController {
     @UseGuards(JwtAuthGuard)
     @Get('listView')
     getListViewWhereVideo(@Req() req, @Query() dto: GetVideoListViewQuery) {
-
         return this.userListViewService.getListViewWhereVideo(dto.videoId, req.user.id)
+    }
+
+    @ApiOperation({summary: 'Delete video with list view',})
+    @ApiResponse({status: HttpStatus.OK,})
+    @ApiBearerAuth('JWT')
+    @UseGuards(JwtAuthGuard)
+    @Get()
+    deleteVideoWithListView(@Req() req, @Query() dto: GetVideoListViewQuery) {
+        // return this.userListViewService.getListViewWhereVideo(dto.videoId, req.user.id)
     }
 }

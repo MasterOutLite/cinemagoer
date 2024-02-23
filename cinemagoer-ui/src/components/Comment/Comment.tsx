@@ -6,12 +6,8 @@ import {Badge} from "@mui/base";
 import ThumbUpRoundedIcon from "@mui/icons-material/ThumbUpRounded";
 import ThumbDownRoundedIcon from "@mui/icons-material/ThumbDownRounded";
 import {CommentsType} from "@/type/commentsType";
+import {useAuthStore} from "@/store/useAuthStore";
 
-
-// userId,
-//     commentId,
-//     userAnswerId,
-//     videoId,
 function Comment({
                      id,
                      comments,
@@ -22,6 +18,7 @@ function Comment({
                      userLike
                  }: CommentsType) {
 
+    const auth = useAuthStore(state => state.user);
     const [likes, setLikes] = useState<number>(like)
     const [dislikes, setDislikes] = useState<number>(dislike)
     const [userLikes, setUserLikes] = useState<boolean>(userLike !== 'none');
@@ -31,6 +28,8 @@ function Comment({
     const handleRate = (rate: boolean) => async () => {
         console.log({commentId: id, rate})
         console.log(id)
+        if (!auth)
+            return;
         const date = await post(PostPatch.CommentsRate, {commentId: id, rate}) as {
             commentId: number,
             rate: boolean,

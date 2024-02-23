@@ -3,9 +3,16 @@ import {CommandModule, CommandService} from 'nestjs-command';
 import {AppModule} from './app.module';
 
 async function bootstrap() {
-    const app = await NestFactory.createApplicationContext(AppModule);
+    console.log("Command start");
+
+    const app = await NestFactory.createApplicationContext(AppModule, {
+        logger: ["debug", "log", "warn", "error"]
+    });
+
+    console.log("Command start build");
 
     try {
+        console.log("Command start app");
         await app
             .select(CommandModule)
             .get(CommandService)

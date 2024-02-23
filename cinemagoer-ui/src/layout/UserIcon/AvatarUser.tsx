@@ -4,7 +4,7 @@ import {useAuthStore} from "@/store/useAuthStore";
 import {Avatar, Button, Link} from "@mui/material";
 import useStorePersist from "@/hook/useStorePersist";
 
-function UserIcon() {
+function AvatarUser() {
     //const {user} = useAuthStore()
     const user = useStorePersist(useAuthStore, state => state.user);
     const [userAvatarUrl,] = useState<null | string>(null);
@@ -23,4 +23,4 @@ function UserIcon() {
     }
 }
 
-export default UserIcon;
+export default AvatarUser;

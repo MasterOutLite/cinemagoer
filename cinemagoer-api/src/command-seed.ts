@@ -2,7 +2,6 @@ import {Injectable} from "@nestjs/common";
 import {Command} from "nestjs-command";
 import {SeedService} from "@src/seed/seed.service";
 
-
 @Injectable()
 export class CommandSeed {
     constructor(private seedService: SeedService) {
@@ -13,7 +12,7 @@ export class CommandSeed {
         describe: 'Seed create all',
     })
     async seedCreateAll() {
-       await this.seedService.createSeed();
+        await this.seedService.createSeed();
     }
 
     @Command({

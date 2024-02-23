@@ -1,5 +1,4 @@
 import Main from "@/layout";
-import ThemeRegistry from "@/styles/ThemeRegistry/ThemeRegistry";
 import '@/styles/globals.css'
 
 export const metadata = {
@@ -12,13 +11,11 @@ export default function RootLayout({children,}: {
 }) {
     return (
         <html lang="en">
-        <ThemeRegistry>
-            <body>
-            <Main>
-                {children}
-            </Main>
-            </body>
-        </ThemeRegistry>
+        <body>
+        <Main>
+            {children}
+        </Main>
+        </body>
         </html>
     )
 }

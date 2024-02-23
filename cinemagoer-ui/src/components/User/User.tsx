@@ -19,8 +19,6 @@ function User() {
     useEffect(() => {
         const get = async () => {
             const date = await getUserListWithVideo();
-            // console.log("With video");
-            // console.log(date);
             setUserList(date);
         }
         if (user)

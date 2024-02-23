@@ -7,6 +7,7 @@ export enum Links {
     carton = '/carton',
     anime = '/anime',
     user = '/user',
+    admin = '/admin',
 }
 
 export function getTypeLink(type: BaseResponse) {

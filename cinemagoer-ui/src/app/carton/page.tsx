@@ -1,8 +1,8 @@
 import React from 'react';
 import {Container} from "@mui/material";
-import {BasePath, getBaseRequest, getVideoByFilter, VideoCategory} from "@/helper/api";
+import {BasePath, getBaseRequest, VideoCategory} from "@/helper/api";
 import RenderVideo from "@/components/RenderVideo/RenderVideo";
-import Main from "@/layout";
+import VideoService from "@/service/video.service";
 
 
 export const metadata = {
@@ -15,7 +15,7 @@ async function Page() {
     const status = await getBaseRequest(BasePath.status);
     const ageRating = await getBaseRequest(BasePath.ageRating);
     const genre = await getBaseRequest(BasePath.genre);
-    const videoBase = (await getVideoByFilter(0, 'videoCategoryId=' + VideoCategory.Cartoon)).rows;
+    const videoBase = (await VideoService.getVideoByFilter(0, 'videoCategoryId=' + VideoCategory.Cartoon)).rows;
     return (
 
         <Container>
