@@ -1,12 +1,12 @@
-import {CreateVideoCombineDto} from "@src/video/dto/create-video-combine.dto";
 import {VideoCategory} from "@src/const/video-category";
 import {Genre} from "@src/const/genre";
 import {AgeRating} from "@src/const/age-ratings";
 import {Type} from "@src/const/type";
 import {Status} from "@src/const/status";
-import {CreateSeasonDto} from "@src/season/dto/create-season.dto";
 import {DayOfWeekEnum} from "@src/const/day-of-week-list";
 import {SeasonOfYearEnum} from "@src/const/season-of-year-list";
+import {CreateVideoCombineDto} from "@models/video/dto/create-video-combine.dto";
+import {CreateSeasonDto} from "@models/season/dto/create-season.dto";
 
 export const anime: CreateVideoCombineDto[] = [
     {

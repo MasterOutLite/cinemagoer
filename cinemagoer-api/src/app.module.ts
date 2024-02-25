@@ -1,61 +1,57 @@
-import {Module} from '@nestjs/common';
-import {SequelizeModule} from "@nestjs/sequelize";
-import {UsersModule} from '@src/users/users.module';
+import {Module} from "@nestjs/common";
 import {ConfigModule} from "@nestjs/config";
-import {RoleModule} from '@role/role.module';
-import {ListViewStateModule} from './list-view-state/list-view-state.module';
-import {UserListViewModule} from './user-list-view/user-list-view.module';
-import {CommentsModule} from './comments/comments.module';
-import {TypeModule} from './type/type.module';
-import {StatusModule} from './status/status.module';
-import {VideoCategoryModule} from '@src/video-category/video-category.module';
-import {PublisherModule} from './publisher/publisher.module';
-import {AgeRatingModule} from './age-rating/age-rating.module';
-import {GenreModule} from '@src/genre/genre.module';
-import {ListViewModule} from './list-view/list-view.module';
-import {VideoModule} from './video/video.module';
-import {VideoRateModule} from './video-rate/video-rate.module';
-import {CommentsRateModule} from './comments-rate/comments-rate.module';
-import {VideoInfoModule} from './video-info/video-info.module';
-import {DubbingStudioModule} from './dubbing-studio/dubbing-studio.module';
-import {VideoSeriesModule} from './video-series/video-series.module';
-import {DubbingOfVideoModule} from './dubbing-of-video/dubbing-of-video.module';
-import {GroupModule} from './group/group.module';
-import {SeasonModule} from './season/season.module';
-import {FilesModule} from './files/files.module';
-import * as process from "process";
-import User from "@users/users.model";
-import Role from "@role/role.model";
-import UserRole from "@role/user-role.model";
-import UserListView from "@src/user-list-view/user-list-view.model";
-import ListViewState from "@src/list-view-state/list-view-state.model";
-import Video from "@src/video/video.model";
-import Type from "@src/type/type.model";
-import Status from "@src/status/status.model";
-import VideoCategory from "@src/video-category/video-category.model";
-import Publisher from "@src/publisher/publisher.model";
-import AgeRating from "@src/age-rating/age-rating.model";
-import ListView from "@src/list-view/list-view.model";
-import Genre from "@src/genre/genre.model";
-import VideoGenre from "@src/genre/video-genre.model";
-import VideoRate from "@src/video-rate/video-rate.model";
-import Comments from "@src/comments/comments.model";
-import CommentsRate from "@src/comments-rate/comments-rate.model";
-import VideoInfo from "@src/video-info/video-info.model";
-import VideoSeries from "@src/video-series/video-series.model";
-import DubbingStudio from "@src/dubbing-studio/dubbing-studio.model";
-import DubbingOfVideo from "@src/dubbing-of-video/dubbing-of-video.model";
-import Group from "@src/group/group.model";
-import GroupVideo from "@src/group/group-video.model";
-import Season from "@src/season/season.model";
 import {ServeStaticModule} from "@nestjs/serve-static";
-import {AuthModule} from './auth/auth.module';
 import * as path from "path";
-import {CommandModule} from "nestjs-command";
 import {CommandSeed} from "@src/command-seed";
-import {SeedModule} from './seed/seed.module';
-import DayOfWeek from "@src/video-series/day-of-week.model";
-import SeasonOfYear from "@src/video/season-of-year.model";
+import {CommandModule} from "nestjs-command";
+import {UsersModule} from "@models/users/users.module";
+import {RoleModule} from "@models/role/role.module";
+import {ListViewStateModule} from "@models/list-view-state/list-view-state.module";
+import {UserListViewModule} from "@models/user-list-view/user-list-view.module";
+import {CommentsModule} from "@models/comments/comments.module";
+import {TypeModule} from "@models/type/type.module";
+import {StatusModule} from "@models/status/status.module";
+import {VideoCategoryModule} from "@models/video-category/video-category.module";
+import {PublisherModule} from "@models/publisher/publisher.module";
+import {AgeRatingModule} from "@models/age-rating/age-rating.module";
+import {GenreModule} from "@models/genre/genre.module";
+import {ListViewModule} from "@models/list-view/list-view.module";
+import {VideoModule} from "@models/video/video.module";
+import {VideoRateModule} from "@models/video-rate/video-rate.module";
+import {CommentsRateModule} from "@models/comments-rate/comments-rate.module";
+import {VideoInfoModule} from "@models/video-info/video-info.module";
+import {DubbingStudioModule} from "@models/dubbing-studio/dubbing-studio.module";
+import {VideoSeriesModule} from "@models/video-series/video-series.module";
+import {DubbingOfVideoModule} from "@models/dubbing-of-video/dubbing-of-video.module";
+import {GroupModule} from "@models/group/group.module";
+import {SeasonModule} from "@models/season/season.module";
+import {FilesModule} from "@src/files/files.module";
+import {AuthModule} from "@src/auth/auth.module";
+import {SeedModule} from "@src/seed/seed.module";
+import User from "@models/users/users.entity";
+import Video from "@models/video/video.entity";
+import Role from "@models/role/role.entity";
+import ListViewState from "@models/list-view-state/list-view-state.entity";
+import UserListView from "@models/user-list-view/user-list-view.entity";
+import ListView from "@models/list-view/list-view.entity";
+import Season from "@models/season/season.entity";
+import CommentsRate from "@models/comments-rate/comments-rate.entity";
+import DayOfWeek from "@models/video-series/day-of-week.entity";
+import SeasonOfYear from "@models/video/season-of-year.entity";
+import Group from "@models/group/group.entity";
+import DubbingOfVideo from "@models/dubbing-of-video/dubbing-of-video.entity";
+import DubbingStudio from "@models/dubbing-studio/dubbing-studio.entity";
+import VideoInfo from "@models/video-info/video-info.entity";
+import VideoSeries from "@models/video-series/video-series.entity";
+import Comments from "@models/comments/comments.entity";
+import Publisher from "@models/publisher/publisher.entity";
+import VideoRate from "@models/video-rate/video-rate.entity";
+import AgeRating from "@models/age-rating/age-rating.entity";
+import Type from "@models/type/type.entity";
+import Status from "@models/status/status.entity";
+import VideoCategory from "@models/video-category/video-category.entity";
+import Genre from "@models/genre/genre.entity";
+import {TypeOrmModule} from "@nestjs/typeorm";
 
 
 @Module({
@@ -67,21 +63,21 @@ import SeasonOfYear from "@src/video/season-of-year.model";
         //for development
         ServeStaticModule.forRoot({rootPath: path.resolve(__dirname, '..', 'static'),}),
 
-        SequelizeModule.forRoot({
-            dialect: 'postgres',
+        TypeOrmModule.forRoot({
+            type: 'postgres',
             host: process.env.POSTGRES_HOST,
             port: Number(process.env.POSTGRES_PORT),
             username: process.env.POSTGRES_USER,
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
-            models: [User, Video, Role, UserRole, ListViewState, UserListView, ListView,
-                Type, Status, VideoCategory, Publisher, AgeRating, Genre, VideoGenre,
+            entities: [User, Video, Role, ListViewState, UserListView, ListView,
+                Type, Status, VideoCategory, Publisher, AgeRating, Genre,
                 VideoRate, VideoInfo, VideoSeries, Comments, CommentsRate, Season,
-                DubbingStudio, DubbingOfVideo, Group, GroupVideo, DayOfWeek, SeasonOfYear
+                DubbingStudio, DubbingOfVideo, Group, DayOfWeek, SeasonOfYear
             ],
-            autoLoadModels: true,
+            autoLoadEntities: false,
+            synchronize: true
         }),
-
         UsersModule,
         RoleModule,
         ListViewStateModule,
@@ -110,7 +106,5 @@ import SeasonOfYear from "@src/video/season-of-year.model";
     controllers: [],
     providers: [CommandSeed],
 })
-
-
 export class AppModule {
 }

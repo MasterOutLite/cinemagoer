@@ -1,66 +1,67 @@
 import {Injectable} from '@nestjs/common';
-import {InjectModel} from "@nestjs/sequelize";
-import Type from "@src/type/type.model";
-import Role from "@role/role.model";
 import {roles, RoleUser} from "@src/const/role";
 import {types} from "@src/const/type";
 import {ageRatings} from "@src/const/age-ratings";
-import AgeRating from "@src/age-rating/age-rating.model";
-import VideoCategory from "@src/video-category/video-category.model";
 import {videoCategorys} from "@src/const/video-category";
-import Status from "@src/status/status.model";
 import {statuses} from "@src/const/status";
-import Publisher from "@src/publisher/publisher.model";
 import {publishers} from "@src/const/publishers";
-import Genre from "@src/genre/genre.model";
 import {genres} from "@src/const/genre";
-import {UsersService} from "@users/users.service";
 import {admins, users} from "@src/const/user";
 import {anime, movie, serials} from "@src/const/video";
 import {FilesService} from "@src/files/files.service";
-import {VideoService} from "@src/video/video.service";
 import {listStates} from "@src/const/list-state";
-import ListViewState from "@src/list-view-state/list-view-state.model";
+import ListViewState from "@models/list-view-state/list-view-state.entity";
 import {AuthService} from "@src/auth/auth.service";
-import {VideoSeriesService} from "@src/video-series/video-series.service";
-import DayOfWeek from "@src/video-series/day-of-week.model";
 import {dayOfWeekList} from "@src/const/day-of-week-list";
-import SeasonOfYear from "@src/video/season-of-year.model";
 import {seasonOfYearList} from "@src/const/season-of-year-list";
-import Comments from "@src/comments/comments.model";
 import {faker} from "@faker-js/faker/locale/uk";
-import CommentsRate from "@src/comments-rate/comments-rate.model";
-import VideoRate from "@src/video-rate/video-rate.model";
+import {InjectRepository} from '@nestjs/typeorm';
+import Type from "@models/type/type.entity";
+import {Repository} from "typeorm";
+import Role from "@models/role/role.entity";
+import AgeRating from "@models/age-rating/age-rating.entity";
+import VideoCategory from "@models/video-category/video-category.entity";
+import Status from "@models/status/status.entity";
+import Publisher from "@models/publisher/publisher.entity";
+import Genre from "@models/genre/genre.entity";
+import DayOfWeek from "@models/video-series/day-of-week.entity";
+import SeasonOfYear from "@models/video/season-of-year.entity";
+import Comments from "@models/comments/comments.entity";
+import CommentsRate from "@models/comments-rate/comments-rate.entity";
+import VideoRate from "@models/video-rate/video-rate.entity";
+import {UsersService} from "@models/users/users.service";
+import {VideoService} from "@models/video/video.service";
+import {VideoSeriesService} from "@models/video-series/video-series.service";
 
 @Injectable()
 export class SeedService {
     constructor(
-        @InjectModel(Type)
-        private type: typeof Type,
-        @InjectModel(Role)
-        private role: typeof Role,
-        @InjectModel(AgeRating)
-        private ageRating: typeof AgeRating,
-        @InjectModel(VideoCategory)
-        private videoCategory: typeof VideoCategory,
-        @InjectModel(Status)
-        private status: typeof Status,
-        @InjectModel(Publisher)
-        private publisher: typeof Publisher,
-        @InjectModel(Genre)
-        private genre: typeof Genre,
-        @InjectModel(ListViewState)
-        private listViewState: typeof ListViewState,
-        @InjectModel(DayOfWeek)
-        private dayOfWeekGetOut: typeof DayOfWeek,
-        @InjectModel(SeasonOfYear)
-        private seasonOfYear: typeof SeasonOfYear,
-        @InjectModel(Comments)
-        private comments: typeof Comments,
-        @InjectModel(CommentsRate)
-        private commentsRate: typeof CommentsRate,
-        @InjectModel(VideoRate)
-        private videoRate: typeof VideoRate,
+        @InjectRepository(Type)
+        private type: Repository<Type>,
+        @InjectRepository(Role)
+        private role: Repository<Role>,
+        @InjectRepository(AgeRating)
+        private ageRating: Repository<AgeRating>,
+        @InjectRepository(VideoCategory)
+        private videoCategory: Repository<VideoCategory>,
+        @InjectRepository(Status)
+        private status: Repository<Status>,
+        @InjectRepository(Publisher)
+        private publisher: Repository<Publisher>,
+        @InjectRepository(Genre)
+        private genre: Repository<Genre>,
+        @InjectRepository(ListViewState)
+        private listViewState: Repository<ListViewState>,
+        @InjectRepository(DayOfWeek)
+        private dayOfWeekGetOut: Repository<DayOfWeek>,
+        @InjectRepository(SeasonOfYear)
+        private seasonOfYear: Repository<SeasonOfYear>,
+        @InjectRepository(Comments)
+        private comments: Repository<Comments>,
+        @InjectRepository(CommentsRate)
+        private commentsRate: Repository<CommentsRate>,
+        @InjectRepository(VideoRate)
+        private videoRate: Repository<CommentsRate>,
         private usersService: UsersService,
         private authService: AuthService,
         private filesService: FilesService,
@@ -109,14 +110,14 @@ export class SeedService {
     // region  Type
 
     async createSeedType() {
-        await this.type.bulkCreate(types);
+        await this.type.save(types)
     }
 
 
     async upsertSeedType() {
-        for (const type of types) {
-            await this.type.upsert(type);
-        }
+        // for (const type of types) {
+        //     await this.type.upsert(type);
+        // }
     }
 
     //endregion
@@ -125,13 +126,13 @@ export class SeedService {
     // region Role
 
     async createSeedRole() {
-        await this.role.bulkCreate(roles);
+        await this.role.save(roles);
     }
 
     async upsertSeedRole() {
-        for (const role of roles) {
-            await this.role.upsert(role);
-        }
+        // for (const role of roles) {
+        //     await this.role.upsert(role);
+        // }
     }
 
     //endregion
@@ -139,65 +140,65 @@ export class SeedService {
     // TODO: ageRating
     //region AgeRating
     async createSeedAgeRating() {
-        await this.ageRating.bulkCreate(ageRatings);
+        await this.ageRating.save(ageRatings);
     }
 
     async upsertSeedAgeRating() {
-        for (const ageRating of ageRatings) {
-            await this.ageRating.upsert(ageRating);
-        }
+        // for (const ageRating of ageRatings) {
+        //     await this.ageRating.upsert(ageRating);
+        // }
     }
 
     //endregion
 
     //region VideoCategory
     async createSeedVideoCategory() {
-        await this.videoCategory.bulkCreate(videoCategorys);
+        await this.videoCategory.save(videoCategorys);
     }
 
     async upsertSeedVideoCategory() {
-        for (const videoCategory of videoCategorys) {
-            await this.videoCategory.upsert(videoCategory);
-        }
+        // for (const videoCategory of videoCategorys) {
+        //     await this.videoCategory.upsert(videoCategory);
+        // }
     }
 
     //endregion
 
     //region Statuses
     async createSeedStatus() {
-        await this.status.bulkCreate(statuses);
+        await this.status.save(statuses);
     }
 
     async upsertSeedStatus() {
-        for (const status of statuses) {
-            await this.status.upsert(status);
-        }
+        // for (const status of statuses) {
+        //     await this.status.upsert(status);
+        // }
     }
 
     //endregion
 
     //region Publisher
     async createSeedPublisher() {
-        await this.publisher.bulkCreate(publishers);
+        await this.publisher.save(publishers);
     }
 
     async upsertSeedPublisher() {
-        for (const publisher of publishers) {
-            await this.publisher.upsert(publisher);
-        }
+        // for (const publisher of publishers) {
+        //     await this.publisher.upsert(publisher);
+        // }
     }
 
     //endregion
 
     //region Genre
     async createSeedGenre() {
-        await this.genre.bulkCreate(genres);
+        await this.genre.save(genres);
     }
 
     async upsertSeedGenre() {
-        for (const genre of genres) {
-            await this.genre.upsert(genre);
-        }
+        // for (const genre of genres) {
+        //     await this.genre.upsert(genre);
+        // }
     }
 
     //endregion
@@ -205,39 +206,39 @@ export class SeedService {
     //region ListState
     async createSeedListState() {
 
-        await this.listViewState.bulkCreate(listStates)
+        await this.listViewState.save(listStates)
     }
 
     async upsertSeedListState() {
-        for (const state of listStates) {
-            await this.listViewState.upsert(state);
-        }
+        // for (const state of listStates) {
+        //     await this.listViewState.upsert(state);
+        // }
     }
 
     //endregion
 
     //region DayOfWeek
     async createSeedDayOfWeek() {
-        await this.dayOfWeekGetOut.bulkCreate(dayOfWeekList)
+        await this.dayOfWeekGetOut.save(dayOfWeekList)
     }
 
     async upsertSeedDayOfWeek() {
-        for (const dauOfWeek of dayOfWeekList) {
-            await this.dayOfWeekGetOut.upsert(dauOfWeek);
-        }
+        // for (const dauOfWeek of dayOfWeekList) {
+        //     await this.dayOfWeekGetOut.upsert(dauOfWeek);
+        // }
     }
 
     //endregion
 
     //region SeasonOfYear
     async createSeedSeasonOfYear() {
-        await this.seasonOfYear.bulkCreate(seasonOfYearList)
+        await this.seasonOfYear.save(seasonOfYearList)
     }
 
     async upsertSeedSeasonOfYear() {
-        for (const season of seasonOfYearList) {
-            await this.seasonOfYear.upsert(season);
-        }
+        // for (const season of seasonOfYearList) {
+        //     await this.seasonOfYear.upsert(season);
+        // }
     }
 
     //endregion
@@ -292,7 +293,7 @@ export class SeedService {
                         userId: user.id
                     });
                 }
-                await this.videoRate.bulkCreate(rateDate);
+                await this.videoRate.save(rateDate);
 
                 // create random count comments to video
                 // For more count comment edit here
@@ -308,7 +309,7 @@ export class SeedService {
                         comment: faker.word.words({count: {min: 10, max: 30}})
                     });
                 }
-                const comments = await this.comments.bulkCreate(commentsData);
+                const comments = await this.comments.save(commentsData);
 
                 // create random comments rate
                 const commentsRateData = []
@@ -326,7 +327,7 @@ export class SeedService {
                         });
                     }
                 }
-                await this.commentsRate.bulkCreate(commentsRateData);
+                await this.commentsRate.save(commentsRateData);
             }
         }
     }

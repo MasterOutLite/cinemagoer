@@ -1,4 +1,4 @@
-import {CreateUserDto} from "@users/dto/create-user.dto";
+import {CreateUserDto} from "@models/users/dto/create-user.dto";
 
 export const users: CreateUserDto[] = [
     {
