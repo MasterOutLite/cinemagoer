@@ -9,7 +9,7 @@ class Role {
     @Column({unique: true})
     name: string;
 
-    @Column({type: 'text'})
+    @Column({type: 'text', nullable: true})
     description: string;
 
     @ManyToMany(() => User, user => user.role)

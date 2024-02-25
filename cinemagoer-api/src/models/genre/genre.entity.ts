@@ -13,7 +13,7 @@ class Genre {
     @Column({unique: true})
     name: string;
 
-    @Column({type: 'text'})
+    @Column({type: 'text', nullable: true})
     description: string;
 
     @ManyToMany(() => Video, video => video.genre)

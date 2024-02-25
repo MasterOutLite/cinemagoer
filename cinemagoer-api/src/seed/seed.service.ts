@@ -323,7 +323,7 @@ export class SeedService {
                         commentsRateData.push({
                             rate: rate === 1,
                             userId: user.id,
-                            commentId: comment.id,
+                            commentsId: comment.id,
                         });
                     }
                 }

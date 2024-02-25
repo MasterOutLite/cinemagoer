@@ -12,22 +12,22 @@ class VideoInfo {
     @Column({unique: true})
     videoId: number;
 
-    @Column({type: 'text'})
+    @Column({type: 'text', nullable: true})
     description: string;
 
-    @Column({type: 'simple-array'})
+    @Column({type: 'simple-array', nullable: true})
     mainCharacters: string[];
 
     @Column({nullable: true, type: 'simple-array'})
     trailers: string[];
 
-    @Column()
+    @Column({nullable: true})
     countSeries: number;
 
     @Column({nullable: true, type: 'simple-array'})
     pictures: string[];
 
-    @Column()
+    @Column({nullable: true})
     duration: string;
 }
 

@@ -28,6 +28,8 @@ export class AuthService {
         if (exists)
             throw new ExistsException(`User already registration with email: ${dto.email}.`);
 
+        console.log('Start registration in auth service!');
+
         const hashPassword = await bcrypt.hash(dto.password, 5)
         const user: UserDto = await this.usersService.registration({...dto, password: hashPassword})
         return this.generateToken(user);

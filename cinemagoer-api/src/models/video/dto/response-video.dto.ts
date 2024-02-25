@@ -2,8 +2,8 @@ import Video from "@models/video/video.entity";
 import ResponseSeasonOfYearDto from "@models/video/dto/response-season-of-year.dto";
 import {ResponseGenreDto} from "@models/genre/dto/response-genre.dto";
 import {ResponseVideoCategoryDto} from "@models/video-category/dto/response-video-category.dto";
-import { ResponseAgeRatingDto } from "@src/models/age-rating/dto/response-age-rating.dto";
-import { ResponsePublisherDto } from "@src/models/publisher/dto/response-publisher.dto";
+import {ResponseAgeRatingDto} from "@src/models/age-rating/dto/response-age-rating.dto";
+import {ResponsePublisherDto} from "@src/models/publisher/dto/response-publisher.dto";
 import {ResponseTypeDto} from "@models/type/dto/response-type.dto";
 import {ResponseStatusDto} from "@models/status/dto/response-status.dto";
 import {ApiProperty} from "@nestjs/swagger";
@@ -22,12 +22,10 @@ export class ResponseVideoDto {
         this.ageRating = new ResponseAgeRatingDto(video.ageRating, withoutDesc);
         this.icon = video.icon;
 
-        // @ts-ignore
-        this.rate = parseFloat(video.getDataValue('avgRate')) || null;
+        this.rate = parseFloat(video['avgRate']) || null;
         if (this.rate)
             this.rate = parseFloat(this.rate.toFixed(2));
-        // @ts-ignore
-        this.yourRate = parseFloat(video.getDataValue('yourRate')) || undefined;
+        this.yourRate = parseFloat(video['yourRate']) || undefined;
     }
 
     @ApiProperty({example: '1', description: 'Id video.'})

@@ -21,21 +21,21 @@ class Comments {
     @Column()
     comment: string;
 
-    @ManyToOne(() => Comments, comments => comments.comments)
-    commentsOne: Comments;
-    @Column()
-    commentId: number;
+    @ManyToOne(() => Comments, comments => comments.commentsSelf)
+    comments: Comments;
+    @Column({nullable: true})
+    commentsId: number;
 
     @ManyToOne(() => User, user => user.commentsAnswer)
     userAnswer: User;
-    @Column()
+    @Column({nullable: true})
     userAnswerId: number;
 
     @OneToMany(() => CommentsRate, rate => rate.comments)
     commentsRate: CommentsRate[];
 
-    @OneToMany(() => Comments, comments => comments.commentsOne)
-    comments: Comments[];
+    @OneToMany(() => Comments, comments => comments.comments)
+    commentsSelf: Comments[];
     createdAt: string;
 }
 

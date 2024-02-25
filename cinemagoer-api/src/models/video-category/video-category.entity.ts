@@ -10,7 +10,7 @@ class VideoCategory {
     @Column({unique: true})
     name: string;
 
-    @Column({unique: false})
+    @Column({unique: false, nullable: true})
     description: string;
 
     @OneToMany(() => Video, video => video.videoCategory)

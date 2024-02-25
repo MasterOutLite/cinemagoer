@@ -28,7 +28,7 @@ class VideoSeries {
 
     @ManyToOne(() => Season, season => season.videoSeries)
     season: Season;
-    @Column()
+    @Column({nullable: true})
     seasonId: number;
 
     @ManyToOne(() => DayOfWeek, dayOfWeekList => dayOfWeekList.videoSeries)
