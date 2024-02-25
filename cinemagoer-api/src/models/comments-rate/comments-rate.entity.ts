@@ -15,7 +15,7 @@ class CommentsRate {
     @ManyToOne(() => Comments, comments => comments.commentsRate)
     comments: Comments;
     @Column()
-    commentId: number;
+    commentsId: number;
 
     @Column()
     rate: boolean

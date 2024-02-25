@@ -66,15 +66,21 @@ export class UsersService {
     }
 
     async updateRole(dto: UpdateUserRoleDto): Promise<ResponseUserDto> {
-        const user = await this.userRepository.findOne({where: {id: dto.userId}});
+        const user = await this.userRepository.findOne({
+            where: {id: dto.userId},
+            relations: {
+                role: true
+            }
+        });
         if (!user)
             throw new BadRequestException('Not found user!');
         const roles = await this.roleRepository.findBy({
             id: In(dto.roleIds)
         });
+
         user.role = [...user.role, ...roles];
 
-        await this.userRepository.update(user.id, user);
+        await this.userRepository.save(user);
         return new ResponseUserDto(user);
     }
 

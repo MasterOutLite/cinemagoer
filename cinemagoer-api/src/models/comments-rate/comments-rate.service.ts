@@ -24,7 +24,7 @@ export class CommentsRateService {
 
         let rate = await this.commentsRateRepository.findOne({
             where: {
-                commentId: dto.commentId,
+                commentsId: dto.commentId,
                 userId: auth.id
             }
         })

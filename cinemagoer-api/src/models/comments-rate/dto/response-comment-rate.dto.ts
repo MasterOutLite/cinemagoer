@@ -10,7 +10,7 @@ export enum StateRate {
 export class ResponseCommentRateDto {
     constructor(entity: CommentsRate, state: StateRate) {
         this.rate = entity.rate
-        this.commentId = entity.commentId;
+        this.commentId = entity.commentsId;
         this.state = state;
     }
 

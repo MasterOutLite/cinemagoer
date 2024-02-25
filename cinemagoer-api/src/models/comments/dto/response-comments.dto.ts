@@ -9,7 +9,7 @@ export class ResponseCommentsDto {
         this.userId = dto.userId;
         this.videoId = dto.videoId;
         this.comments = dto.comment;
-        this.commentId = dto?.commentId;
+        this.commentId = dto?.commentsId;
         this.userAnswerId = dto?.userAnswerId;
         this.user = new ResponseUserDto(dto.user);
         this.createdAt = dto.createdAt;

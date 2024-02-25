@@ -9,7 +9,7 @@ class Status {
     @Column({unique: true})
     name: string;
 
-    @Column({type: 'text'})
+    @Column({type: 'text', nullable: true})
     description: string;
 
     @OneToMany(() => Video, video => video.status)

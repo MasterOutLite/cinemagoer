@@ -9,7 +9,7 @@ class ListViewState {
     @Column({unique: true})
     name: string;
 
-    @Column()
+    @Column({nullable: true})
     description: string;
 
     @OneToMany(() => UserListView, list => list.listViewState)

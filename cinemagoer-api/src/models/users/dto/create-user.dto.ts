@@ -17,7 +17,7 @@ export class CreateUserDto {
     @Length(4, 20, {message: 'min: 4 / max: 20'})
     nickname: string;
 
-    @ApiProperty({example: 'nicknameTon', description: 'nickname user', required: false})
+    @ApiProperty({example: [], description: 'nickname user', required: false})
     @IsNumber({}, {each: true})
     @IsOptional()
     roles?: number[];
