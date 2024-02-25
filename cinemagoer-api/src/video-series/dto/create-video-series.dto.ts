@@ -14,7 +14,7 @@ export class CreateVideoSeriesDto {
     @IsString({message: 'Is not string.'})
     readonly name: string;
 
-    @ApiProperty({example: '2023-9-9', description: 'Data release.', format: 'Date'})
+    @ApiProperty({example: '2023-09-09', description: 'Data release.', format: 'Date'})
     @IsDate({message: 'Is not date.'})
     readonly dateRelease: Date;
 
