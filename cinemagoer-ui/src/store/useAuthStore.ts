@@ -47,14 +47,3 @@ export const useAuthStore = create<State & Action>()(
         name: 'auth-store',
         storage: createJSONStorage(() => localStorage),
     }));
-
-// export const useAuthStore = create<State & Action>((set, get) => (
-//     {
-//         token: '',
-//         user: undefined,
-//         setToken(token: string) {
-//             const user = jwtDecode(token) as Auth;
-//             set(state => ({token, user}))
-//         },
-//     }
-// ));

@@ -9,7 +9,6 @@ import {CreateVideoDto} from './dto/create-video.dto';
 import {ResponseVideoCombineDto} from "@models/video/dto/response-video-combine.dto";
 import Genre from "@models/genre/genre.entity";
 import Group from "@models/group/group.entity";
-import {ResponseVideoDto} from "@models/video/dto/response-video.dto";
 import {CreateVideoInfoDto} from "@models/video-info/dto/create-video-info.dto";
 import {ResponseVideoInfoDto} from "@models/video-info/dto/response-video-info.dto";
 import {UpdateVideoDto} from "@models/video/dto/update-video.dto";
@@ -25,6 +24,7 @@ import {SearchVideoQuery} from "@models/video/query/search-video.query";
 import {GetVideoQuery} from "@models/video/query/get-video.query";
 import {ResponseVideoSeriesDto} from "@models/video-series/dto/response-video-series.dto";
 import {ResponseSeasonDto} from "@models/season/dto/response-season.dto";
+import VideoRate from "@models/video-rate/video-rate.entity";
 
 @Injectable()
 export class VideoService {
@@ -47,6 +47,8 @@ export class VideoService {
         private ageRatingService: Repository<AgeRating>,
         @InjectRepository(Group)
         private groupService: Repository<Group>,
+        @InjectRepository(VideoRate)
+        private videoRateRepository: Repository<VideoRate>,
     ) {
     }
 
@@ -131,14 +133,12 @@ export class VideoService {
                 seasonOfYear: true,
             }
         })
-        const videoRes: ResponseVideoDto = new ResponseVideoDto(reloadVideo);
-
 
         const videoInfoDto: CreateVideoInfoDto = dto;
         videoInfoDto.videoId = video.id;
         const videoInfoRes: ResponseVideoInfoDto = await this.videoInfoService.create(videoInfoDto, files.trailers, files.pictures);
 
-        return new ResponseVideoCombineDto(videoRes, videoInfoRes);
+        return new ResponseVideoCombineDto(reloadVideo, videoInfoRes);
     }
 
     async update(dto: UpdateVideoDto, files) {
@@ -164,9 +164,15 @@ export class VideoService {
                 exists: await this.videoCategoryService.exists({where: {id: dto.videoCategoryId}})
             });
         if (dto.publisherId)
-            existsAtr.push({tag: 'publisherId', exists: await this.publisherService.exists({where: {id: dto.publisherId}})});
+            existsAtr.push({
+                tag: 'publisherId',
+                exists: await this.publisherService.exists({where: {id: dto.publisherId}})
+            });
         if (dto.ageRatingId)
-            existsAtr.push({tag: 'ageRatingId', exists: await this.ageRatingService.exists({where: {id: dto.ageRatingId}})});
+            existsAtr.push({
+                tag: 'ageRatingId',
+                exists: await this.ageRatingService.exists({where: {id: dto.ageRatingId}})
+            });
         if (dto.groupId)
             existsAtr.push({tag: 'groupId', exists: await this.groupService.exists({where: {id: dto.groupId}})});
 
@@ -187,7 +193,7 @@ export class VideoService {
             video.group = await this.groupService.findBy({id: dto.groupId});
         await this.videoRepository.update(video.id, video);
 
-        const videoReload = await this.videoRepository.findOne({
+        return await this.videoRepository.findOne({
             where: {id: video.id}, relations: {
                 genre: true,
                 ageRating: true,
@@ -197,8 +203,7 @@ export class VideoService {
                 publisher: true,
                 seasonOfYear: true,
             }
-        })
-        return new ResponseVideoDto(videoReload)
+        });
     }
 
     async getVideoByFilter(dto: FilterVideoQuery, auth: TokenFormat) {
@@ -213,11 +218,18 @@ export class VideoService {
 
         const limitRows = dto.limit || 20;
 
+        let searchGenre;
+        if (dto.genreIds) {
+            searchGenre = {
+                genre: {
+                    id: In(dto.genreIds || [])
+                },
+            }
+        }
+
         const videos = await this.videoRepository.findAndCount({
             where: {
-                genre: {
-                    id: In(dto.genreIds)
-                },
+                ...searchGenre,
                 ...search,
                 dateRelease: Between(dto.dateReleaseMin || new Date('1968'), dto.dateReleaseMax || new Date())
             },
@@ -235,22 +247,16 @@ export class VideoService {
             order: {
                 id: 'asc'
             }
-
         });
 
-        return new ResponseCountVideoDto(videos[1], dto.page, videos[0]);
+        const resVideo = await this.addRateToVideo(videos[0], auth);
+        return new ResponseCountVideoDto(videos[1], dto.page, resVideo);
     }
 
     async getVideoByName(dto: SearchVideoQuery, auth: TokenFormat) {
         console.log(dto.name)
         const limitRows = dto.limit || 20;
         const videos = await this.videoRepository.findAndCount({
-            // attributes: {
-            //     include: [
-            //         [literal('(SELECT AVG("rate") FROM "video-rate" WHERE "video-rate"."videoId" = "Video"."id")'), 'avgRate'],
-            //         [literal(`(SELECT "rate" FROM "video-rate" WHERE "video-rate"."videoId" = "Video"."id" and "video-rate"."userId" = ${auth ? auth.id : 0})`), 'yourRate']
-            //     ]
-            // },
             where: {
                 name: ILike(dto.name)
             },
@@ -270,27 +276,18 @@ export class VideoService {
             }
         });
 
-
-        return new ResponseCountVideoDto(videos[1], dto.page, videos[0]);
+        const resVideo = await this.addRateToVideo(videos[0], auth);
+        return new ResponseCountVideoDto(videos[1], dto.page, resVideo);
     }
 
 
     async get(dto: GetVideoQuery, auth: TokenFormat) {
-        let list = {};
-
         const video = await this.videoRepository.findOne({
-            // attributes: {
-            //     include: [
-            //         [literal('(SELECT AVG("rate") FROM "video-rate" WHERE "video-rate"."videoId" = "Video"."id")'), 'avgRate'],
-            //         [literal(`(SELECT "rate" FROM "video-rate" WHERE "video-rate"."videoId" = "Video"."id" and "video-rate"."userId" = ${auth ? auth.id : 0})`), 'yourRate']
-            //     ]
-            // },
             where: {id: dto.id,},
             relations: {
                 genre: true,
                 videoInfo: true,
                 videoSeries: true,
-                videoRate: true,
                 listView: true,
                 group: true,
                 season: true,
@@ -302,15 +299,37 @@ export class VideoService {
                 seasonOfYear: true,
             },
         });
+
+        const rate = await this.videoRateRepository.count({where: {videoId: video.id}});
+
+        const yourRate = auth ? await this.videoRateRepository.count(
+            {where: {videoId: video.id, userId: auth.id}}) : 0;
+
         if (!video)
             throw new BadRequestException('Video id is bad!')
 
-        const resVideo = new ResponseVideoDto(video);
-        const resInfo = new ResponseVideoInfoDto(video.videoInfo);
+        const resVideo = {...video, rate, yourRate};
+        const resInfo = new ResponseVideoInfoDto(video.videoInfo[0]);
         const resSeries = video.videoSeries.map(value => new ResponseVideoSeriesDto(value));
         const resSeason = video.season.map(value => new ResponseSeasonDto(value));
 
         return new ResponseVideoCombineDto(resVideo, resInfo, resSeries, resSeason);
+    }
+
+    async addRateToVideo(videos: Video[], auth: TokenFormat) {
+        const videoWithRate = []
+        for (const video of videos) {
+            const rate = await this.videoRateRepository.average("rate", {
+                videoId: video.id
+            })
+            console.log('Rate', rate);
+            //const rate = await this.videoRateRepository.count({where: {videoId: video.id}});
+            const yourRate = auth ? await this.videoRateRepository.count(
+                {where: {videoId: video.id, userId: auth.id}}) : 0;
+            videoWithRate.push({...video, rate, yourRate})
+        }
+
+        return videoWithRate;
     }
 
     async exists(id: number): Promise<boolean> {
@@ -347,12 +366,11 @@ export class VideoService {
                 seasonOfYear: true,
             }
         })
-        const videoRes: ResponseVideoDto = new ResponseVideoDto(reloadVideo);
 
         const videoInfoDto: CreateVideoInfoDto = dto;
         videoInfoDto.videoId = video.id;
         const videoInfoRes: ResponseVideoInfoDto = await this.videoInfoService.createSeed(videoInfoDto);
-        return new ResponseVideoCombineDto(videoRes, videoInfoRes);
+        return new ResponseVideoCombineDto(reloadVideo, videoInfoRes);
     }
 
 }

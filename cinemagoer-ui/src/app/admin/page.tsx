@@ -5,11 +5,11 @@ import {useAuthStore} from "@/store/useAuthStore";
 import {Roles} from "@/helper/roles";
 import {useRouter} from "next/navigation";
 import AddVideo from "@/components/AddVideo/AddVideo";
+import {Container} from "@mui/material";
 
 function Page() {
     const router = useRouter();
     const user = useStorePersist(useAuthStore, (state) => state.user);
-    //&& user.roles.find(value => value === Roles.ADMIN)
     if (user)
         return (
             <div>
@@ -22,8 +22,9 @@ function Page() {
                         JSON.stringify(user)
                     }
                 </div>
-                <AddVideo/>
-
+                <Container>
+                    <AddVideo/>
+                </Container>
             </div>
         );
     else {

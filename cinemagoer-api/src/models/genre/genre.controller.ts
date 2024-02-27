@@ -1,7 +1,7 @@
 import {Body, Controller, Get, HttpStatus, Post, UseGuards} from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {Roles} from "@src/auth/roles-auth.decorator";
-import {RolesGuard} from "@src/auth/roles-guard";
+import {Roles} from "@src/guard/roles.decorator";
+import {RoleGuard} from "@src/guard/role-guard.service";
 import {RoleUser} from "@src/const/role";
 import {GenreService} from "@models/genre/genre.service";
 import {ResponseGenreDto} from "@models/genre/dto/response-genre.dto";
@@ -16,7 +16,7 @@ export class GenreController {
     @ApiBearerAuth('JWT')
     @ApiResponse({status: HttpStatus.CREATED, type: ResponseGenreDto})
     @Roles(RoleUser.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(RoleGuard)
     @Post()
     createGenre(@Body() dto: CreateGenreDto){
         return this.genreService.create(dto);

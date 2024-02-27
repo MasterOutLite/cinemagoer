@@ -14,15 +14,12 @@ export class PossiblyJwtAuthGuard implements CanActivate {
         const req = context.switchToHttp().getRequest();
         try {
             const authHeader = req.headers.authorization;
-            const bearer = authHeader.split(' ')[0];
             const token = authHeader.split(' ')[1];
 
             req.user = this.jwtService.verify(token) as TokenFormat;
-            return true;
-
         } catch (e) {
-            //console.log(e)
-            return true;
+            console.log(e)
         }
+        return true;
     }
 }

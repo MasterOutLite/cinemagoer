@@ -1,7 +1,7 @@
 import {Body, Controller, Get, HttpStatus, Post, UseGuards} from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {Roles} from "@src/auth/roles-auth.decorator";
-import {RolesGuard} from "@src/auth/roles-guard";
+import {Roles} from "@src/guard/roles.decorator";
+import {RoleGuard} from "@src/guard/role-guard.service";
 import {RoleUser} from "@src/const/role";
 import {TypeService} from "@models/type/type.service";
 import {CreateTypeDto} from "@models/type/dto/create-type.dto";
@@ -18,7 +18,7 @@ export class TypeController {
     @ApiResponse({status: HttpStatus.CREATED, type: CreateTypeDto})
     @ApiBearerAuth('JWT')
     @Roles(RoleUser.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(RoleGuard)
     @Post()
     createType(@Body() dto: CreateTypeDto) {
         return this.typeService.createType(dto);

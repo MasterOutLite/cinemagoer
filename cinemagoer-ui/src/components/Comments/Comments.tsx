@@ -41,6 +41,7 @@ function Comments({videoId}: CommentsProps) {
         const get = async () => {
             const date = await getBaseRequest(BasePath.comments,
                 `page=${page}&count=20&videoId=${videoId}`) as CountData<CommentsType>;
+            console.log(date);
             setCommentsReq(date);
             setComments([...date.rows])
             //console.log(date.rows);

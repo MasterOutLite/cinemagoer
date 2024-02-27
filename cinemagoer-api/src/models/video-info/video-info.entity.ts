@@ -1,4 +1,4 @@
-import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import Video from "@models/video/video.entity";
 
 @Entity({name: 'video-info'})
@@ -7,7 +7,7 @@ class VideoInfo {
     id: number;
 
 
-    @OneToMany(() => Video, video => video.videoInfo)
+    @ManyToOne(() => Video, video => video.videoInfo)
     video: Video;
     @Column({unique: true})
     videoId: number;

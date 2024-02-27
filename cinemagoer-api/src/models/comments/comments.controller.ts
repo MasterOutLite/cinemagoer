@@ -3,11 +3,11 @@ import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger
 import {CommentsService} from "@models/comments/comments.service";
 import {CommentsRateService} from "@models/comments-rate/comments-rate.service";
 import {ResponseCommentsDto} from "@models/comments/dto/response-comments.dto";
-import {JwtAuthGuard} from "@src/auth/jwt-auth-guard";
+import {JwtAuthGuard} from "@src/guard/jwt-auth-guard";
 import {CreateCommentsDto} from "@models/comments/dto/create-comments.dto";
 import {CreateCommentRateDto} from "@models/comments-rate/dto/create-comment-rate.dto";
 import {ResponseCountCommentsDto} from "@models/comments/dto/response-count-comments.dto";
-import {PossiblyJwtAuthGuard} from "@src/auth/possibly-jwt-auth-guard";
+import {PossiblyJwtAuthGuard} from "@src/guard/possibly-jwt-auth-guard";
 import {GetCommentsDto} from "@models/comments/dto/get-comments.dto";
 
 @ApiTags('Comments')

@@ -1,10 +1,10 @@
 "use client"
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button, Stack, styled} from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import VideoBanner from "@/components/VideoBaner/VideoBanner";
 import AddNameVideo from "@/components/AddVideo/AddNameVideo";
-import AddVideoParam from "@/components/AddVideo/AddVideoParam";
+import SelectParam from "@/components/AddVideo/SelectParam";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -20,25 +20,33 @@ const VisuallyHiddenInput = styled('input')({
 
 function AddVideo() {
 
+    const [names, setNames] = React.useState<string[]>([])
+
+    useEffect(() => {
+        console.log('AddVideo:', 'Names', names);
+    }, [names]);
+
     return (
-        <Stack alignItems='center'>
+        <Stack>
             <Stack direction='row' alignItems='start'>
                 <VideoBanner icon={''}>
                     <Button
                         component="label"
-                        role={undefined}
                         variant="contained"
-                        tabIndex={-1}
                         startIcon={<CloudUploadIcon/>}
                     >
                         Upload file
                         <VisuallyHiddenInput type="file"/>
                     </Button>
+
+
                 </VideoBanner>
-                <AddNameVideo/>
+                <Stack gap={2}>
+                    <AddNameVideo setNameArr={setNames}/>
+                    <SelectParam/>
+                </Stack>
             </Stack>
 
-            <AddVideoParam/>
 
         </Stack>
     );

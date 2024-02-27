@@ -12,11 +12,11 @@ import {
     UseInterceptors
 } from '@nestjs/common';
 import {ApiBearerAuth, ApiConsumes, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {Roles} from "@src/auth/roles-auth.decorator";
+import {Roles} from "@src/guard/roles.decorator";
 import {RoleUser} from "@src/const/role";
-import {RolesGuard} from "@src/auth/roles-guard";
-import {JwtAuthGuard} from "@src/auth/jwt-auth-guard";
-import {PossiblyJwtAuthGuard} from "@src/auth/possibly-jwt-auth-guard";
+import {RoleGuard} from "@src/guard/role-guard.service";
+import {JwtAuthGuard} from "@src/guard/jwt-auth-guard";
+import {PossiblyJwtAuthGuard} from "@src/guard/possibly-jwt-auth-guard";
 import {VideoInfoService} from "@models/video-info/video-info.service";
 import {VideoService} from "@models/video/video.service";
 import {CreateVideoRateDto} from "@models/video-rate/dto/create-video-rate.dto";
@@ -63,7 +63,7 @@ export class VideoController {
         {name: 'pictures'}
     ]))
     @Roles(RoleUser.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(RoleGuard)
     @Post()
     createVideo(@Body() dto: CreateVideoCombineDto,
                 @UploadedFiles() files: {
@@ -83,7 +83,7 @@ export class VideoController {
         {name: 'icon', maxCount: 1},
     ]))
     @Roles(RoleUser.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(RoleGuard)
     @Put()
     update(@Body() dto: UpdateVideoDto,
            @UploadedFiles() files: {
@@ -101,7 +101,7 @@ export class VideoController {
         {name: 'pictures'}
     ]))
     @Roles(RoleUser.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(RoleGuard)
     @Put('info')
     updateVideoInfo(@Body() dto: UpdateVideoInfoDto,
                     @UploadedFiles() files: {

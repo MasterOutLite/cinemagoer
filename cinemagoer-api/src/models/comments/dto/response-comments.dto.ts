@@ -1,6 +1,6 @@
 import {ApiProperty} from "@nestjs/swagger";
 import Comments from "@models/comments/comments.entity";
-import {ResponseUserDto} from "@models/users/dto/response-user.dto";
+import {CommentsUserDto} from "@models/comments/dto/comments-user.dto";
 
 
 export class ResponseCommentsDto {
@@ -11,15 +11,14 @@ export class ResponseCommentsDto {
         this.comments = dto.comment;
         this.commentId = dto?.commentsId;
         this.userAnswerId = dto?.userAnswerId;
-        this.user = new ResponseUserDto(dto.user);
+        this.user = dto.user;
         this.createdAt = dto.createdAt;
-        // @ts-ignore
-        this.like = parseInt(dto.getDataValue('like') || 0);
-        // @ts-ignore
-        this.dislike = parseInt(dto.getDataValue('dislike') || 0);
-        // @ts-ignore
-        const userLike = dto.getDataValue('userLike');
-        this.userLike = userLike === null ? 'none' : userLike;
+
+
+        this.like = parseInt(dto['likeCount'] || 0);
+        this.dislike = parseInt(dto['dislikeCount'] || 0);
+        const userLike = dto['userLike'];
+        this.userLike = userLike === 0 ? 'none' : userLike;
     }
 
     @ApiProperty({example: 1, description: 'ID'})
@@ -31,8 +30,8 @@ export class ResponseCommentsDto {
     @ApiProperty({example: 1, description: 'ID user'})
     readonly userId: number;
 
-    @ApiProperty({example: {}, description: 'User'})
-    readonly user: ResponseUserDto;
+    @ApiProperty({example: CommentsUserDto, description: 'User'})
+    readonly user: CommentsUserDto;
 
     @ApiProperty({example: 1, description: 'ID video'})
     readonly videoId: number;

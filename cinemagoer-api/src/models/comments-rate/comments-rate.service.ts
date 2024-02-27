@@ -40,7 +40,7 @@ export class CommentsRateService {
                 state = StateRate.update;
             }
         } else {
-            rate = await this.commentsRateRepository.save({...dto, userId: auth.id});
+            rate = await this.commentsRateRepository.save({...dto, userId: auth.id, commentsId: dto.commentId});
             state = StateRate.create;
         }
         return new ResponseCommentRateDto(rate, state);

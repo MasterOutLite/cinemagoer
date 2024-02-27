@@ -1,7 +1,7 @@
 import {Body, Controller, Get, HttpStatus, Post, Put, Query, UseGuards} from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {Roles} from "@src/auth/roles-auth.decorator";
-import {RolesGuard} from "@src/auth/roles-guard";
+import {Roles} from "@src/guard/roles.decorator";
+import {RoleGuard} from "@src/guard/role-guard.service";
 import {RoleUser} from "@src/const/role";
 import {VideoSeriesService} from "@models/video-series/video-series.service";
 import {ResponseVideoSeriesDto} from "@models/video-series/dto/response-video-series.dto";
@@ -22,7 +22,7 @@ export class VideoSeriesController {
     @ApiBearerAuth('JWT')
     @ApiResponse({status: HttpStatus.CREATED, type: [ResponseVideoSeriesDto]})
     @Roles(RoleUser.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(RoleGuard)
     @Post()
     create(@Body() dto: CreateListSeriesDto) {
         return this.videoSeriesService.create(dto);
@@ -32,7 +32,7 @@ export class VideoSeriesController {
     @ApiBearerAuth('JWT')
     @ApiResponse({status: HttpStatus.OK, type: [ResponseVideoSeriesDto]})
     @Roles(RoleUser.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(RoleGuard)
     @Put()
     update(@Body() dto: UpdateListSeriesDto) {
         return this.videoSeriesService.update(dto);

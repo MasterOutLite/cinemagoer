@@ -1,9 +1,10 @@
 import React from 'react';
 import {Box, IconButton, Link, Skeleton, Stack, Typography} from "@mui/material";
-import {apiPath, removeVideoToUserListView} from "@/helper/api";
+import {apiPath,} from "@/helper/api";
 import {getTypeLinkById} from "@/helper/link";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {VideoFromListView} from "@/type/list-view";
+import UserListViewService from "@/service/user-list-view.service";
 
 export interface UserListViewTabContentProps {
     video: VideoFromListView[],
@@ -17,7 +18,7 @@ function UserListViewTabContent({video, userListViewId, remove}: UserListViewTab
     function handleRemoveVideo(videoId: number, userListViewId: number) {
         return () => {
             const deleteVideo = async () => {
-                const data = await removeVideoToUserListView(userListViewId, videoId);
+                const data = await UserListViewService.removeVideoToUserListView(userListViewId, videoId);
                 if (!data || data.add)
                     return;
                 const newList = listVideo.filter(value => value.id !== data.videoId);

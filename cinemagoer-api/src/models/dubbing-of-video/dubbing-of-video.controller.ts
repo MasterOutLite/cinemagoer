@@ -1,9 +1,9 @@
 import {Controller, HttpStatus, Post, UploadedFiles, UseGuards, UseInterceptors} from '@nestjs/common';
 import {ApiBearerAuth, ApiConsumes, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {FileFieldsInterceptor} from "@nestjs/platform-express";
-import {Roles} from "@src/auth/roles-auth.decorator";
+import {Roles} from "@src/guard/roles.decorator";
 import {RoleUser} from "@src/const/role";
-import {RolesGuard} from "@src/auth/roles-guard";
+import {RoleGuard} from "@src/guard/role-guard.service";
 import {DubbingOfVideoService} from "@models/dubbing-of-video/dubbing-of-video.service";
 import {ResponseDubbingStudioDto} from "@models/dubbing-studio/dto/response-dubbing-studio.dto";
 import {CreateDubbingOfVideoDto} from "@models/dubbing-of-video/dto/create-dubbing-of-video.dto";
@@ -22,7 +22,7 @@ export class DubbingOfVideoController {
         {name: 'video', maxCount: 1},
     ]))
     @Roles(RoleUser.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(RoleGuard)
     @Post()
     create(dto: CreateDubbingOfVideoDto, @UploadedFiles() files: {
         video: Express.Multer.File[],

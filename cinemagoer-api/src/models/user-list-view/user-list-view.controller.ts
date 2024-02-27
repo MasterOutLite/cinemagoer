@@ -2,7 +2,7 @@ import {Body, Controller, Get, HttpStatus, Post, Query, Req, UseGuards} from '@n
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {UserListViewService} from "@models/user-list-view/user-list-view.service";
 import {ResponseListViewArrDto} from "@models/user-list-view/dto/response-list-view-arr.dto";
-import {JwtAuthGuard} from "@src/auth/jwt-auth-guard";
+import {JwtAuthGuard} from "@src/guard/jwt-auth-guard";
 import {CreateListViewDto} from "@models/user-list-view/dto/create-list-view.dto";
 import {ResponseUserListViewDto} from "@models/user-list-view/dto/response-user-list-view.dto";
 import {GetVideoListViewQuery} from "@models/user-list-view/query/get-video-list-view.query";

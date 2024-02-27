@@ -1,7 +1,7 @@
 import {Body, Controller, Get, HttpStatus, Post, UseGuards} from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {Roles} from "@src/auth/roles-auth.decorator";
-import {RolesGuard} from "@src/auth/roles-guard";
+import {Roles} from "@src/guard/roles.decorator";
+import {RoleGuard} from "@src/guard/role-guard.service";
 import {RoleUser} from "@src/const/role";
 import {AgeRatingService} from "@models/age-rating/age-rating.service";
 import {CreateAgeRatingDto} from "@models/age-rating/dto/create-age-rating.dto";
@@ -18,7 +18,7 @@ export class AgeRatingController {
     @ApiBearerAuth('JWT')
     @ApiResponse({status: HttpStatus.CREATED, type: CreateAgeRatingDto})
     @Roles(RoleUser.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(RoleGuard)
     @Post()
     createType(@Body() dto: CreateAgeRatingDto){
         return this.ageRatingService.create(dto);

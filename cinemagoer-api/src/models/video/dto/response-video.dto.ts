@@ -21,11 +21,6 @@ export class ResponseVideoDto {
         this.publisher = new ResponsePublisherDto(video.publisher, withoutDesc);
         this.ageRating = new ResponseAgeRatingDto(video.ageRating, withoutDesc);
         this.icon = video.icon;
-
-        this.rate = parseFloat(video['avgRate']) || null;
-        if (this.rate)
-            this.rate = parseFloat(this.rate.toFixed(2));
-        this.yourRate = parseFloat(video['yourRate']) || undefined;
     }
 
     @ApiProperty({example: '1', description: 'Id video.'})
@@ -37,31 +32,31 @@ export class ResponseVideoDto {
     @ApiProperty({example: '6.3', description: 'Your video rate'})
     yourRate?: number;
 
-    @ApiProperty({example: '["Wolf", "Вовк"]', description: 'Name video.'})
+    @ApiProperty({example: ["Wolf", "Вовк"], description: 'Name video.'})
     name: string[];
 
-    @ApiProperty({example: '20.09.2023', description: 'Email unique user.'})
+    @ApiProperty({type: Date, description: 'Email unique user.'})
     dateRelease: Date;
 
-    @ApiProperty({example: [{id: 1, name: 'Roman'}, {id: 1, name: 'Fight'}], description: 'Genre (Roman, Fight, ...).'})
+    @ApiProperty({type: ResponseTypeDto, isArray: true, description: 'Genre (Roman, Fight, ...).',})
     genre: ResponseGenreDto[];
 
-    @ApiProperty({example: '1', description: 'Season of year (Winter, Spring, Summer, Autumn).'})
+    @ApiProperty({type: ResponseSeasonOfYearDto, description: 'Season of year (Winter, Spring, Summer, Autumn).'})
     seasonOfYear: ResponseSeasonOfYearDto;
 
-    @ApiProperty({example: {id: 1, name: 'Film'}, description: 'Type video (Film, Serial, ...).'})
+    @ApiProperty({type: ResponseTypeDto, description: 'Type video (Film, Serial, ...).'})
     type: ResponseTypeDto;
 
-    @ApiProperty({example: {id: 1, name: 'Release'}, description: 'Status video (Release, Waiting, ...).'})
+    @ApiProperty({type: ResponseStatusDto, description: 'Status video (Release, Waiting, ...).'})
     status: ResponseStatusDto;
 
-    @ApiProperty({example: {id: 1, name: 'Cartoon'}, description: 'Video category (Film, Cartoon, ...).'})
+    @ApiProperty({type: ResponseVideoCategoryDto, description: 'Video category (Film, Cartoon, ...).'})
     videoCategory: ResponseVideoCategoryDto;
 
-    @ApiProperty({example: {id: 1, name: 'Sony'}, description: 'Publisher name (The Walt Disney Company, Pixar, ...).'})
+    @ApiProperty({type: ResponsePublisherDto, description: 'Publisher name (The Walt Disney Company, Pixar, ...).'})
     publisher: ResponsePublisherDto;
 
-    @ApiProperty({example: {id: 1, name: 'PG-13'}, description: 'Age rating (18+, 16+, PG-13, ...).'})
+    @ApiProperty({type: ResponseAgeRatingDto, description: 'Age rating (18+, 16+, PG-13, ...).'})
     ageRating: ResponseAgeRatingDto;
 
     @ApiProperty({example: 'pictures/bfb73574-64dc-4fb6-97a7-9dfe9ac4aa5f.jpg4', description: 'Icon video.'})

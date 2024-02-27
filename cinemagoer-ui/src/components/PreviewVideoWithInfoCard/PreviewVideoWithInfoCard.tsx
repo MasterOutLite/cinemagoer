@@ -3,17 +3,17 @@ import {Link, Paper, Skeleton, Stack, Typography} from "@mui/material";
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import {yellow} from "@mui/material/colors";
 import Image from "next/image";
-import styles from '@/styles/MiddleVideo.module.css'
+import styles from '@/styles/PreviewVideoWithInfoCard.module.css'
 import {VideoType} from "@/type/videoType";
 import {getTypeLink} from "@/helper/link";
 import {apiPath} from "@/helper/api";
 import {FilterParam} from "@/type/filter-param";
 
-export interface MiddleVideoProps extends VideoType {
+export interface PreviewVideoWithInfoCardProps extends VideoType {
 
 }
 
-function MiddleVideo({
+function PreviewVideoWithInfoCard({
                          id,
                          name,
                          type,
@@ -23,7 +23,7 @@ function MiddleVideo({
                          icon,
                          rate,
                          videoCategory,
-                     }: MiddleVideoProps) {
+                     }: PreviewVideoWithInfoCardProps) {
     const typeLink = getTypeLink(videoCategory);
     return (
         <Paper style={{padding: '4px', background: '#e6d2be1a'}}>
@@ -78,4 +78,4 @@ function MiddleVideo({
     );
 }
 
-export default MiddleVideo;
+export default PreviewVideoWithInfoCard;

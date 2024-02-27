@@ -10,6 +10,7 @@ export default function RootLayout({children,}: {
     children: React.ReactNode
 }) {
     return (
+
         <html lang="en">
         <body>
         <Main>
@@ -17,5 +18,6 @@ export default function RootLayout({children,}: {
         </Main>
         </body>
         </html>
+
     )
 }

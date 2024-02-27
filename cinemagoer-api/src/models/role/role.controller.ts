@@ -1,7 +1,7 @@
 import {Body, Controller, Get, HttpStatus, Post, UseGuards} from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {Roles} from "@src/auth/roles-auth.decorator";
-import {RolesGuard} from "@src/auth/roles-guard";
+import {Roles} from "@src/guard/roles.decorator";
+import {RoleGuard} from "@src/guard/role-guard.service";
 import {RoleUser} from "@src/const/role";
 import {RoleService} from "@models/role/role.service";
 import {ResponseRoleDto} from "@models/role/dto/response-role.dto";
@@ -17,7 +17,7 @@ export class RoleController {
     @ApiOperation({summary: 'Create role'})
     @ApiResponse({status: HttpStatus.CREATED, type: ResponseRoleDto})
     @Roles( RoleUser.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(RoleGuard)
     @Post()
     @ApiBearerAuth('JWT')
     createRole(@Body() dto: CreateRoleDto) {

@@ -1,9 +1,9 @@
 import {Body, Controller, Get, HttpStatus, Put, Req, UploadedFiles, UseGuards, UseInterceptors} from '@nestjs/common';
 import {ApiBearerAuth, ApiConsumes, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {FileFieldsInterceptor} from "@nestjs/platform-express";
-import {JwtAuthGuard} from "@src/auth/jwt-auth-guard";
-import {Roles} from "@src/auth/roles-auth.decorator";
-import {RolesGuard} from "@src/auth/roles-guard";
+import {JwtAuthGuard} from "@src/guard/jwt-auth-guard";
+import {Roles} from "@src/guard/roles.decorator";
+import {RoleGuard} from "@src/guard/role-guard.service";
 import {RoleUser} from "@src/const/role";
 import {UsersService} from "@models/users/users.service";
 import {UserDto} from "@models/users/dto/user.dto";
@@ -22,7 +22,7 @@ export class UsersController {
     @ApiBearerAuth('JWT')
     @ApiResponse({status: HttpStatus.CREATED, type: UserDto})
     @Roles(RoleUser.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(RoleGuard)
     @Put('role')
     updateUserRole(@Body() dto: UpdateUserRoleDto) {
         return this.userService.updateRole(dto);
@@ -43,7 +43,7 @@ export class UsersController {
     @ApiResponse({status: HttpStatus.OK, type: [ResponseUserDto]})
     @ApiBearerAuth('JWT')
     @Roles(RoleUser.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(RoleGuard)
     @Get()
     getUserAll() {
         return this.userService.getUserAll();

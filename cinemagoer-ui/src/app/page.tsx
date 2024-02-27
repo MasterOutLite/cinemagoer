@@ -1,6 +1,6 @@
 import {Box, Container, Grid, Paper} from "@mui/material";
 import React from "react";
-import MiddleVideo from "@/components/MiddleVideo/MiddleVideo";
+import PreviewVideoWithInfoCard from "@/components/PreviewVideoWithInfoCard/PreviewVideoWithInfoCard";
 import Title from "@/components/Title/Title";
 import BreakBlock2 from "@/components/BreakBlock/BreakBlock2";
 import {VideoCategory} from "@/helper/api";
@@ -46,7 +46,7 @@ export default async function Home({}) {
                     <Grid container spacing={2} p={1}>
                         {
                             movie.map((value: VideoType) => <Grid key={value.id} item xs={12} md={6}>
-                                <MiddleVideo   {...value}/>
+                                <PreviewVideoWithInfoCard   {...value}/>
                             </Grid>)
                         }
                     </Grid>
@@ -60,7 +60,7 @@ export default async function Home({}) {
                     <Grid container spacing={2} p={1}>
                         {
                             anime.map((value: VideoType) => <Grid key={value.id} item xs={12} md={6}>
-                                <MiddleVideo  {...value}/>
+                                <PreviewVideoWithInfoCard  {...value}/>
                             </Grid>)
                         }
                     </Grid>

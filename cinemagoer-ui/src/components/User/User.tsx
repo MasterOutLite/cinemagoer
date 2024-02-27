@@ -1,14 +1,10 @@
 "use client";
 import React, {useEffect, useState} from 'react';
-import {Box, IconButton, Link, Paper, Skeleton, Stack, Tabs, Typography} from "@mui/material";
+import {Box, Paper, Typography} from "@mui/material";
 import {useAuthStore} from "@/store/useAuthStore";
-import Tab from "@mui/material/Tab";
-import {apiPath, getUserListWithVideo} from "@/helper/api";
 import {ListView} from "@/type/list-view";
-import DeleteIcon from '@mui/icons-material/Delete';
-import {getTypeLink, getTypeLinkById} from "@/helper/link";
-import {TabPanel} from "@/components/TabPanel/TabPanel";
 import UserListView from "@/components/UserListView/UserListView";
+import UserListViewService from "@/service/user-list-view.service";
 
 
 function User() {
@@ -18,7 +14,7 @@ function User() {
 
     useEffect(() => {
         const get = async () => {
-            const date = await getUserListWithVideo();
+            const date = await UserListViewService.getUserListWithVideo();
             setUserList(date);
         }
         if (user)

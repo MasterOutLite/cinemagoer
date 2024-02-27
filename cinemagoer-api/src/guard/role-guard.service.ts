@@ -2,11 +2,11 @@ import {CanActivate, ExecutionContext, Injectable, UnauthorizedException} from "
 import {Observable} from "rxjs";
 import {JwtService} from "@nestjs/jwt";
 import {Reflector} from "@nestjs/core";
-import {ROLES_KEY} from "@src/auth/roles-auth.decorator";
+import {ROLES_KEY} from "@src/guard/roles.decorator";
 import {TokenFormat} from "@src/auth/dto/TokenFormat";
 
 @Injectable()
-export class RolesGuard implements CanActivate {
+export class RoleGuard implements CanActivate {
     constructor(
         private jwtService: JwtService,
         private reflector: Reflector,
@@ -24,15 +24,9 @@ export class RolesGuard implements CanActivate {
                 throw new UnauthorizedException("Role bad requared Role");
             }
 
-
             const authHeader = req.headers.authorization;
             //console.log( req.headers);
-            const bearer = authHeader.split(' ')[0];
             const token = authHeader.split(' ')[1];
-
-            if (bearer !== 'Bearer' || !token) {
-                throw new UnauthorizedException("Role bad");
-            }
 
             const user = this.jwtService.verify(token) as TokenFormat;
             req.user = user;

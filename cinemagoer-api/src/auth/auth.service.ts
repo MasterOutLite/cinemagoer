@@ -26,7 +26,7 @@ export class AuthService {
     async registration(dto: CreateUserDto) {
         const exists = await this.usersService.getByEmail(dto.email);
         if (exists)
-            throw new ExistsException(`User already registration with email: ${dto.email}.`);
+            throw new ExistsException(`User already registration by email: ${dto.email}.`);
 
         console.log('Start registration in auth service!');
 

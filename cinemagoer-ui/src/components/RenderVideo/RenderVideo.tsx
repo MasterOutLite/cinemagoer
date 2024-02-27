@@ -4,7 +4,7 @@ import Filter from "@/components/Filter/Filter";
 import {Box, Button, Paper, Stack, SwipeableDrawer, TextField} from "@mui/material";
 import Title from "@/components/Title/Title";
 import {VideoType} from "@/type/videoType";
-import BigVideo from "@/components/BigVideo/BigVideo";
+import PreviewCardVideo from "@/components/PreviewCardVideo/PreviewCardVideo";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import {VideoCategory} from "@/helper/api";
 import {BaseResponse} from "@/type/base-response";
@@ -133,7 +133,7 @@ function RenderVideo({filter, videoBase, title}: RenderVideoProps) {
                         {
                             video.map(value => (
                                 <Grid2 key={value.id}>
-                                    <BigVideo  {...value}/>
+                                    <PreviewCardVideo  {...value}/>
                                 </Grid2>
                             ))
                         }

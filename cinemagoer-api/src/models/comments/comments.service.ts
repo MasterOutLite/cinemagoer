@@ -8,8 +8,7 @@ import Video from "@models/video/video.entity";
 import Users from "@models/users/users.entity";
 import {GetCommentsDto} from "@models/comments/dto/get-comments.dto";
 import CommentsRate from "@models/comments-rate/comments-rate.entity";
-import User from "@models/users/users.entity";
-import Role from "@models/role/role.entity";
+import {ResponseCountCommentsDto} from "@models/comments/dto/response-count-comments.dto";
 
 @Injectable()
 export class CommentsService {
@@ -50,30 +49,60 @@ export class CommentsService {
     }
 
     async getAll(dto: GetCommentsDto, auth: TokenFormat) {
-        const search: { videoId: number, commentId: number } = {videoId: dto.videoId, commentId: dto.commentId || null};
+        console.log('Comments Service: dto ', dto)
+        const search: { videoId: number, commentsId?: number } = {videoId: dto.videoId};
+        if (dto.commentId)
+            search.commentsId = dto.commentId;
+        console.log('Comments Service: search ', search)
         const take = dto.count || 20;
         const skip = dto.count * dto.page;
+
+        console.log('Comments Service:', `take: ${take}. skip: ${skip}`);
 
         const exists = await this.videoRepository.exists({where: {id: dto.videoId}});
         if (!exists) {
             throw new BadRequestException(`Request param videoId is null or bad value!`);
         }
 
-        const comments = await this.commentsRepository.createQueryBuilder('comments')
-            .select([
-                'comments.*',
-                '(SELECT count("rate") FROM "comments-rate" as "CommentsRate" WHERE "CommentsRate"."commentId" = "comments"."id" and "CommentsRate"."rate" = true) AS like',
-                '(SELECT count("rate") FROM "comments-rate" as "CommentsRate" WHERE "CommentsRate"."commentId" = "comments"."id" and "CommentsRate"."rate" = false) AS dislike',
-                `(SELECT "rate" FROM "comments-rate" as "CommentsRate" WHERE "CommentsRate"."commentId" = "comments"."id" and "CommentsRate"."userId" = ${auth ? auth.id : 0} LIMIT 1) AS userLike`
-            ])
-            .leftJoin(User, 'user', 'user.id = comments.userId')
-            .leftJoin(Role, 'role', 'role.id = user.roleId')
-            .where({...search})
-            .orderBy('comments.createdAt', 'DESC')
-            .take(take)
-            .skip(skip)
-            .getManyAndCount();
+        const commentsCount = await this.commentsRepository.findAndCount({
+            where: {...search},
+            relations: {
+                user: true,
+                comments: true,
+            },
+            select: {
+                user: {id: true, nickname: true, avatar: true}
+            }
+        })
 
-        return {count: comments[1], rows: comments[0]};
+        const comments = commentsCount[0];
+        const newComments = [];
+        for (const comment of comments) {
+            const likeCount = await this.commentsRateRepository.count({
+                where: {
+                    commentsId: comment.id,
+                    rate: true
+                }
+            });
+            const dislikeCount = await this.commentsRateRepository.count({
+                where: {
+                    commentsId: comment.id,
+                    rate: false
+                }
+            });
+
+            const userLike = await this.commentsRateRepository.count({
+                where: {
+                    commentsId: comment.id,
+                    userId: auth ? auth.id : 0
+                }
+            });
+
+            newComments.push({...comment, likeCount, dislikeCount, userLike})
+        }
+
+        //console.log('Comments Service:', 'comments date', commentsCount);
+        console.log('Comments Service:', 'newComments date', newComments);
+        return new ResponseCountCommentsDto(commentsCount[1], newComments);
     }
 }

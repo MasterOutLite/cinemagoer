@@ -8,7 +8,7 @@ export interface BigVideoProps extends VideoType {
 }
 
 
-function BigVideo({id, name, type, ageRating, rate, icon, dateRelease, status, videoCategory,}: BigVideoProps) {
+function PreviewCardVideo({id, name, type, ageRating, rate, icon, dateRelease, status, videoCategory,}: BigVideoProps) {
     const typeLink = getTypeLink(videoCategory);
     const data = new Date(dateRelease);
     return (
@@ -41,4 +41,4 @@ function BigVideo({id, name, type, ageRating, rate, icon, dateRelease, status, v
     );
 }
 
-export default BigVideo;
+export default PreviewCardVideo;

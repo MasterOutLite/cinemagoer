@@ -1,8 +1,8 @@
 import {Body, Controller, Get, HttpStatus, Post, Put, Query, UseGuards} from '@nestjs/common';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {Roles} from "@src/auth/roles-auth.decorator";
+import {Roles} from "@src/guard/roles.decorator";
 import {RoleUser} from "@src/const/role";
-import {RolesGuard} from "@src/auth/roles-guard";
+import {RoleGuard} from "@src/guard/role-guard.service";
 import {SeasonService} from "@models/season/season.service";
 import {ResponseSeasonDto} from "@models/season/dto/response-season.dto";
 import {CreateSeasonDto} from "@models/season/dto/create-season.dto";
@@ -22,7 +22,7 @@ export class SeasonController {
     @ApiBearerAuth('JWT')
     @ApiResponse({status: HttpStatus.CREATED, type: ResponseSeasonDto})
     @Roles(RoleUser.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(RoleGuard)
     @Post()
     create(@Body() dto: CreateSeasonDto) {
         return this.seasonService.create(dto);
@@ -32,7 +32,7 @@ export class SeasonController {
     @ApiBearerAuth('JWT')
     @ApiResponse({status: HttpStatus.OK, type: [ResponseSeasonDto]})
     @Roles(RoleUser.ADMIN)
-    @UseGuards(RolesGuard)
+    @UseGuards(RoleGuard)
     @Put()
     update(@Body() dto: UpdateSeasonDto) {
         return this.seasonService.update(dto);

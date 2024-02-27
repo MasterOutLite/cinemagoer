@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
+    Box,
     Button,
     IconButton,
     Stack,
@@ -10,12 +11,17 @@ import {
     Typography
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
-function AddNameVideo() {
+export interface AddNameVideoProps {
+    setNameArr: (names: string[]) => void;
+}
+
+function AddNameVideo({setNameArr}: AddNameVideoProps) {
     const [names, setNames] = React.useState<string[]>([])
     const [name, setName] = React.useState<string>('')
+    const [nameMain, setNameMain] = React.useState<string>('')
 
     function handleChangeName(event: React.ChangeEvent<HTMLInputElement>) {
         const {
@@ -24,9 +30,17 @@ function AddNameVideo() {
         setName(value);
     }
 
+    function handleChangeMainName(event: React.ChangeEvent<HTMLInputElement>) {
+        const {
+            target: {value},
+        } = event
+
+        setNameMain(value);
+    }
+
     function handleAddName() {
         const exists = names.find(value => value === name);
-        if (!exists) {
+        if (!exists && name) {
             setNames(prevState => [name, ...prevState]);
             setName('');
         }
@@ -39,40 +53,52 @@ function AddNameVideo() {
         }
     }
 
+    useEffect(() => {
+        setNameArr([nameMain, ...names])
+    }, [nameMain, names]);
+
     return (
         <Stack gap={1}>
-            <TextField id="outlined-basic"
-                       value={name}
-                       onChange={handleChangeName}
-                       label="Додати назву" variant="outlined"/>
-            <Button
-                onClick={handleAddName}
-                variant="contained">Додати</Button>
+            <TextField id="main-name-video"
+                       value={nameMain}
+                       size={'small'}
+                       onChange={handleChangeMainName}
+                       label="Назва" variant="outlined"/>
+
+            <Stack direction={'row'}>
+                <TextField id="other-name-video"
+                           value={name}
+                           size={'small'}
+                           onChange={handleChangeName}
+                           label="Додаткові назви" variant="outlined"/>
+                <Button
+                    onClick={handleAddName}
+                    variant="contained">Додати</Button>
+            </Stack>
             <Accordion>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
                     aria-controls="panel1-content"
                     id="panel1-header"
                 >
-                    Назви фільму
+                    Додаткові назви
                 </AccordionSummary>
                 <AccordionDetails>
                     {
-                        names.map(value =>
-                            <Stack key={value} direction='row' alignItems='center' justifyContent='space-between'>
-                                <Typography>
+                        names.map(value => (
+                            <Stack direction={'row'} key={value} justifyContent={'space-between'}>
+                                <Typography variant={'body1'} component={'span'}>
                                     {value}
                                 </Typography>
-                                <IconButton
-                                    onClick={handleRemoveName(value)}
-                                    aria-label="delete" size="small">
+                                <IconButton onClick={handleRemoveName(value)} size={'small'}>
                                     <DeleteIcon/>
                                 </IconButton>
                             </Stack>
-                        )
+                        ))
                     }
                 </AccordionDetails>
             </Accordion>
+
         </Stack>
     );
 }

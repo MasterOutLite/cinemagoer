@@ -69,7 +69,7 @@ class Video {
     comments: Comments[];
 
     @OneToMany(() => VideoInfo, videoInfo => videoInfo.video)
-    videoInfo: VideoInfo;
+    videoInfo: VideoInfo[];
 
     @OneToMany(() => VideoSeries, series => series.video)
     videoSeries: VideoSeries[];
